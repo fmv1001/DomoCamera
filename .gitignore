@@ -17,6 +17,23 @@ out/
 #  Uncomment the following line in case you need and you don't have the release build type files in your app
 # release/
 
+#AppAndroid
+AndroidApp/*.iml
+AndroidApp/.gradle
+AndroidApp/local.properties
+AndroidApp/.idea/caches
+AndroidApp/.idea/libraries
+AndroidApp/.idea/modules.xml
+AndroidApp/.idea/workspace.xml
+AndroidApp/.idea/navEditor.xml
+AndroidApp/.idea/assetWizardSettings.xml
+AndroidApp/.DS_Store
+AndroidApp/build
+AndroidApp/captures
+AndroidApp/.externalNativeBuild
+AndroidApp/.cxx
+AndroidApp/local.properties
+
 # Gradle files
 .gradle/
 build/
