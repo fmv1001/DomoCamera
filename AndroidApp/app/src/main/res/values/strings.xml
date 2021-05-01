@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">AppStream</string>
+    <string name="txtvw1">Pulsa el boton para recibir respuesta</string>
+    <string name="conectar">Conectar</string>
 </resources>

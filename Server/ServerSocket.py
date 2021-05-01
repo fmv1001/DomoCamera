@@ -8,10 +8,8 @@ class SocketServer():
     """ Clase responsable del funcionamiento del servidor
     """
     
-
     # Create a TCP/IP socket
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
     # Bind the socket to the port
     server_address = ('', 9999)
     print('starting up on {} port {}'.format(*server_address))
@@ -29,7 +27,7 @@ class SocketServer():
 
             # Receive the data in small chunks and retransmit it
             while True:
-                data = connection.recv(512)
+                data = connection.recv(64)
                 print(str(data.decode("UTF8"))," es la respuesta")
                 if data:
                     print('sending data back to the client')
