@@ -6,8 +6,9 @@ from sqlalchemy import sql
 
 
 schema: Schema = Schema('sqlite:////tmp/database.db')
-cam1: Camera = Camera(0,"rtsp://192.168.18.34:8080/h264_pcm.sdp", "camera 1","False")
+cam1: Camera = Camera(0,"rtsp://192.168.18.185:8080/h264_pcm.sdp", "camera 1","False")
 cam2: Camera = Camera(1,"rtsp://192.168.18.61:8080/h264_pcm.sdp", "camera 2","False")
+cam3: Camera = Camera(2,"rtsp://192.168.18.235:8080/h264_pcm.sdp", "camera 3","False")
 
 db_session: Session = schema.new_session()
 
@@ -25,7 +26,7 @@ except:
 
 print("Borradas: " + str(num_rows_deleted))
 
-db_session.add_all([cam1, cam2])
+db_session.add_all([cam1, cam2, cam3])
 db_session.commit()
 
 for instance in db_session.query(Camera).order_by(Camera.name):
