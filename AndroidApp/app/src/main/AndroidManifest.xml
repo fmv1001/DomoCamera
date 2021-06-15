@@ -12,7 +12,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppStream">
+        <activity
+            android:name=".NavMenuActivity"
+            android:label="@string/title_activity_nav_menu"
+            android:theme="@style/Theme.AppStream.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".AppSettings">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

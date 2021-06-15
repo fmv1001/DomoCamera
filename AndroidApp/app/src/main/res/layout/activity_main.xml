@@ -60,8 +60,9 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:tint="@color/red_conn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/btn_radio" />
+        app:srcCompat="@android:drawable/btn_radio"
+        app:tint="@color/red_conn" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
