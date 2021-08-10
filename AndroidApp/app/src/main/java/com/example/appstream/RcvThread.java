@@ -11,6 +11,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 
 
@@ -18,40 +19,49 @@ public class RcvThread extends Thread {
 
     private static String SERVER_IP;    // Server IP
     private static int SERVER_PORT_SEND;// Server sender port
-
-    Bitmap frameBitMap;
-
     private DatagramSocket rcvSocket;
     private InetAddress serverAddress;
+
+    Bitmap frameBitMap;
+    private boolean running = true;
 
     private final FrameHandler frameHandler = new FrameHandler();
 
     private ImageView imgViewCam;
 
-    public RcvThread(ImageView img_view_cam, String SERVER_IP, int SERVER_PORT) throws UnknownHostException {
-        this.SERVER_IP =SERVER_IP;
-        serverAddress = InetAddress.getByName(SERVER_IP);
-        SERVER_PORT_SEND = SERVER_PORT;
+    public RcvThread(ImageView img_view_cam, String server_ip, int server_port) throws UnknownHostException {
+        this.SERVER_IP = server_ip;
+        //serverAddress = InetAddress.getByName(SERVER_IP);
+        SERVER_PORT_SEND = server_port;
         this.imgViewCam = img_view_cam;
-    }
-
-    @Override
-    public void run()
-    {
-        try
-        {
+        try {
             rcvSocket = new DatagramSocket(null);
             rcvSocket.setReuseAddress(true);
             rcvSocket.bind(new InetSocketAddress(SERVER_PORT_SEND));
-            serverAddress = InetAddress.getByName(SERVER_IP);
+            //serverAddress = InetAddress.getByName(SERVER_IP);
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
 
-            while (true) {
+    }
+
+    @Override
+    public void interrupt() {
+        this.running = false;
+    }
+
+    @Override
+    public void run() {
+        try
+        {
+            while (running) {
                 byte[] inBuf= new byte[1024*1024];
                 DatagramPacket inPacket = new DatagramPacket(inBuf,inBuf.length);
                 rcvSocket.receive(inPacket);
 
-                if(!inPacket.getAddress().equals(serverAddress))
-                    throw new IOException("Mensaje desconocido");
+                if(!inPacket.getAddress().equals(InetAddress.getByName(SERVER_IP)))
+                    throw new IOException("Mensaje desconocido: " + serverAddress.toString());
+
 
                 ByteArrayInputStream in = new ByteArrayInputStream(inPacket.getData());
                 frameHandler.sendEmptyMessage(1);
