@@ -3,10 +3,11 @@ from sqlalchemy.orm import mapper, relationship
 from sqlalchemy.sql.sqltypes import Boolean, Integer 
 
 class Camera():
-    def __init__(self, id: int, ipaddres: str, name: str, state: str):
+    def __init__(self, id: int, name: str, ipaddres: str,  port:int, state: str):
         self.id: Integer = id
-        self.ipaddres: str = ipaddres
         self.name: str = name
+        self.ipaddres: str = ipaddres
+        self.port:int = port
         self.state: str = state
 
     @classmethod
@@ -18,7 +19,8 @@ class Camera():
                 metadata,
                 Column('id', Integer, primary_key=True),
                 Column('ipaddres', String(64), nullable=False),
-                Column('name', String(16), nullable=False),
+                Column('name', String(16), unique=True, nullable=False),
+                Column('port', Integer, unique=True, nullable=False),
                 Column('state', String(8), nullable=False)
             )
         )
