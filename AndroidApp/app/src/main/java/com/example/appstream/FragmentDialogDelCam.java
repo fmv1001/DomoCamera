@@ -7,18 +7,21 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
-public class FragmentDialogNewCam {
+import java.util.List;
 
-    public interface FragmentDialogInterface{
-        void getData(String name, String ip, int port, int action);
+public class FragmentDialogDelCam {
+
+    public interface FragmentDialogInterfaceDelCam{
+        void getDataDelCam(String camera);
     }
 
-    private final FragmentDialogInterface intfzData;
+    private final FragmentDialogInterfaceDelCam intfzData;
 
-    public FragmentDialogNewCam(Context context, FragmentDialogInterface activity, int action){
+    public FragmentDialogDelCam(Context context, FragmentDialogInterfaceDelCam activity, List<Camera> cameraList){
 
         intfzData = activity;
 
@@ -26,45 +29,32 @@ public class FragmentDialogNewCam {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.GRAY));
-        dialog.setContentView(R.layout.dialog_fragment_new_cam);
+        dialog.setContentView(R.layout.dialog_fragment_del_cam);
 
-        EditText editTextName = (EditText) dialog.findViewById(R.id.et_newCameraName);
-        EditText editTextIp = (EditText) dialog.findViewById(R.id.et_newCameraIp);
-        EditText editTextPort = (EditText) dialog.findViewById(R.id.et_newCameraPort);
-        Button accept = (Button) dialog.findViewById(R.id.acceptNewCameraBtn);
-        Button decline = (Button) dialog.findViewById(R.id.cancelNewCameraBtn);
+        RadioGroup radioGroup = (RadioGroup) dialog.findViewById(R.id.radioGroupDelCam);
+        Button accept = (Button) dialog.findViewById(R.id.acceptDelCameraBtn);
+        Button decline = (Button) dialog.findViewById(R.id.cancelDelCameraBtn);
 
-        if(action == 0) {
-
-            accept.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String cameraName = editTextName.getText().toString();
-                    String cameraIp = editTextIp.getText().toString();
-                    String cameraPort = editTextPort.getText().toString();
-                    if (cameraIp == null || cameraIp.equals("") || cameraName == null || cameraName.equals("") || cameraPort == null || cameraPort.equals(""))
-                        Toast.makeText(context, "Rellene todos los campos", Toast.LENGTH_SHORT).show();
-                    else {
-                        intfzData.getData(cameraName, cameraIp, Integer.parseInt(cameraPort), 0);
-                        dialog.dismiss();
-                    }
-                }
-            });
-        }else{
-
-            accept.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String cameraName = editTextName.getText().toString();
-                    if (cameraName == null || cameraName.equals(""))
-                        Toast.makeText(context, "Rellene el campo", Toast.LENGTH_SHORT).show();
-                    else {
-                        intfzData.getData(cameraName, null, 0, 1);
-                        dialog.dismiss();
-                    }
-                }
-            });
+        for (Camera camX: cameraList) {
+            RadioButton myRadioButton = new RadioButton(context);
+            myRadioButton.setText(camX.getName());
+            //myRadioButton.setId();
+            radioGroup.addView(myRadioButton);
         }
+
+        accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (radioGroup.getCheckedRadioButtonId() == -1)
+                    Toast.makeText(context, "Seleccione una opcion", Toast.LENGTH_SHORT).show();
+                else {
+                    RadioButton radioButton = dialog.findViewById(radioGroup.getCheckedRadioButtonId());
+                    intfzData.getDataDelCam(radioButton.getText().toString());
+                    dialog.dismiss();
+                }
+            }
+        });
 
         decline.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +65,4 @@ public class FragmentDialogNewCam {
 
         dialog.show();
     }
-
-
 }

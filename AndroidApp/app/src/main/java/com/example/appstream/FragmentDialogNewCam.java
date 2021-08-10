@@ -8,18 +8,17 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-public class FragmentDialog {
+public class FragmentDialogNewCam {
 
-    public interface FragmentDialogInterface{
-        void getData(String name, String ip, int port, int action);
+    public interface FragmentDialogInterfaceNewCAm{
+        void getDataNewCam(String name, String ip, int port);
     }
 
-    private final FragmentDialogInterface intfzData;
+    private final FragmentDialogInterfaceNewCAm intfzData;
 
-    public FragmentDialog(Context context, FragmentDialogInterface activity, int action){
+    public FragmentDialogNewCam(Context context, FragmentDialogInterfaceNewCAm activity){
 
         intfzData = activity;
 
@@ -27,15 +26,13 @@ public class FragmentDialog {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.GRAY));
-        dialog.setContentView(R.layout.dialog_fragment);
+        dialog.setContentView(R.layout.dialog_fragment_new_cam);
 
         EditText editTextName = (EditText) dialog.findViewById(R.id.et_newCameraName);
         EditText editTextIp = (EditText) dialog.findViewById(R.id.et_newCameraIp);
         EditText editTextPort = (EditText) dialog.findViewById(R.id.et_newCameraPort);
-        Button accept = (Button) dialog.findViewById(R.id.acceptNewCameraBtn);
-        Button decline = (Button) dialog.findViewById(R.id.cancelNewCameraBtn);
-
-        if(action == 0) {
+        Button accept = (Button) dialog.findViewById(R.id.acceptDelCameraBtn);
+        Button decline = (Button) dialog.findViewById(R.id.cancelDelCameraBtn);
 
             accept.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -46,26 +43,11 @@ public class FragmentDialog {
                     if (cameraIp == null || cameraIp.equals("") || cameraName == null || cameraName.equals("") || cameraPort == null || cameraPort.equals(""))
                         Toast.makeText(context, "Rellene todos los campos", Toast.LENGTH_SHORT).show();
                     else {
-                        intfzData.getData(cameraName, cameraIp, Integer.parseInt(cameraPort), 0);
+                        intfzData.getDataNewCam(cameraName, cameraIp, Integer.parseInt(cameraPort));
                         dialog.dismiss();
                     }
                 }
             });
-        }else{
-
-            accept.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String cameraName = editTextName.getText().toString();
-                    if (cameraName == null || cameraName.equals(""))
-                        Toast.makeText(context, "Rellene el campo", Toast.LENGTH_SHORT).show();
-                    else {
-                        intfzData.getData(cameraName, null, 0, 1);
-                        dialog.dismiss();
-                    }
-                }
-            });
-        }
 
         decline.setOnClickListener(new View.OnClickListener() {
             @Override
