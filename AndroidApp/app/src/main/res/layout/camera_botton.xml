@@ -3,37 +3,43 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="70dp"
-    android:background="#1075ce">
+    android:background="#5C5B5B">
 
     <ImageView
-        android:id="@+id/imagenHabitacion"
+        android:id="@+id/cameraImage"
         android:layout_width="80dp"
         android:layout_height="50dp"
-        android:layout_above="@+id/viewHabitacion"
+        android:layout_above="@+id/cameraView"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="23dp"
-        app:srcCompat="@drawable/habitacion" />
+        app:srcCompat="@android:drawable/presence_video_away"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="23dp" />
 
     <TextView
-        android:id="@+id/tvNombre"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:id="@+id/cameraName"
+        android:layout_width="252dp"
+        android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="50dp"
-        android:layout_toEndOf="@+id/imagenHabitacion"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginBottom="0dp"
+        android:layout_toEndOf="@+id/cameraImage"
+        android:layout_toRightOf="@+id/cameraImage"
         android:gravity="center_vertical"
         android:text="TextView"
         android:textColor="#FFFFFF"
         android:textSize="25sp" />
 
     <View
-        android:id="@+id/viewHabitacion"
+        android:id="@+id/cameraView"
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:background="#FFFFFF"></View>
+        android:layout_alignParentBottom="true"
+        android:background="#FFFFFF"
+        android:layout_alignParentLeft="true"></View>
 
 </RelativeLayout>
