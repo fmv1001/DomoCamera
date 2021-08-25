@@ -4,7 +4,11 @@
 *.ap_
 *.aab
 
-#pycache
+# Sonar
+.scannerwork
+.scannerwork/*
+
+# pycache
 Server/__pycache__/*
 
 # Files for the ART/Dalvik VM
