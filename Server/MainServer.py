@@ -6,7 +6,7 @@ from CamConnex import ServerThreadForIpCam
 from schema import Schema
 from cameras import Camera
 from sqlalchemy.orm.session import Session
-from sqlalchemy import delete
+from sqlalchemy import delete, exc
 import time
 
 class SocketServer():
@@ -28,7 +28,6 @@ class SocketServer():
         
         self.__lista_camaras = []
         self.__main__()
-        return
     
     def __main__(self):
         # Wait for an android client
@@ -39,14 +38,14 @@ class SocketServer():
         rcv = connection.recv(1024)
         print("recibo: ",rcv.decode())
 
-        camerasString = "-"
+        cameras_string = "-"
         for instance in self.__db_session.query(Camera).order_by(Camera.name):
-            camerasString = (camerasString + instance.name + "|" + instance.ipaddres + "|" + str(instance.port) + "-")
-            print(camerasString)
-            camX = ServerThreadForIpCam(instance.name,instance.port, self.__client_address, instance.ipaddres)
-            self.__lista_camaras.append(camX)
-            camX.start()
-        connection.send(camerasString.encode())
+            cameras_string = (cameras_string + instance.name + "|" + instance.ipaddres + "|" + str(instance.port) + "-")
+            print(cameras_string)
+            cam_x = ServerThreadForIpCam(instance.name,instance.port, self.__client_address, instance.ipaddres)
+            self.__lista_camaras.append(cam_x)
+            cam_x.start()
+        connection.send(cameras_string.encode())
 
         while True:
             try:
@@ -57,77 +56,75 @@ class SocketServer():
                 #self.__switch_options.get(option.decode(), self.error)()
                 if option.decode() == "0":
                     print("op0")
-                    self.stopServer()
+                    self.stop_server()
                     break
                 elif option.decode() == "1":
                     print("op1")
-                    newC = connection.recv(128)
-                    print("reciboNew: ", newC.decode())
-                    cameraOptions = newC.decode().split('-')
-                    print(cameraOptions)
-                    self.addCamera(cameraOptions[0], cameraOptions[1], cameraOptions[2])
+                    new_cam = connection.recv(128)
+                    print("reciboNew: ", new_cam.decode())
+                    camera_options = new_cam.decode().split('-')
+                    print(camera_options)
+                    self.add_camera(camera_options[0], camera_options[1], camera_options[2])
                 elif option.decode() == "2":
                     print("op2")
-                    delC = connection.recv(16)
-                    print("reciboDel: ", delC.decode())
-                    self.deleteCamera(delC.decode())
+                    del_cam = connection.recv(16)
+                    print("reciboDel: ", del_cam.decode())
+                    self.delete_camera(del_cam.decode())
                 elif option.decode() == "3":
                     print("op3")
-                    stopC = connection.recv(16)
-                    print("reciboStop: ", stopC.decode())
-                    self.stopCamera(stopC.decode())
+                    stop_cam = connection.recv(16)
+                    print("reciboStop: ", stop_cam.decode())
+                    self.stop_camera(stop_cam.decode())
                 elif option.decode() == "4":
                     print("op4")
-                    startC = connection.recv(16)
-                    print("reciboStart: ", startC.decode())
-                    self.startCamera(startC.decode())
-            except:                
-                print("Error en la conexion, cerrando camaras...")
+                    start_c = connection.recv(16)
+                    print("reciboStart: ", start_c.decode())
+                    self.start_camera(start_c.decode())
+                else:
+                    self.error()
+            except Exception as e:  
+                print(e)              
+                print("Error en la conexion, cerrando camaras...") #---------------
                 for i in self.__lista_camaras:
                     print("Cerrando camara: ", i)
                     i.delete()
                 self.__sock_recv.close()
                 break
     
-    def addCamera(self, name, ip_camera, port):
+    def add_camera(self, name, ip_camera, port):
+        ip = "rtsp://" + ip_camera + "/h264_ulaw.sdp"
+        cam_x_data_base: Camera = Camera(22,name, ip, port,"false")
         try:
-            ip = "rtsp://" + ip_camera + "/h264_ulaw.sdp"
-            camX_data_base: Camera = Camera(22,name, ip, port,"false")
-            try:
-                self.__db_session.add(camX_data_base)
-                self.__db_session.commit()
-            except:
-                self.__db_session.rollback()
-            camX = ServerThreadForIpCam(name,int(port), self.__client_address, ip)
-            self.__lista_camaras.append(camX)
-            camX.start()
-        except:
-            print("Error añadiendo camaras")
-        return
+            self.__db_session.add(cam_x_data_base)
+            self.__db_session.commit()
+        except exc.SQLAlchemyError as e:
+            print(type(e))
+            print("error añadiendo cámara")
+            self.__db_session.rollback()
+        cam_x = ServerThreadForIpCam(name,int(port), self.__client_address, ip)
+        self.__lista_camaras.append(cam_x)
+        cam_x.start()
     
-    def deleteCamera(self, name_camera):
-        try:
-            print("Numero de camaras: ", self.__lista_camaras)
-            for i in self.__lista_camaras:
-                    if i.getName() == name_camera:
-                        i.delete()
-                        try:
-                            sql1 = delete(Camera).where(Camera.name == name_camera)
-                            self.__db_session.execute(sql1)
-                            self.__db_session.commit()
-                            print("Camara eliminada de la base de datos")
-                        except:
-                            print("Error eliminando camaras de la bbdd")
-                            self.__db_session.rollback()
-                        self.__lista_camaras.remove(i)
-                        print("Camara eliminada de la lista del servidor")
-                        print("Numero de camaras final: ", self.__lista_camaras)
-                        return
-        except:
-            print("Error eliminando camaras")
-        return
+    def delete_camera(self, name_camera):
+        print("Numero de camaras: ", self.__lista_camaras)
+        for i in self.__lista_camaras:
+                if i.getName() == name_camera:
+                    i.delete()
+                    try:
+                        sql1 = delete(Camera).where(Camera.name == name_camera)
+                        self.__db_session.execute(sql1)
+                        self.__db_session.commit()
+                        print("Camara eliminada de la base de datos")
+                    except exc.SQLAlchemyError as e:
+                        print(e)
+                        print("Error eliminando camaras de la bbdd")
+                        self.__db_session.rollback()
+                    self.__lista_camaras.remove(i)
+                    print("Camara eliminada de la lista del servidor")
+                    print("Numero de camaras final: ", self.__lista_camaras)
+                    return
     
-    def stopServer(self):
+    def stop_server(self):
         print("Cerrando servidor...")
         for i in self.__lista_camaras:
             print("Cerrando camara: ", i)
@@ -135,37 +132,20 @@ class SocketServer():
         self.__lista_camaras.clear()
         self.__sock_recv.close()
         print("Hasta otra")
-        return
 
-    def stopCamera(self, name_camera): #----------------------------------------------
-        try:
-            for i in self.__lista_camaras:
-                    if i.getName() == name_camera:
-                        i.stop()
-                        return
-        except:
-            print("Error parando camara")
-        return
+    def stop_camera(self, name_camera): #----------------------------------------------
+        for i in self.__lista_camaras:
+                if i.getName() == name_camera:
+                    i.stop()
+                    return
 
-    def startCamera(self, name_camera): #----------------------------------------------
-        try:
-            for i in self.__lista_camaras:
-                    if i.getName() == name_camera:
-                        i.startCamera()
-                        return
-        except:
-            print("Error iniciando camara")
-        return
+    def start_camera(self, name_camera): #----------------------------------------------
+        for i in self.__lista_camaras:
+                if i.getName() == name_camera:
+                    i.start_cam()
+                    return
 
     def error(self):
 	    print('error al recibir accion')
-
-    __switch_options = {
-	"0": stopServer,
-	"1": addCamera,
-    "2": deleteCamera,
-    "3": stopCamera,
-    "4": startCamera
-    }
-        
+    
 SocketServer()

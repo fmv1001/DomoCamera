@@ -6,7 +6,7 @@ import time
 class ServerThreadForIpCam(Thread):
     """ Clase responsable del envio de imagenes de la camara
     """
-    def __init__(self,nameC, port, app_client, cam_dir, group=None, target=None, name=None, kwargs=None, *, daemon=None):
+    def __init__(self,name_camera, port, app_client, cam_dir, group=None, target=None, name=None, kwargs=None, *, daemon=None):
         """ Initialization/constructor method.
         """
 
@@ -18,7 +18,7 @@ class ServerThreadForIpCam(Thread):
         self.__stop = False
         self.__cam_dir = cam_dir
         self.__capture = cv2.VideoCapture(cam_dir)
-        self.__name = nameC
+        self.__name = name_camera
         if (self.__capture.isOpened()):
             print("Conexion con cámara establecida")
         else:
@@ -28,7 +28,6 @@ class ServerThreadForIpCam(Thread):
         self.__img_counter = 0
         self.__port = port
 
-        return
     def run(self):
         print('sending... to ', self.__app_client[0])
         self.__runnig = False
@@ -42,41 +41,40 @@ class ServerThreadForIpCam(Thread):
                     break
 
                 # Frame resize
-                frame = cv2.resize(frame, (1000,700))
+                #frame = cv2.resize(frame, (1000,700))
 
                 # Frame serialize
-                data = cv2.imencode('.jpg', frame, [int(cv2.IMWRITE_JPEG_QUALITY),5])[1]
+                data = cv2.imencode('.jpg', frame, [int(cv2.IMWRITE_JPEG_QUALITY),15])[1]
+
+                print(len(data))
 
                 # Sending the frame
                 try:
                     self.__sock_send.sendto(data, (self.__app_client[0],self.__port))
-                except:
-                    print("ocurrio un error al enviar imagen, paramos ejecucion")
+                except InterruptedError: # error no recogido
+                    print("Ha ocurrio un error al enviar imagen, paramos ejecucion ")
                     self.__runnig = False
                 self.__img_counter += 1
             if (self.__stop):
                 break
-        print("saliendo en: ", self.__cam_dir)
-            #self.__capture.release()
-        
-        return
+        print("saliendo en: ", self.__name)
 
     def stop(self):
-        print("parando : ", self.__cam_dir)
+        print("parando : ", self.__name)
         self.__runnig = False
-        #self.__sock_send.close()
 
-    def startCamera(self):
-        #self.__sock_send = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        print("reiniciando : ", self.__cam_dir)
+    def start_cam(self):
+        print("reiniciando : ", self.__name)
         self.__runnig = True
     
     def delete(self):
-        print("eliminando : ", self.__cam_dir)
+        print("eliminando : ", self.__name)
         self.__stop = True
         self.__runnig = False
         self.__sock_send.close()
-        self.__capture.release()
+        if (self.__capture.isOpened()):
+            self.__capture.release()
+        
 
     def getName(self) -> str:
         return self.__name
