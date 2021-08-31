@@ -1,45 +1,53 @@
 package com.example.appstream;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.LinearLayout;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import java.net.UnknownHostException;
 
 public class ReceiverCamFrame extends AppCompatActivity {
 
-    private static String SERVER_IP;    // Server IP
-    private static int SERVER_PORT_SEND;// Server sender port
-
     private ImageView imgViewCam;
     private String name;
+    ServerTCPConnexion connexion = null;
+    private int height;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cam_view);
-        SERVER_IP = getIntent().getStringExtra("server_ip");
-        SERVER_PORT_SEND = getIntent().getIntExtra("server_port", 9999);
+        // Server IP
+        String serverIp = getIntent().getStringExtra("server_ip");
+        // Server sender port
+        int serverPortSend = getIntent().getIntExtra("server_port", 9999);
         name = getIntent().getStringExtra("name");
-        /*
         try {
-            serverAddress = InetAddress.getByName(SERVER_IP);
-        } catch (UnknownHostException e) {
+            connexion = ServerTCPConnexion.getInstance(null);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-         */
-        imgViewCam = (ImageView) findViewById(R.id.img_view_cam1);
+        if (connexion != null)
+            connexion.startCamera(name);
 
-        Toast.makeText(this, "Iniciando conexion", Toast.LENGTH_SHORT).show();
+        imgViewCam = (ImageView) findViewById(R.id.img_view_cam1);
+        height = imgViewCam.getLayoutParams().height;
+
+
+        ActionBar actionbar = getSupportActionBar();
+        if (actionbar != null)
+            actionbar.hide();
+
         Thread rcv1 = null;
         try {
-            rcv1 = new RcvThread(imgViewCam, SERVER_IP, SERVER_PORT_SEND);
+            rcv1 = new RcvThread(imgViewCam, serverIp, serverPortSend);
             rcv1.start();
-        } catch (UnknownHostException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -51,14 +59,33 @@ public class ReceiverCamFrame extends AppCompatActivity {
 
     @Override
     public void onStop() {
-        ServerTCPConnexion connexion = null;
-        try {
-            connexion = ServerTCPConnexion.getInstance(null);
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-        connexion.stop_camera(name);
+        if (connexion != null)
+            connexion.stopCamera(name);
         super.onStop();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        float densityFactor = this.getResources().getDisplayMetrics().density;
+        // Checks the orientation of the screen
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            LinearLayout.LayoutParams linearLayoutParams;
+            linearLayoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.MATCH_PARENT);
+            float leftRightMargin = densityFactor*50;
+            linearLayoutParams.setMargins((int) leftRightMargin,0,(int) leftRightMargin,0);
+            imgViewCam.setLayoutParams(linearLayoutParams);
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            LinearLayout.LayoutParams linearLayoutParams;
+            linearLayoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    height);
+            float topMargin = densityFactor*30;
+            linearLayoutParams.setMargins(0,(int) topMargin,0,0);
+            imgViewCam.setLayoutParams(linearLayoutParams);
+        }
     }
 }
 

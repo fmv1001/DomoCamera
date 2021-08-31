@@ -9,14 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -32,7 +29,6 @@ import com.example.appstream.ServerTCPConnexion;
 import com.example.appstream.ui.CheckCamerasViewModel;
 import com.example.appstream.ui.SharedViewModel;
 
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -40,37 +36,32 @@ import java.util.List;
 
 public class HomeFragment extends Fragment implements  FragmentDialogNewCam.FragmentDialogInterfaceNewCAm, FragmentDialogDelCam.FragmentDialogInterfaceDelCam{
 
-    private HomeViewModel homeViewModel;
-    private String SERVER_IP = "192.168.0.108";
-    //Thread connexionThread = null;
+    private String serverIp = "192.168.0.108";
     private static ServerTCPConnexion connexionThread;
     DataBaseCameras dataBaseCameras;
-    private List<Camera> cameraList = new ArrayList<Camera>();
-    private List<String> onlineCamera = new ArrayList<String>();
+    private List<Camera> cameraList = new ArrayList<>();
+    private List<String> onlineCamera = new ArrayList<>();
     private ArrayAdapter arrayAdapter;
     private static int idCounter = 0;
     private Context context;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                new ViewModelProvider(getActivity()).get(HomeViewModel.class);
 
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-
         setHasOptionsMenu(true);
+
         context = getContext();
 
         SharedViewModel sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
         sharedViewModel.getSelected().observe(getActivity(), new Observer<String[]>() {
             @Override
             public void onChanged(String[] serverInf) {
-                SERVER_IP = serverInf[0];
+                serverIp = serverInf[0];
                 try {
                     connexionThread = connexionThread.getInstance(requireActivity());
-                } catch (UnknownHostException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -79,7 +70,7 @@ public class HomeFragment extends Fragment implements  FragmentDialogNewCam.Frag
         dataBaseCameras = new DataBaseCameras(getContext());
         dataBaseCameras.startDataBase();
         dataBaseCameras.upDataBase();
-        SERVER_IP = dataBaseCameras.getIpServer();
+        serverIp = dataBaseCameras.getIpServer();
         idCounter = dataBaseCameras.getIdCounter();
 
         CheckCamerasViewModel checkCamerasViewModel = new ViewModelProvider(requireActivity()).get(CheckCamerasViewModel.class);
@@ -91,7 +82,7 @@ public class HomeFragment extends Fragment implements  FragmentDialogNewCam.Frag
         });
 
         for (String onlineCamI: onlineCamera){
-            connexionThread.stop_camera(onlineCamI);
+            connexionThread.stopCamera(onlineCamI);
             Toast.makeText(getContext(), "parando: " + onlineCamI, Toast.LENGTH_SHORT).show();
         }
         onlineCamera.clear();
@@ -108,9 +99,6 @@ public class HomeFragment extends Fragment implements  FragmentDialogNewCam.Frag
         }
         dataBaseCameras.closeDataBase();
 
-        //String prueba = "Prueba: " + getArguments().getString("server_ip");
-        //SERVER_IP = getArguments().getString("server_ip");
-
         return root;
     }
 
@@ -124,7 +112,7 @@ public class HomeFragment extends Fragment implements  FragmentDialogNewCam.Frag
                 new FragmentDialogDelCam(getContext(), HomeFragment.this, cameraList);
                 return true;
             case R.id.action_stop_server:
-                connexionThread.stop_server();
+                connexionThread.stopServer();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -150,9 +138,8 @@ public class HomeFragment extends Fragment implements  FragmentDialogNewCam.Frag
         if (dataBaseCameras.deleteCamera(camera)==1) {
             Toast.makeText(getContext(), "exitoD", Toast.LENGTH_SHORT).show();
             dataBaseCameras.closeDataBase();
-            List<Camera> cameraList1 = new LinkedList<Camera>(cameraList);
-            for (Camera camX : cameraList1) {//Iterator<Camera> itr = cameraList.iterator(); itr.hasNext();
-                //Camera camX = itr.next();
+            List<Camera> cameraList1 = new LinkedList<>(cameraList);
+            for (Camera camX : cameraList1) {
                 if (camera.equals(camX.getName())) {
                     arrayAdapter.remove(camX);
                     break;
@@ -169,8 +156,9 @@ public class HomeFragment extends Fragment implements  FragmentDialogNewCam.Frag
         if (connexionThread == null)
             Toast.makeText(getContext(), "conexion no obtenida", Toast.LENGTH_SHORT).show();
         else{
-            if(agregarBoton(name, ip, port))
-                connexionThread.add_camera(name, ip, port);
+            Boolean add = agregarBoton(name, ip, port);
+            if(add!=null && add)
+                connexionThread.addCamera(name, ip, port);
             else
                 Toast.makeText(getContext(), "errorAñadiendo", Toast.LENGTH_SHORT).show();
         }
@@ -180,19 +168,19 @@ public class HomeFragment extends Fragment implements  FragmentDialogNewCam.Frag
     public void getDataDelCam(String camera) {
         Toast.makeText(getContext(), camera, Toast.LENGTH_SHORT).show();
         if(eliminarboton(camera))
-            connexionThread.del_camera(camera);
+            connexionThread.delCamera(camera);
         else
             Toast.makeText(getContext(), "errorEliminando", Toast.LENGTH_SHORT).show();
     }
 
     public void checkLiveCameras(String listOfCameras){
         if (listOfCameras != null && !listOfCameras.equals("")){
-            List<String> list0 = new LinkedList<String>(Arrays.asList(listOfCameras.split("-")));
-            List<String[]> listC = new ArrayList<String[]>();
-            List<String> listX = new ArrayList<String>();
+            List<String> list0 = new LinkedList<>(Arrays.asList(listOfCameras.split("-")));
+            List<String[]> listC = new ArrayList<>();
+            List<String> listX = new ArrayList<>();
             int i = 0;
             for (String camX:list0){
-                List<String> l1 = new LinkedList<String>(Arrays.asList(camX.split("\\|")));
+                List<String> l1 = new LinkedList<>(Arrays.asList(camX.split("\\|")));
                 if(l1.size() == 3) {
                     String[] camera = new String[]{l1.get(0), l1.get(1), l1.get(2)};
                     listC.add(i, camera);
@@ -200,18 +188,13 @@ public class HomeFragment extends Fragment implements  FragmentDialogNewCam.Frag
                     i++;
                 }
             }
-            //list0.clear();
-            List<Camera> cameraList1 = new LinkedList<Camera>(cameraList);
-            for (Camera camX : cameraList1) {//Iterator<Camera> itr = cameraList.iterator(); itr.hasNext();
-                //Camera camX = itr.next();
+            List<Camera> cameraList1 = new LinkedList<>(cameraList);
+            for (Camera camX : cameraList1) {
                 if(listX.contains(camX.getName())) {
                     int index = listX.indexOf(camX.getName());
-                    Toast.makeText(context, "indexX " + String.valueOf(index) + listX.get(index), Toast.LENGTH_SHORT).show();
-                    Toast.makeText(context, "indexC " + String.valueOf(index) + listC.get(index)[0], Toast.LENGTH_SHORT).show();
                     listX.remove(index);
                     listC.remove(index);
                 } else {
-                    //Toast.makeText(getContext(), "no esta " + camX.getName(), Toast.LENGTH_SHORT).show();
                     dataBaseCameras.upDataBase();
                     if(dataBaseCameras.deleteCamera(camX.getName()) == 1)
                         arrayAdapter.remove(camX);
@@ -229,11 +212,9 @@ public class HomeFragment extends Fragment implements  FragmentDialogNewCam.Frag
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Camera cami = (Camera) arrayAdapter.getItem(position);
-            RelativeLayout relativeLayout = (RelativeLayout) view;
-            connexionThread.start_camera(cami.getName());
             onlineCamera.add(cami.getName());
             Intent pagN = new Intent(getContext(), ReceiverCamFrame.class);
-            pagN.putExtra("server_ip", SERVER_IP);
+            pagN.putExtra("server_ip", serverIp);
             pagN.putExtra("server_port", cami.getPort());
             pagN.putExtra("name", cami.getName());
             startActivity(pagN);
