@@ -12,10 +12,13 @@ import java.util.List;
 public class DataBaseCameras extends SQLiteOpenHelper implements DataBaseCameraInterface{
 
     private static final int DATABASE_VERSION = 1;
+    private final String CAMERAS_TABLE_NAME = "cameras";
+    private final String SERVER_TABLE_NAME = "serverinf";
+    private final String IP_SERVER_COLUMN = "ipServer";
     public static final String DATABASE_NAME = "DataBase.db";
     private Context context;
     private SQLiteDatabase db;
-    private DataBaseCameras dataBaseCameras;
+    private DataBaseCameras instance;
 
     public DataBaseCameras(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -41,13 +44,13 @@ public class DataBaseCameras extends SQLiteOpenHelper implements DataBaseCameraI
 
     @Override
     public boolean startDataBase() {
-        dataBaseCameras = new DataBaseCameras(this.context);
-        return !dataBaseCameras.equals(null);
+        instance = new DataBaseCameras(this.context);
+        return instance != null;
     }
 
     @Override
     public boolean upDataBase() {
-        db = dataBaseCameras.getWritableDatabase();
+        db = instance.getWritableDatabase();
         return !db.equals(null);
     }
 
@@ -63,30 +66,29 @@ public class DataBaseCameras extends SQLiteOpenHelper implements DataBaseCameraI
         values.put("name",name);
         values.put("ip",ip);
         values.put("port",port);
-        return db.insert("cameras", null, values)!=-1;
+        return db.insert(CAMERAS_TABLE_NAME, null, values)!=-1;
     }
 
     @Override
     public boolean saveIpServer(String ip) {
         ContentValues values = new ContentValues();
-        values.put("ipServer",ip);
-        return db.insert("serverinf", null, values)!=-1;
+        values.put(IP_SERVER_COLUMN,ip);
+        return db.insert(SERVER_TABLE_NAME, null, values)!=-1;
     }
 
     @Override
     public int deleteIpServer() {
-        int deletedRows = db.delete("serverinf", null, null);
-        return deletedRows;
+        return db.delete(SERVER_TABLE_NAME, null, null);
     }
 
     @Override
     public String getIpServer() {
-        String [] columns = new String []{"ipServer"};
-        Cursor cursor = this.db.query("serverinf",columns,null,null,null,null,null);
+        String [] columns = new String []{IP_SERVER_COLUMN};
+        Cursor cursor = this.db.query(SERVER_TABLE_NAME,columns,null,null,null,null,null);
         String ip = "";
         while(cursor.moveToNext()) {
             ip = cursor.getString(
-                    cursor.getColumnIndexOrThrow("ipServer"));
+                    cursor.getColumnIndexOrThrow(IP_SERVER_COLUMN));
         }
         cursor.close();
         return ip;
@@ -94,11 +96,17 @@ public class DataBaseCameras extends SQLiteOpenHelper implements DataBaseCameraI
 
     @Override
     public List<String> getCamera(String name) {
-        List<String> camera = new ArrayList<String>();
+        List<String> camera = new ArrayList<>();
         String [] columns = new String []{"name","ip", "port"};
         String selection = "name = ?";
         String[] selectionArgs = { name };
-        Cursor cursor = this.db.query("cameras",columns,selection,selectionArgs,null,null,null);
+        Cursor cursor = this.db.query(CAMERAS_TABLE_NAME,
+                columns,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null);
         while(cursor.moveToNext()) {
             String itemName = cursor.getString(
                     cursor.getColumnIndexOrThrow("name"));
@@ -116,9 +124,15 @@ public class DataBaseCameras extends SQLiteOpenHelper implements DataBaseCameraI
 
     @Override
     public List<String[]> getCameras() {
-        List<String[]> cameras = new ArrayList<String[]>();
+        List<String[]> cameras = new ArrayList<>();
         String [] columns = new String []{"name","ip", "port"};
-        Cursor cursor = this.db.query("cameras",columns,null,null,null,null,null);
+        Cursor cursor = this.db.query(CAMERAS_TABLE_NAME,
+                columns,
+                null,
+                null,
+                null,
+                null,
+                null);
         while(cursor.moveToNext()) {
             String itemName = cursor.getString(
                     cursor.getColumnIndexOrThrow("name"));
@@ -147,20 +161,23 @@ public class DataBaseCameras extends SQLiteOpenHelper implements DataBaseCameraI
         // Specify arguments in placeholder order.
         String[] selectionArgs = { name };
         // Issue SQL statement.
-        int deletedRows = db.delete("cameras", selection, selectionArgs);
-        return deletedRows;
+        return db.delete(CAMERAS_TABLE_NAME, selection, selectionArgs);
     }
 
     @Override
     public int getIdCounter(){
         String [] columns = new String []{"id"};
-        Cursor cursor = this.db.query("cameras",columns,null,null,null,null,"id DESC");
+        Cursor cursor = this.db.query(
+                CAMERAS_TABLE_NAME,
+                columns,
+                null,
+                null,
+                null,
+                null,
+                "id DESC");
         int itemID = 0;
-        while(cursor.moveToNext()) {
-            itemID = cursor.getInt(
-                    cursor.getColumnIndexOrThrow("id"));
-            break;
-        }
+        cursor.moveToNext();
+        itemID = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
         cursor.close();
         return itemID+1;
     }

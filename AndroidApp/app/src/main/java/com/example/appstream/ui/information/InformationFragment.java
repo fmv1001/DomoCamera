@@ -16,12 +16,9 @@ import com.example.appstream.R;
 
 public class InformationFragment extends Fragment {
 
-    private InformationViewModel slideshowViewModel;
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        slideshowViewModel =
-                new ViewModelProvider(this).get(InformationViewModel.class);
+        InformationViewModel slideshowViewModel = new ViewModelProvider(this).get(InformationViewModel.class);
         View root = inflater.inflate(R.layout.fragment_information, container, false);
 
         return root;

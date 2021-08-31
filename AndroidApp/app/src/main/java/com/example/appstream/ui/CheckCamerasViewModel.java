@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 public class CheckCamerasViewModel extends ViewModel {
-    private final MutableLiveData<String> selected = new MutableLiveData<String>();
+    private final MutableLiveData<String> selected = new MutableLiveData<>();
 
     public void select(String aliveCameras) {
         selected.postValue(aliveCameras);

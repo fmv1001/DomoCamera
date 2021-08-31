@@ -38,7 +38,6 @@ public class FragmentDialogDelCam {
         for (Camera camX: cameraList) {
             RadioButton myRadioButton = new RadioButton(context);
             myRadioButton.setText(camX.getName());
-            //myRadioButton.setId();
             radioGroup.addView(myRadioButton);
         }
 

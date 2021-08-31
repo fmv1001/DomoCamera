@@ -44,6 +44,15 @@ public class SettingFragment extends Fragment {
         dataBaseCameras = new DataBaseCameras(getContext());
 
         EditText ip = (EditText) root.findViewById(R.id.txt33);
+
+        dataBaseCameras.startDataBase();
+        dataBaseCameras.upDataBase();
+        String oldIp = dataBaseCameras.getIpServer();
+        if(!oldIp.equals("")){
+            ip.setText(oldIp);
+        }
+        dataBaseCameras.closeDataBase();
+
         InputFilter[] filters = new InputFilter[1];
         filters[0] = new InputFilter() {
             @Override
@@ -73,7 +82,6 @@ public class SettingFragment extends Fragment {
         };
         ip.setFilters(filters);
 
-        //EditText ip = (EditText) root.findViewById(R.id.txt33);
         EditText port = (EditText) root.findViewById(R.id.editTextNumber2);
 
         Button connect = root.findViewById(R.id.ip_change);
@@ -83,23 +91,12 @@ public class SettingFragment extends Fragment {
                 String[] serverInf = {ip.getText().toString(), port.getText().toString()};
                 dataBaseCameras.startDataBase();
                 dataBaseCameras.upDataBase();
-                if(dataBaseCameras.deleteIpServer() == 1)
-                    Toast.makeText(context, "bienIP", Toast.LENGTH_SHORT).show();
+                if(dataBaseCameras.deleteIpServer() != 1)
+                    Toast.makeText(context, "Error eliminando ip de la base de datos", Toast.LENGTH_SHORT).show();
                 dataBaseCameras.saveIpServer(ip.getText().toString());
                 dataBaseCameras.closeDataBase();
                 settingViewModel.select(serverInf);
                 sharedViewModel.select(serverInf);
-                /*
-                try {
-                    connexionThread = new ServerTCPConnexion(ip.getText().toString(),
-                            Integer.parseInt(port.getText().toString()), getContext());
-                } catch (UnknownHostException e) {
-                    e.printStackTrace();
-                }
-
-                if (!connexionThread.isAlive())
-                    connexionThread.start();
-                 */
             }
         });
 

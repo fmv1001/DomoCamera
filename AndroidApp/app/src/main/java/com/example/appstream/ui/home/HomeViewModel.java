@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 public class HomeViewModel extends ViewModel {
 
-    private final MutableLiveData<String[]> selected = new MutableLiveData<String[]>();
+    private final MutableLiveData<String[]> selected = new MutableLiveData<>();
 
     public void select(String[] serverInf) {
         selected.setValue(serverInf);

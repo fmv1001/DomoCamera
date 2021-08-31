@@ -5,7 +5,7 @@ import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Message;
 import android.widget.ImageView;
-import java.io.ByteArrayInputStream;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -17,8 +17,8 @@ import java.net.UnknownHostException;
 
 public class RcvThread extends Thread {
 
-    private static String SERVER_IP;    // Server IP
-    private static int SERVER_PORT_SEND;// Server sender port
+    private static String serverIp;    // Server IP
+    private static int serverPortSend;// Server sender port
     private DatagramSocket rcvSocket;
     private InetAddress serverAddress;
 
@@ -29,16 +29,14 @@ public class RcvThread extends Thread {
 
     private ImageView imgViewCam;
 
-    public RcvThread(ImageView img_view_cam, String server_ip, int server_port) throws UnknownHostException {
-        this.SERVER_IP = server_ip;
-        //serverAddress = InetAddress.getByName(SERVER_IP);
-        SERVER_PORT_SEND = server_port;
-        this.imgViewCam = img_view_cam;
+    public RcvThread(ImageView imgViewCam, String serverIp, int serverPortSend) {
+        RcvThread.serverIp = serverIp;
+        this.serverPortSend = serverPortSend;
+        this.imgViewCam = imgViewCam;
         try {
             rcvSocket = new DatagramSocket(null);
             rcvSocket.setReuseAddress(true);
-            rcvSocket.bind(new InetSocketAddress(SERVER_PORT_SEND));
-            //serverAddress = InetAddress.getByName(SERVER_IP);
+            rcvSocket.bind(new InetSocketAddress(serverPortSend));
         } catch (SocketException e) {
             e.printStackTrace();
         }
@@ -59,13 +57,13 @@ public class RcvThread extends Thread {
                 DatagramPacket inPacket = new DatagramPacket(inBuf,inBuf.length);
                 rcvSocket.receive(inPacket);
 
-                if(!inPacket.getAddress().equals(InetAddress.getByName(SERVER_IP)))
+                if(!inPacket.getAddress().equals(InetAddress.getByName(serverIp)))
                     throw new IOException("Mensaje desconocido: " + serverAddress.toString());
 
-
-                ByteArrayInputStream in = new ByteArrayInputStream(inPacket.getData());
+                Bitmap b = BitmapFactory.decodeByteArray(inPacket.getData(), 0, inPacket.getLength());
+                b = Bitmap.createScaledBitmap(b, imgViewCam.getWidth(), imgViewCam.getHeight(), false);
                 frameHandler.sendEmptyMessage(1);
-                frameBitMap = BitmapFactory.decodeStream(in);
+                frameBitMap = b;//Bitmap.createScaledBitmap(b, imgViewCam.getWidth(), imgViewCam.getHeight(), false);
             }
         } catch (Exception e) {
             System.err.println("Error en recepción de imagen: ");
