@@ -5,8 +5,7 @@
     <string name="Image_view">Imagen de la camara</string>
     <string name="Cam_0">Camara X</string>
     <string name="server_ip">IP del servidor</string>
-    <string name="title_activity_main2">MainActivity</string>
-    <string name="title_activity_nav_menu">nav_menu</string>
+    <string name="title_activity_nav_menu">LocalStream</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Francisco Martin</string>
@@ -21,6 +20,8 @@
     <string name="menu_option_add">Add Camera</string>
     <string name="menu_option_del">Delete Camera</string>
     <string name="menu_option_stop">Stop Server</string>
+
+    <string name="amplify_camera">Tumbe el dispositivo para una visión más amplia</string>
 
     <!-- Strings used for fragments for navigation -->
     <string name="example_ip">192.168.200.105</string>
