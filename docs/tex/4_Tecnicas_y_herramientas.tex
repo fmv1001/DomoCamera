@@ -25,9 +25,9 @@ ZenHub me ha permitido gestionar mi proyecto, ayudándome con la planificación 
 
 \section{Metodologías}
 
-\subsection{Modelo Cliente-Servidor}
+\subsection{Arquitectura Cliente-Servidor}
 
-Modelo Cliente-Servidor.
+La arquitectura cliente-servidor es un modelo de diseño de software en una red informática en la que se clasifica a los dispositivos implicados. Un cliente que solicita información (demandante) y el servidor se la proporciona (proveedor de recursos).
 
 
 
@@ -47,13 +47,26 @@ En este proyecto se ha usado la herramienta Sonar-Scanner de SonarQube, para la 
 \LaTeX es un sistema de software libre de composición tipográfica de alta calidad, orientado a la producción de documentación técnica y científica. \LaTeX es el estándar de facto para la comunicación y publicación de documentos científicos gracias a sus características, posibilidades y calidad profesional.\\
 He usado \LaTeX para el desarrollo de tanto este documento como de los anexos.
 
+\subsection{TEXMAKER}
 
+Texmaker es un editor \LaTeX, avanzado y multiplataforma. 
+Integra las diferentes herramientas necesarias para desarrollar documentos con \LaTeX, todo ello en una sola aplicación.
+Incluye compatibilidad para unicode, autocompletado, corrección ortográfica, plegado de código, modo de vista continua y tiene integrado un visor de pdf.
+Texmaker es fácil de usar y de configurar, y está publicado bajo la licencia GPL (open source).
+
+\subsection{MikText}
+
+MikText.
+
+\subsection{Draw.io}
+
+Para hacer diagramas.
 
 \section{Lenguajes de programación}
 
 \subsection{Python}
 
-Python es un lenguaje de programación ampliamente utilizado por empresas de casi todo el mundo para la construcción de aplicaciones web, analización de datos, automatización de operaciones y creación de aplicaciones empresariales con alta fiabilidad y escalabilidad.\\
+Python es un lenguaje de programación ampliamente utilizado por empresas de casi todo el mundo para la construcción de aplicaciones web, análisis de datos, automatización de operaciones y creación de aplicaciones empresariales con alta fiabilidad y escalabilidad.\\
 Para desarrollar el servidor he utilizado la versión 3.0 del lenguaje Python.
 
 \subsection{Java}
@@ -77,9 +90,8 @@ Android Studio es el IDE oficial para desarrollar aplicaciones en Andorid y por 
 
 \subsection{Visual Studio Code}
 
-Visual Studio Code es un editor de código fuente desarrollado por Microsoft para Windows, Linux y macOS. Incluye soporte para la depuración, control integrado de Git, resaltado de sintaxis, finalización inteligente de código, fragmentos y refactorización de código. Es gratuito y de código abierto aunque la descarga oficial está bajo software privativo e incluye características personalizadas por Microsoft.\\ 
-Para el despliegue del servidor he utilizado esta aplicación open source de Microsoft.
-
+Visual Studio Code es un entorno de desarrollo desplegado por Microsoft para todas las plataformas (Windows, Linux y macOS). Incluye soporte para depuración, resaltado de sintaxis, control integrado de Git, finalización inteligente de código, fragmentos y refactorización de código. Visual Studio Code es un proyecto open source aunque la descarga de forma oficial es bajo software privativo de Microsoft incluyendo algunas de sus características personalizadas.\\ 
+Para la fase de desarrollo del servidor he utilizado esta aplicación open source de Microsoft.
 
 
 
@@ -95,18 +107,23 @@ Gradle, es una herramienta que permite la automatización de compilación de có
 
 \subsection{UDP}
 
-El protocolo de datagramas de usuario (User Datagram Protocol o UDP) es un protocolo de la capa de transporte basado en el intercambio de datagramas. Permite el envío de datagramas a través de la red sin que se haya establecido previamente una conexión, ya que el propio datagrama incorpora suficiente información de direccionamiento en su cabecera.\\
-Gracias a este protocolo el servidor envía las imágenes al dispositivo móvil Android sin que este tengo que confirmar que lo ha recibido.
+El protocolo de datagramas de usuario (User Datagram Protocol o UDP) es un protocolo de la capa de transporte basado en el intercambio de datagramas (un datagrama es un paquete de datos que compone el mínimo bloque de información en una red). Permite el envío de datagramas a través de la red sin que se haya establecido previamente una conexión, gracias a la incorporación suficiente de información de direccionamiento en su cabecera. Una de sus ventajas es que no implementa acuse de recibo.\\
+Gracias a este protocolo el servidor envía las imágenes al dispositivo móvil Android sin que este confirme que lo ha recibido (no implementa acuse de recibo), perdiendo rendimiento, y el envío es no bloqueante para el hilo que envía.
 
 \subsection{TCP / IP}
 
-TCP es un protocolo de capa de transporte utilizado por aplicaciones que requieren una entrega garantizada. Se trata de un protocolo de ventana deslizante que permite gestionar tanto los tiempos de espera como las retransmisiones. TCP establece una conexión virtual full duplex entre dos puntos finales. Cada punto final está definido por una dirección IP y un número de puerto TCP. El funcionamiento de TCP se implementa como una máquina de estado finito.\\
+TCP es un protocolo del nivel de transporte empleado por aplicaciones que requieren entrega garantizada (acuse de recibo). Se trata de un protocolo que implementa control de flujo para gestionar tiempos de espera, retransmisiones, entre otros. TCP establece un enlace virtual full duplex entre dos puntos finales. Cada punto final está formado por una dirección IP y un puerto TCP.\\
 Para que el servidor y la aplicación se comuniquen a la hora de realizar alguna tarea, este protocolo ha permitido que en ningún momento se pierda la conexión y en ese caso los dos serán conscientes y actuaran para salvaguardar la información y mantener un sistema coherente.
 
 \subsection{Sockets}
 
-Los sockets hacen posible la comunicación entre conectores de procesos, cada uno de ellos tiene asociada una dirección, un puerto, y un protocolo asociado (UDP o TCP). Los sockets nos permiten implementar una arquitectura cliente-servidor. La comunicación debe ser iniciada por uno de los procesos que se denomina programa "cliente". El segundo proceso espera a que otro inicie la comunicación, por este motivo se denomina programa "servidor". Un socket es un proceso o hilo existente en la máquina cliente y en la máquina servidora, que sirve en última instancia para que el programa servidor y el cliente lean y escriban la información. Esta información será la transmitida por las diferentes capas de red.\\
+Los sockets hacen posible la comunicación entre conectores de procesos, cada uno de ellos tiene asociada una dirección, un puerto, y un protocolo asociado (UDP o TCP). Los sockets nos permiten implementar una arquitectura cliente-servidor. La comunicación debe ser iniciada por uno de los procesos que se denomina programa ``cliente''. El segundo proceso espera a que otro inicie la comunicación, por este motivo se denomina programa ``servidor''. Un socket es un proceso o hilo existente en la máquina cliente y en la máquina servidora, que sirve en última instancia para que el programa servidor y el cliente lean y escriban la información. Esta información será la transmitida por las diferentes capas de red.\\
 He usado los sockets junto a los protocolos mencionados en esta misma sección para la comunicación entre el servidor y el cliente (dispositivo Android).
+
+\subsection{RTSP}
+
+El Protocolo de Transmisión en Tiempo Real (Real Time Streaming Protocol o RTSP) es una tecnología de vídeo de probada eficacia. Es un protocolo usado en la capa de aplicación para la transferencia de datos de medios de vídeo en tiempo real. Permite el control en la transmisión de audio y vídeo entre puntos finales. También facilita el envío de contenidos en streaming de baja latencia vía Internet. El puerto que usa por defecto RTSP es el 554.\\
+En este proyecto se ha usado este protocolo para establecer la conexión con las cámaras, a través de RTSP OpenCV obtiene el control.
 
 
 
@@ -114,35 +131,35 @@ He usado los sockets junto a los protocolos mencionados en esta misma sección p
 
 \subsection{Sqlalchemy}
 
-SQLAlchemy es el conjunto de herramientas SQL de Python y el mapeador relacional de objetos que ofrece a los desarrolladores de aplicaciones toda la potencia y flexibilidad de SQL. Proporciona un conjunto completo de patrones de persistencia de nivel empresarial bien conocidos, diseñados para un acceso a la base de datos eficiente y de alto rendimiento, adaptados a un lenguaje de dominio sencillo y pitónico.
+SQLAlchemy es el conjunto de herramientas SQL para Python además de ser el mapeador relacional de objetos que ofrece toda la potencia y flexibilidad del lenguaje SQL. Aporta un complejo conjunto de patrones de persistencia muy conocidos, diseñados para un acceso eficiente y de alto rendimiento a la base de datos, adaptados a un lenguaje pitónico y sencillo.
 
 \subsection{OpenCV}
 
-OpenCV es una enorme biblioteca de código abierto para la visión por ordenador, el aprendizaje automático y el procesamiento de imágenes. OpenCV es compatible con una gran variedad de lenguajes de programación como Python, C++, Java, entre otros.\\
+OpenCV es una biblioteca de código abierto para visión artificial, aprendizaje automático y procesamiento de imágenes. Es compatible con gran variedad de lenguajes de programación como Python, C++, Java, entre otros.\\
 OpenCV me ha permitido mantener una conexión con las cámaras disponibles y a su vez obtener las imágenes de estas.
 
 \subsection{SQLite}
 
-SQLite es una biblioteca en lenguaje C que implementa un motor de base de datos SQL pequeño, rápido, autónomo, de alta fiabilidad y con todas las funciones. SQLite es el motor de base de datos más utilizado en el mundo. SQLite está integrado en todos los teléfonos móviles y en la mayoría de los ordenadores, y viene incluido en innumerables aplicaciones que la gente utiliza a diario. SQLite es la API para utilizar una base de datos en Android.
+SQLite es una biblioteca que hace uso de lenguaje C para implementar un pequeño motor de base de datos SQL haciendo que sea rápido, autónomo, manteniendo una alta fiabilidad y con todas las funciones necesarias para una base de datos. SQLite es el motor de base de datos más utilizado en el mundo. La biblioteca \textit{SQLite} está incluida en todos los teléfonos móviles además de en la mayoría de los ordenadores, y viene integrado en un número inmenso de aplicaciones de uso diario. Además, SQLite es la API para utilizar una base de datos en Android.
 
 \subsection{Android Support Library}
 
-El paquete Android Support Library es un conjunto de bibliotecas de código que proporcionan versiones compatibles con versiones anteriores de las API del marco de trabajo de Android, así como características que sólo están disponibles a través de las API de la biblioteca. Cada biblioteca de apoyo es compatible con un nivel específico de la API de Android.
+El paquete Android Support Library es un conjunto de bibliotecas que proporcionan versiones compatibilidad con versiones anteriores de APIs de la estructura Android, así como algunas características que únicamente están disponibles por medio de las API de esta biblioteca. Cada biblioteca del paquete es compatible con una versión específica de la API de Android.
 
 \subsection{AndroidX}
 
-AndroidX es el proyecto de código abierto que el equipo de Android utiliza para desarrollar, probar, empaquetar, versionar y liberar bibliotecas dentro de Jetpack. AndroidX es una importante mejora de la biblioteca de soporte original de Android.
+AndroidX es el proyecto de open source que Android utiliza para desarrollar, probar, empaquetar, versionar y liberar bibliotecas dentro de Jetpack. AndroidX ha mejorado y sustituido al paquete Android Support Library.
 
 \subsection{JavaFx}
 
-JavaFX es un conjunto de paquetes gráficos y multimedia que permite a los desarrolladores diseñar, crear, probar, depurar e implantar aplicaciones cliente enriquecidas que funcionan de forma coherente en diversas plataformas. El SDK de JavaFX-Android contiene una implementación de JavaFX que se ejecuta en Android, junto con algunas herramientas para construir los paquetes de Android.
+JavaFX a través de paquetes gráficos y multimedia nos permite diseñar, crear, probar, depurar e implantar apps clientes que funcionaran de coherentemente en las distintas plataformas. El SDK de JavaFX-Android posee una implementación de JavaFX para ser ejecutado en Android, junto con otras herramientas para la construcción de paquetes en Android.
 
 \subsection{JUnit}
 
-Unit es un marco de pruebas unitarias para el lenguaje de programación Java. Desempeña un papel crucial en el desarrollo dirigido por pruebas, y es una familia de marcos de pruebas unitarias conocidos colectivamente como xUnit. JUnit es un framework de "Unit Testing" para aplicaciones Java que ya está incluido por defecto en android studio.
+Unit es un marco de pruebas unitarias que ha sido diseñado para el lenguaje de programación Java. JUnit es un framework de "Unit Testing" para desarrollos de aplicaciones Java, que viene por defecto en android studio.
 
 \subsection{Material Design}
 
-Material Design es un lenguaje de diseño orientado a Android creado por Google, que admite experiencias táctiles en pantalla a través de funciones ricas en pistas y movimientos naturales que imitan los objetos del mundo real. Material design es una guía completa para el diseño visual, de movimiento y de interacción en todas las plataformas y dispositivos.
+Material Design es un lenguaje de diseño creado por Google orientado a Android, que admite movimientos y pulsaciones táctiles en pantalla gracias a funciones y movimientos que imitan objetos del mundo real. Material design es una guía completa para el diseño visual, de movimiento y de interacción en todas las plataformas y dispositivos.
 
 

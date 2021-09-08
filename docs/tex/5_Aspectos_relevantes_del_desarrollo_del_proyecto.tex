@@ -14,30 +14,88 @@ También decidí hacer el servidor dado que una asignatura que he cursado en est
 
 Una vez escogido el tema, tocaba diseñar la estructura del proyecto. 
 Decidí que la mejor opción sería separar el servidor en un dispositivo y la aplicación en otro, ya que así el dispositivo no cargaría con toda la carga computacional que supondría para él, dado que estos no disponen de mucha batería, aplicando el modelo cliente-servidor.\\
-Ahora tocaba decidir donde desarrollar el servidor y en que lenguaje. En este paso, me decanté por el lenguaje Python ya que está muy extendido (llegando a ser uno de los lenguajes de programación mas usado del mundo \cite{pythonuse}) y estaba muy familiarizado con él debido a que lo he usado en numerosas ocasiones.\\
+Ahora tocaba decidir donde desarrollar el servidor y en que lenguaje. En este paso, me decanté por el lenguaje Python ya que está muy extendido (llegando a ser uno de los lenguajes de programación mas usados del mundo \cite{pythonuse}) y estaba muy familiarizado con él debido a que lo he usado en numerosas ocasiones.\\
 Después tenía que asegurarme de poder realizar la conexión con una cámara a través de Python.
 Tras una búsqueda intensa por internet encontré la librería OpenCV. 
 Para la realización de este proyecto me compré una cámara IP, pero tras unos días no conseguía acceder a ella desde OpenCV con python. 
 Para no perder demasiado tiempo contacté con la empresa que me había vendido la cámara y les comenté mi problema.
-Rápidamente me contestaron y me proporcionaron la dirección que debía usar, y gracias a ello pude realizar una conexión servidor-cámara.\\
+Rápidamente me contestaron y me proporcionaron la dirección que debía usar, y gracias a ello pude realizar una conexión python-cámara.\\
 Una vez realizada dicha conexión ya podía empezar con el siguiente punto del proyecto.
 
 
 
-\section{Desarrollo de la aplicación y servidor}
+\section{Desarrollo del servidor}
+A la hora de desarrollar el servidor pensé que debía de implementarlo en algún dispositivo de bajo consumo, ya que iba a estar operativo las 24 horas del día. Por ello pensé en la Raspberry Pi, que la tenía por casa y ya había realizado algún proyecto personal con ella y se puede ejecutar python en ella.\\
+Ahora ya podía empezar a programar. 
+Inicialmente realicé una conexión mediante Sockets con el servidor esperando a la conexión TCP / IP de la aplicación.
+Poco a poco fui añadiendo más funcionalidad, como por ejemplo, permitir añadir las cámaras o eliminarlas, o poder para el servidor entre otras.
+Para poder mantener persistencia en la información, decidí crear un ORM para la base de datos de la cámara \ref{tabla:basedatoscamarasservidor}. Para ello usé \textbf{SQLAlchemy}, debido a que esta librería dispone de su propio ORM, el cual es capaz de mapear tablas a clases Python y convertir automáticamente las llamadas a funciones dentro de dichas clases a sentencias en lenguaje SQL.
+
+\tablaSmall{Ejemplo de la base de datos de \textit{cámaras} en el servidor.}{l c c c c}{basedatoscamarasservidor}
+{ \multicolumn{1}{l}{Id} & Ip Address & Name & Port \\}{
+	0 & 192.168.0.30:8080 & Cámara 1 & 9999\\
+	1 & 192.168.0.31:8080 & Cámara 2 & 9998\\
+	2 & 192.168.0.32:8080 & Cámara 3 & 9997\\
+}
+
+Para el envío de imágenes de que se obtenían desde la conexión con la cámara que mantenía el servidor gracias a la librería OpenCV, una vez obtenía el frame, realizamos la serialización del mismo con la funcion \textit{imencode}.
+Esta función comprime la imagen y la almacena en el búfer de memoria redimensionándola para ajustarla al resultado.
+Tras su serialización enviamos el frame mediante un socket UDP, para que en caso de que se pierda un paquete en el envío no se pierda fluidez en la imagen con respecto a la consistencia. Todo ello se realiza desde un hilo en segundo plano que es controlado por el hilo principal del servidor.\\
+Por temas de consumo energético se tomó la decisión de mantener la conexión de la cámara pero sólo obtener la imagen cuando la aplicación lo requiere (cuando el usuario pincha en el icono para ver la cámara).
 
 
 
+\section{Desarrollo de la aplicación}
+El desarrollo de la aplicación Android fue lo que más trabajo me ha costado y es en este donde más problemas me he encontrado.\\
 
+Antes de comenzar a escribir código realice un cursillo para Android Studio, a continuación dejo el enlace: \href{https://www.youtube.com/watch?v=tyx05coXixw&list=PLyvsggKtwbLX06iMtXnRGX5lyjiiMaT2y}{\textit{Curso de programación Android desde cero}}.\\
 
+En un principio creé una única actividad en la que utilizaba un botón para conectarme al servidor y recibir un pequeño texto. 
+Es aquí donde me encontré el primer problema, ya que al enviar datos desde un socket de python y otro Java, los datos no se serializan igual. Para solucionarlo tube que convertir a bytes el texto en python y recibirlo en Java en un buffer de bytes y convertirlo a String.\\
 
+Una vez conseguido enviar texto desde las dos partes, y recibirla con éxito, comencé con l aparte en que envíamos imágenes a la aplicación. 
+Y aquí tuve muchos problemas, ya que OpenCV desde python codificaba las imágenes en un formato que luego desde Java no conseguía descifrar. 
+Tras mucho tiempo navegando por Stack Overflow y muchos repositorios de GitHub, encontré la forma adecuada, el paquete \textit{android.graphics.Bitmap}.
+Primero creé un \textit{DatagramPacket} con un buffer de bytes para la entrada de los datos, y con la clase \textit{BitmapFactory} y la función \textit{decodeByteArray} pude mostrar la imagen enviada desde el servidor, convirtiéndola en un \textit{BitMap}. 
+También hubo que usar un manejador o Handler para permitir que el hilo secundario actualice la interfaz.\\
 
+Cuando la aplicación recibe una imagen del servidor la actualiza sobre un \textit{ImageView}. Intenté que la imagen se visualizara sobre un VideoView pero no aceptaba la imagen que llegaba de un socket, requería un documento de vídeo o una conexión de un vídeo por HTTP.\\
 
+Después de conseguir la conexión de vídeo, diseñé la interfaz de usuario.
+Para ello usé el paquete \textit{androidx.navigation} con un menú desplegable. 
+En este momento encontré mas problemas, dado que el menú desplegable utiliza Fragments de Android y no se pueden comunicar directamente con la actividad principal.
+Para ello use la clase \textit{ViewModel} del paquete \textit{androidx.lifecycle}, para la comunicación entre fragments y con la actividad principal.\\
 
+Tras conseguir implementar el diseño, se fue añadiendo funcionalidad a la aplicación:
+\begin{itemize}
+	\item Añadir las cámaras.
+	\item Eliminar las cámaras.
+	\item Parar el servidor.
+	\item Desconectarse del servidor.
+\end{itemize}
 
+\subsection{Persistencia en la aplicación}
 
+Para lograr la persistencia en Android debemos mantener la información en una base de datos y \textbf{SQLite} es la API en Android el uso de bases de datos.\\
+En la app hemos creado dos tablas:
+\begin{itemize}
+	\item Tabla para las cámaras \ref{tabla:basedatoscamarasapp}.
+	\item Tabla para la IP del servidor \ref{tabla:basedatosipserverapp}.
+\end{itemize}
 
+\tablaSmall{Ejemplo de la base de datos de \textit{cámaras} en la app.}{l c c c c}{basedatoscamarasapp}
+{ \multicolumn{1}{l}{Id} & Ip Address & Name & Port \\}{
+	0 & 192.168.0.30:8080 & Cámara 1 & 9999\\
+	1 & 192.168.0.31:8080 & Cámara 2 & 9998\\
+	2 & 192.168.0.32:8080 & Cámara 3 & 9997\\
+}
 
+\tablaSmall{Ejemplo de la base de datos de \textit{dirección ip} del servidor en la app.}{l c c c c}{basedatosipserverapp}
+{ \multicolumn{1}{l}{Ip Address}\\}{
+	192.168.0.30\\
+}
+
+Para esta base de datos he creado una interfaz para el acceso a la misma, para encapsular dicha responsabilidad, con la ayuda de la clase \textit{SQLiteOpenHelper}.
 
 
 

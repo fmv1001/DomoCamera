@@ -2,10 +2,1070 @@
 
 \section{Introducción}
 
+La Especificación de Requisitos Software (ERS) pretende obtener una descripción completa del comportamiento del sistema que va a ser desarrollado. 
+En él se anotan las necesidades del producto (tanto para usuario, como para cliente), además de definirse los requerimientos del sistema. 
+Incluye la totalidad de los casos de uso de las interacciones del usuario final con el software.
+Este documento sirve de medio de comunicación entre todas las partes (desarrolladores, clientes y usuarios finales).\\
+
+Según el estándar IEEE-STD-830-1998 \cite{ieee830} un ERS debe presentar las siguientes características:
+
+\begin{itemize}
+\item
+	\textbf{Correcto}\\
+	Un ERS es correcto si, y sólo si, cada requisito declarado se encuentra en el software
+\item
+	\textbf{Inequívoco}\\
+	Un SRS es inequívoco si, y sólo si, cada requisito declarado tiene una sola interpretación.
+\item
+	\textbf{Completo}\\
+	Un SRS es completo si, y sólo si, incluye: 
+		\begin{itemize}
+		\item
+			Requisitos relacionados a funcionalidad, desarrollo, restricciones
+de diseño, atributos e interfaces externas.
+		\item
+			 Definiciones de las respuestas del software a todos los posibles datos de la entrada del sistema y a toda clase de situaciones.
+		\item
+			 Tener todas las etiquetas llenas y bien referencias. 
+		\end{itemize}
+\item
+	\textbf{Consistente}\\
+	Un SRS debe ser coherente con los requerimientos del ERS y con todos los documentos de distinto nivel.
+\item
+	\textbf{Delinear que tiene importancia y/o estabilidad}\\
+	Un SRS debe delinear la importancia y/o estabilidad de cada requisito. Cada requisito mantiene un identificador que identifica la importancia o estabilidad de dicho requisito. 
+\item
+	\textbf{Comprobable}\\
+	Un SRS es comprobable si, y sólo si, cada requisito declarado es verificable. 
+	Un requisito es verificable si, y sólo si, allí existe algún método finito para verificar que el producto del software reúne el requisito.
+\item
+	\textbf{Modificable}\\
+	Un SRS es modificable si, y sólo si, su estructura y estilo permite cualquier cambio a los requisitos fácilmente, completamente y de forma consistente mientras conserva la estructura y estilo.
+\item
+	\textbf{Identificable}\\
+	Un SRS es identificable si el origen de los requisitos es claro y facilita las referencias en el desarrollo futuro o documentación del mismo. 
+\end{itemize}
+
 \section{Objetivos generales}
+
+Se pretende cumplir los objetivos siguientes:
+
+\begin{itemize}
+\tightlist
+\item
+  Desarrollar una aplicación para el entorno Android que permita la monitorización de cámaras dispuestas en un hogar.
+\item
+  Desarrollar y desplegar un servidor que gestione el entorno domótico (la conexión con las cámaras y con la aplicación Android).
+\item
+  Facilitar al usuario la monitorización mediante una interfaz fácil y sencilla.
+\item
+  Utilizar dispositivos de bajo consumo.
+\end{itemize}
+
+
 
 \section{Catalogo de requisitos}
 
+En este apartado se presentarán los requisitos del sistema, tanto los funcionales como los no funcionales.
+
+\subsection{Requisitos funcionales}
+
+\begin{itemize}
+	\item
+		\textbf{RF-1 Gestión de cámaras:} 
+			El sistema debe de ser capaz de realizar la gestión de las cámaras.
+		\begin{itemize}
+			\item
+				\textbf{RF-1.1 Añadir cámara:}
+					El usuario debe de ser capaz de añadir una cámara con un nombre que la identifique, la ip de acceso a la cámara y un puerto de envío. 
+					\begin{itemize}
+						\item
+							\textbf{RF-1.1.1 Conectar cámara:}
+								El servidor debe de ser capaz de conectarse a una cámara a petición del usuario.
+					\end{itemize}
+			\item
+				\textbf{RF-1.2 Eliminar cámara:}
+					El usuario debe de ser capaz de eliminar una cámara existente en el sistema.
+		\end{itemize}
+		
+	\item
+		\textbf{RF-2 Gestión de la conexión aplicación-servidor:} 
+			El sistema debe de ser capaz de realizar la gestión de la conexión del servidor con la aplicación.
+		\begin{itemize}
+			\item
+				\textbf{RF-2.1 Conectar al servidor:}
+					El usuario debe de ser capaz de conectarse al servidor a través de la ip del servidor y el puerto de escucha. 
+			\item
+				\textbf{RF-2.2 Desconectar del servidor:}
+					El usuario debe de ser capaz de desconectarse del servidor.
+		\end{itemize}
+		
+	\item
+		\textbf{RF-3 Monitorización de las cámaras:} 
+			El usuario debe ser capaz de poder monitorizar todas las cámaras conectadas al sistema.
+			\begin{itemize}
+			\item
+				\textbf{RF-3.1 Visualizar imagen:}
+					El usuario debe de ser capaz de visualizar la imagen procedente de las cámaras.
+		\end{itemize}
+	
+	\item
+		\textbf{RF-4 Gestión del servidor:} 
+			El sistema debe de ser capaz de realizar la gestión del servidor.
+		\begin{itemize}
+			\item
+				\textbf{RF-4.1 Iniciar servidor:}
+					El usuario debe de ser capaz de iniciar el servidor.
+			\item
+				\textbf{RF-4.2 Parar servidor:}
+					El usuario debe de ser capaz de parar el servidor.
+		\end{itemize}
+\end{itemize}
+
+
+
+\subsection{Requisitos no funcionales}
+
+\begin{itemize}
+	\item
+		\textbf{RNF-1 Usabilidad:}
+			La aplicación debe mantener una interfaz de usuario intuitiva, debe parecerse lo suficiente a otras aplicaciones del mismo entorno para que la curva de aprendizaje sea lo suficientemente corta como para la no necesidad de un tutorial.
+	\item
+		\textbf{RNF-2 Rendimiento:} 
+			El sistema debe mantener una cierta fluidez, no se deben presentar fallos o paradas del sistema, independientemente del dispositivo utilizado.
+	\item
+		\textbf{RNF-3 Disponibilidad:} 
+			El servidor debe ser accesible en cualquier momento desde la aplicación mientras este haya sido iniciado. 
+			Además la aplicación debe estar disponible para su uso independientemente del momento de acceso.
+	\item
+		\textbf{RNF-4 Estabilidad:} 
+			El sistema debe ser estable, debe mantener un nivel bajo de fallos y ser capaz de enmascarar los mismos al usuario.
+	\item
+		\textbf{RNF-5 Robustez:} 
+			El sistema debe ser capaz de soportar circunstancias no anticipadas sin que se produzca una caída o fallo del sistema.
+	\item
+		\textbf{RNF-6 Fiabilidad (validez e integridad):} 
+			El sistema debe mantener la validez de todas las acciones que se realizan en el mismo, mantenido la integridad de los datos.
+	\item
+		\textbf{RNF-7 Seguridad:} 
+			El sistema debe mantener la seguridad de forma que no se comprometa la información del usuario.
+	\item
+		\textbf{RNF-8 Mantenibilidad:} 
+			El sistema debe permitir la corrección de fallos, mejora de rendimiento (escalabilidad) o adaptaciones con facilidad.
+	\item
+		\textbf{RNF-9 Soporte:} 
+			La aplicación debe dar soporte a dispositivos con versiones de Android iguales o superiores a Android 4.1 (Jelly Bean).
+\end{itemize}
+
+
+
 \section{Especificación de requisitos}
 
+En este apartado vamos a mostrar los casos de uso de cada una de las acciones derivadas de los requisitos funcionales del proyecto.
 
+\subsection{Caso de uso general}
+
+\imagen{casoUsoGeneral}{Caso de uso general de la especificación de requisitos.}
+
+\subsection{Actores}
+
+El único  actor que actúa con el sistema es el usuario final.
+
+\subsection{Casos de uso}
+
+%CASO DE USO 1
+
+\begin{longtable}[h!]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-1}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Gestión de cámaras}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Versión}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+1.0\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Autor}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\nombre\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF-1, RF-1.1, RF-1.1.1, RF-1.2\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Permite al usuario gestionar sus cámaras.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+El usuario debe encontrarse en la pestaña principal (home).\\
+La aplicación debe estar conectada al servidor.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Se listan todas las cámaras que están disponibles.
+\item
+  Para cada una de las cámaras se muestra un botón para poder acceder a ella.
+\item
+  Se muestra un menú en el que al pulsar podremos añadir o eliminar cámaras.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+El número de cámaras mostrado es el mismo que el servidor y la aplicación tienen en sus bases de datos.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{itemize}
+\tightlist
+\item
+  Error al cargar cámaras (mensaje).
+\item
+  No hay cámaras introducidas (pantalla vacía).
+\end{itemize}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-1 Gestión de cámaras.}
+\end{longtable}
+
+%CASO DE USO 2 ---------------------------------------------------------
+
+\begin{longtable}[h!]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-2}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Añadir cámara}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Versión}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+1.0\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Autor}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\nombre\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF-1.1, RF-1.1.1\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Permite al usuario añadir una cámara.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+El usuario debe encontrarse en la pestaña principal (home).\\
+La aplicación debe estar conectada al servidor.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  El usuario pulsa el botón del menú desplegable superior derecho.
+\item
+  El usuario elige la opción ``\textit{Añadir cámara}''.
+\item
+  El usuario rellena los campos \textit{nombre}, \textit{IP} y \textit{Puerto}.
+\item
+  El usuario pulsa el botón aceptar.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se ha añadido una nueva cámara en la pantalla principal y la información ha sido almacenada en las bases de datos.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{itemize}
+\tightlist
+\item
+  Error al en la conexión (mensaje).
+\item
+  Cámara ya existente (mensaje).
+\end{itemize}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-2 Añadir cámara.}
+\end{longtable}
+
+%CASO DE USO 3 ---------------------------------------------------------
+
+\begin{longtable}[h!]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-3}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Conectar cámara.}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Versión}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+1.0\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Autor}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\nombre\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF-1.1.1\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Permite al usuario gestionar sus cámaras.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+El usuario debe haber añadido la cámara.\\
+La aplicación debe estar conectada al servidor.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Se comunica la acción al servidor.
+\item
+  El servidor realiza la conexión con la cámara.
+\item
+  Se actualizan las bases de datos.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se ha establecido una conexión con la cámara.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{itemize}
+\tightlist
+\item
+  Error al intentar realizar conexión con cámara.
+\end{itemize}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-3 Conectar cámara.}
+\end{longtable}
+
+%CASO DE USO 4 ---------------------------------------------------------
+
+\begin{longtable}[h!]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-4}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Eliminar cámara}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Versión}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+1.0\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Autor}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\nombre\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF-1.2\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Permite al usuario eliminar una cámara.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+El usuario debe encontrarse en la pestaña principal (home).\\
+La aplicación debe estar conectada al servidor.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  El usuario pulsa el botón del menú desplegable superior derecho.
+\item
+  El usuario elige la opción ``\textit{Eliminar cámara}''.
+\item
+  El usuario escoge una opción (cámara) de las mostradas.
+\item
+  El usuario pulsa el botón aceptar.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se ha eliminado la cámara de la pantalla principal y la información ha sido actualizada en las bases de datos.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{itemize}
+\tightlist
+\item
+  Error al en la conexión (mensaje).
+\item
+  Error al eliminar (mensaje).
+\end{itemize}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-4 Eliminar cámara.}
+\end{longtable}
+
+%CASO DE USO 5 ---------------------------------------------------------
+
+\begin{longtable}[h!]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-5}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Gestión de la conexión aplicación-servidor}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Versión}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+1.0\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Autor}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\nombre\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF-2, RF-2.1, RF-2.2\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Permite al usuario gestionar la conexión de la aplicación con el servidor.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+El usuario debe encontrarse en la pestaña principal (home).\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  El usuario pulsa el botón del menú lateral superior izquierdo.
+\item
+  El usuario elige la opción ``\textit{Settings}''.
+\item
+  El visualiza los campos IP y Puerto para la conexión con el servidor.
+
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+-\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{itemize}
+\tightlist
+\item
+  Error al cargar campo (mensaje).
+\end{itemize}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-5 Gestión de la conexión aplicación-servidor.}
+\end{longtable}
+
+%CASO DE USO 6 ---------------------------------------------------------
+
+\begin{longtable}[h!]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-6}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Conectar al servidor}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Versión}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+1.0\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Autor}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\nombre\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF-2.1\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Permite al usuario conectarse al servidor desde la aplicación.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+El usuario debe encontrarse en la pestaña de ajustes (settings).
+La aplicación no debe estar conectada al servidor.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  El usuario rellena los campos ``\textit{IP}'' y ``\textit{Puerto}'' con datos válidos.
+\item
+  El usuario pulsa el botón ``\textit{Conectarse con el servidor}''.
+\item
+  Se muestra un mensaje con el estado de la conexión.
+
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+La aplicación mantiene una conexión con el servidor.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{itemize}
+\tightlist
+\item
+  Error al conectar al servidor (mensaje).
+\item
+  Destino inalcanzable (mensaje).
+\end{itemize}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-6 Conectar al servidor.}
+\end{longtable}
+
+%CASO DE USO 7 ---------------------------------------------------------
+
+\begin{longtable}[h!]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-7}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Desconectar del servidor.}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Versión}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+1.0\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Autor}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\nombre\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF-2.2\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Permite al usuario desconectarse del servidor desde la aplicación.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+La aplicación debe estar conectada al servidor.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  El usuario pulsa el botón del menú desplegable superior derecho.
+\item
+  El usuario elige la opción ``\textit{Disconnect}''.
+\item
+  Se muestra un mensaje indicando que se ha desconectado del servidor.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+La aplicación ha cerrado la conexión con el servidor.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{itemize}
+\tightlist
+\item
+  Error al desconectar del servidor (mensaje).
+\end{itemize}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-7 Desconectar del servidor.}
+\end{longtable}
+
+%CASO DE USO 8 ---------------------------------------------------------
+
+\begin{longtable}[h!]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-8}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Monitorización de las cámaras.}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Versión}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+1.0\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Autor}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\nombre\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF-3, RF-3.1\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Permite al usuario monitorizar las cámaras desde la aplicación.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+La aplicación debe estar conectada al servidor.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  El usuario entra en la aplicación.
+\item
+  Se muestran todos los botones con los nombres de las cámaras disponibles.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+-\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{itemize}
+\tightlist
+\item
+  Error al cargar cámaras (mensaje).
+\end{itemize}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-8 Monitorización de las cámaras.}
+\end{longtable}
+
+%CASO DE USO 9 ---------------------------------------------------------
+
+\begin{longtable}[h!]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-9}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Visualizar Imagen.}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Versión}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+1.0\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Autor}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\nombre\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF-3.1\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Permite al usuario visualizar la imagen de un cámara de las disponibles.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+La aplicación debe estar conectada al servidor.\\
+El usuario se encuentra en la pantalla principal (Home).\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  El usuario pulsa en una de las cámaras disponibles.
+\item
+  El servidor recibe la acción de comenzar a enviar las imágenes.
+\item
+  Se muestra una pantalla con la imagen en vivo de la cámara seleccionada.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se ha cambiado de pantalla y se visualiza la imagen.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{itemize}
+\tightlist
+\item
+  Error al cargar imagen (mensaje).
+\item
+  Error en la conexión (mensaje).
+\end{itemize}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-9 Visualizar Imagen.}
+\end{longtable}
+
+%CASO DE USO 10 ---------------------------------------------------------
+
+\begin{longtable}[h!]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-10}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Gestión del servidor.}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Versión}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+1.0\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Autor}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\nombre\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF-4, RF-4.1, RF-4.2\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Permite al usuario gestionar el servidor.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+-\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  El usuario inicia la aplicación.
+\item
+  Se muestra la pantalla de inicio.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+-\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+-\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-10 Gestión del servidor.}
+\end{longtable}
+
+%CASO DE USO 11 ---------------------------------------------------------
+
+\begin{longtable}[h!]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-11}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Iniciar servidor.}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Versión}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+1.0\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Autor}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\nombre\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF-4.1\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Permite al usuario iniciar el servidor.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Encontrase en la ventana de comandos de una terminal, en la carpeta que contenga los archivos del servidor.\\
+Tener instalado Python 3 en el dispositivo.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  El usuario ejecuta el archivo ``\textit{MainServer}'' con el comando ``\textit{python3 MainServer.py}''.
+\item
+  El servidor se inicia y comienza a conectarse a las cámaras que tenía en al base de datos.
+\item
+  El servidor queda en espera de una conexión.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+El servidor está iniciado en escucha.\\
+Se ha establecido conexión con las cámaras disponibles\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{itemize}
+\tightlist
+\item
+  Error al iniciar servidor (mensaje).
+\item
+  Error al establecer conexión con cámara (mensaje).
+\end{itemize}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-11 Iniciar servidor.}
+\end{longtable}
+
+%CASO DE USO 12 ---------------------------------------------------------
+
+\begin{longtable}[h!]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-12}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Parar servidor.}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Versión}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+1.0\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Autor}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\nombre\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF-4.2\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Permite al usuario parar el servidor.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+La aplicación debe estar conectada al servidor.\\
+El usuario se encuentra en la pantalla principal (Home).\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  El usuario pulsa el botón del menú desplegable superior derecho.
+\item
+  El usuario elige la opción ``\textit{Stop Server}''.
+\item
+  Se muestra un mensaje indicando que se ha parado el servidor.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+El servidor se ha parado y se han cerrado las conexiones.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{itemize}
+\tightlist
+\item
+  Error al para servidor (mensaje).
+\item
+  Error en la conexión (mensaje).
+\end{itemize}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-12 Parar servidor.}
+\end{longtable}

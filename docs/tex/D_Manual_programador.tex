@@ -2,9 +2,99 @@
 
 \section{Introducción}
 
+Este anexo describe la documentación técnica de programación.
+Se incluye la instalación de IDEs, la estructura de la aplicación y el servidor, su compilación, o la configuración de diferentes servicios utilizados, con vista a que cualquier persona pueda trabajar con este proyecto o continuarlo de una forma más fácil.
+
+
+
 \section{Estructura de directorios}
 
+La estructura del proyecto se puede encontrar en el \href{https://github.com/fmv1001/LocalStream}{repositorio de GitHub}.\\
+Dicha estructura se describe a continuación:
+
+\begin{itemize}
+\item
+	\textbf{/:} Es el directorio raíz del proyecto, en el podemos encontrar el README del repositorio y el fichero de configuración de SonarQube.
+\item
+	\textbf{/AndroidApp/:} Contiene los ficheros de configuración de Gradle.
+\item
+	\textbf{/AndroidApp/app/:} módulo respectivo a la aplicación Android.
+\item
+	\textbf{/AndroidApp/app/src/:} En esta carpeta encontramos el código fuente de la aplicación.
+\item
+	\textbf{/AndroidApp/app/src/main:} la carpeta ``main'' alberga los archivos de conjunto de fuentes ``principales'': el código de la app y recursos de Android compartidos por las variantes de compilación.
+\item
+	\textbf{/AndroidApp/app/src/main/res/:} Contiene los recursos de aplicación, como archivos de elementos de diseño, archivos de diseño y strings de IU.
+\item
+	\textbf{/AndroidApp/app/src/main/java/com/example/appstream/:} Contiene las fuentes del código Java que implementa la funcionalidad de la aplicación.
+\item
+	\textbf{/AndroidApp/app/androidTest/:} Contiene el código necesario para las pruebas de instrumentación que se ejecutan en los dispositivos Android.
+\item
+	\textbf{/AndroidApp/app/test/:} Contiene el código necesario para pruebas locales.
+\item
+	\textbf{/docs/:} en esta carpeta se encuentra toda la documentación relativa al proyecto.
+\item
+	\textbf{/docs/img/:} imágenes utilizadas en la documentación relativa al proyecto.
+\item
+	\textbf{/docs/text/:} En la carpeta ``\textit{text}'' se encuentran los distintos documentos que forman los documentos maestros.
+\item
+	\textbf{/Server/:} contiene todo los archivos de código fuente necesarios para que el servidor funcione correctamente.
+\end{itemize}
+
 \section{Manual del programador}
+
+Este manual servirá de referencia a futuros desarrolladores que trabajen en el proyecto. En el se explicaremos como preparar el entorno de desarrollo, obtener el código fuente y los requisitos necesarios para poder llevarlo a cabo.
+
+\subsection{Requisitos}
+
+\begin{itemize}
+\item
+	Python 3.
+\item
+	Visual Studio Code.
+\item
+	Android Studio.
+\item
+	Git
+\item
+	SonarQube
+\end{itemize}
+
+En el siguiente punto se indica como instalar y configurar correctamente cada componente.
+
+
+\subsection{Entorno de desarrollo}
+
+\subsubsection{Python 3}
+
+Instalación de Python 3:
+\begin{enumerate}
+\item
+	En primer lugar debemos dirigirnos a la página oficial del Python en el apartado de \href{https://www.python.org/downloads/}{descargas}.
+\item
+	En segundo lugar debemos descargar el archivo de instalación pinchando en ``\textit{Download Python 3.9.7}''.
+	\imagen{pythoninstall}{Página de descargas oficial de Python.}
+\item
+	Una vez descargado el archivo lo ejecutamos y dejando seleccionada la opción de ``\textit{Add Python to path}'', hacemos clic en ``\textit{Install Now}''
+	\imagen{pythoninstall1}{Instalador para Windows de Python.}
+\item
+	Dejamos que termine la instalación.
+	\imagen{pythoninstall2}{Instalador para Windows de Python.}
+	\imagen{pythoninstall3}{Instalador para Windows de Python.}
+\end{enumerate}
+
+\subsubsection{Visual Studio Code}
+
+Instalación de Visual Studio Code:
+
+\imagen{vscinstall}{Página oficial de descarga de Visual Studio Code.}
+\imagen{vscinstall1}{.}
+\imagen{vscinstall3}{.}
+\imagen{vscinstall4}{.}
+\imagen{vscinstall5}{.}
+\imagen{vscinstall6}{.}
+\imagen{vscinstall7}{.}
+
 
 \section{Compilación, instalación y ejecución del proyecto}
 
