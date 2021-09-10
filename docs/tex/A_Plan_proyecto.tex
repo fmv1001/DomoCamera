@@ -2,12 +2,486 @@
 
 \section{Introducción}
 
+En este anexo vamos a describir la planificación que se ha llevado a cabo en este proyecto. 
+La planificación es la fase en la que se estima los costes del proyecto, a nivel de trabajo, tiempo y recursos económicos.
+Estudiar la planificación es de gran ayuda, ya que vamos a estimar si es viable o no el proyecto, cuanto tiempo llevará finalizarlo, qué recursos son necesarios y cuando deben emplearse, entre otros. 
+Para ello se divide en planificación temporal y estudio de viabilidad. \\
+
+En la planificación temporal vamos a estudiar el tiempo necesario para llevar a cabo el proyecto, además de definir un programa de tiempos donde se establezcan fechas de finalización de distintas fases del desarrollo, con el fin de llegar a un producto final en la fecha de entrega estimada. Todo ello teniendo en cuenta el nivel de recursos necesarios para realizar cada fase del desarrollo del producto.\\
+
+En cuanto al estudio de viabilidad, este se fracciona en dos partes: la viabilidad económica y la viabilidad legal. En ellas se van a estudiar los costes económicos del proyecto y los beneficios que supondrán una vez acabado y entregado, así como todas las posibles leyes (tanto de protección de datos como de propiedad intelectual) que afecten al proyecto, y licencias que sean necesarias para la realización del proyecto o uso del producto final.
+
 \section{Planificación temporal}
+
+Esta sección trata la planificación llevada a cabo para la realización de este proyecto.
+Este aspecto es una de las debilidades del proyecto, ya que no se ha seguido la mejor planificación que se podría haber ejecutado.
+Lo ideal es hacer una planificación por \textit{sprints}, pero dado que el tiempo del que disponía durante la realización del mismo era limitado, decidí realizar una planificación por fases.  
+
+A continuación se desarrollaran las fases seguidas en la planificación del proyecto.
+
+\subsection{Fase 1: Instalación del entorno de desarrollo}
+
+En esta fase, se instalador y configuraron los entornos de desarrollo, estos son: Android Studio y Visual Studio Code. 
+En la configuración de Android Studio había que crear el proyecto de la aplicación, eligiendo la versión de android compatible y hacer un pequeño boceto de la misma \ref{fig:ptimage1}. 
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.35\linewidth]{img/pt1}
+	\caption{Boceto inicial de pantalla de inicio de la aplicación.}
+	\label{fig:ptimage1}
+\end{figure}
+También en esta fase se hizo un estudio de cual era la mejor tecnología para realizar la conexión entre el servidor y la aplicación, además de la librería que implementara dicha tecnología.
+Posteriormente se haría lo mismo con la conexión servidor-cámara.
+
+\subsection{Fase 2: Conexión cámara-servidor}
+
+En esta fase traté de conseguir realizar una conexión con la cámara desde el servidor, con la ayuda de la librería OpenCV. 
+Aquí me retrase unos días ya que no conseguía acceder a la cámara desde OpenCV con python. 
+Para no perder demasiado tiempo contacté con la empresa que me había vendido la cámara y les comenté mi problema.
+Rápidamente me contestaron y me proporcionaron la dirección que debía usar para obtener la conexión, y gracias a ello pude realizar una la conexión servidor-cámara.
+
+\subsection{Fase 3: Conexión servidor-aplicación}
+
+Una vez que ya podía obtener imagen desde el servidor, la siguiente fase trataba de conseguir conectar la aplicación al servidor.
+Para ello utilicé la tecnología de sockets con los protocolos UDP, y TCP / IP.
+Inicialmente empecé por enviar texto y poco a poco llegué a enviar imágenes.
+
+\subsection{Fase 4: Diseño e implementación de la interfaz de usuario la aplicación}
+
+En esta fase tenía que diseñar la interfaz de usuario para la aplicación y toda la lógica que conlleva. 
+Esta fase me retraso algunos días ya que no me terminaba de gustar la interacción con la aplicación y tuve que empezar desde cero dos veces, hasta que topé con la librería \textit{Navigation} de android, que me permitía crear un menú lateral, implementado de una forma muy intuitiva y correcta.
+
+\subsection{Fase 5: Implementación de funcionalidad entre aplicación y servidor}
+
+Cuando ya tenía la interfaz de usuario, había que desarrollar la lógica de negocio de la aplicación. 
+Pero a la vez tenía que ir implementando la funcionalidad en el servidor.
+En esta fase encontré algunas trabas dentro de la aplicación ya que no podía comunicar la actividad principal que se ejecutaba con el fragmento de código que correspondía a la imagen que la aplicación mostraba.
+En este punto utilicé el paquete \textit{ViewModel} e interfaces para realizar dicha comunicación, así como para comunicar los \textit{fragments} dentro de la aplicación.
+Después de esto ya tenía la fase terminada.
+
+\subsection{Fase 6: Añadir funcionalidad al sistema}
+
+En este punto me dedique a añadir funcionalidad al sistema, es decir, añadir funcionalidades como puede ser añadir cámaras, eliminarlas, parar el servidor entre otras.
+
+\subsection{Fase 7: Añadir persistencia al sistema}
+
+Para que cuando la aplicación o el servidor estuvieran parados y no se perdieran los datos, implemente una base de datos en cada uno de ellos. 
+En la aplicación utilicé SQLite y en el servidor SQLAlchemy.
+
+\subsection{Fase 8: Implementación de herramientas de análisis de calidad de código}
+
+Cuando ya disponía de un prototipon completamente funcional, utilicé SonarQube y su herramienta Sonar-Scanner para mejorar la calidad del código del proyecto, además de para encontrar posibles fallos en el mismo.
+\imagen{squse2}{Página de \textit{Issues} de SonarQube.}
+
+\subsection{Fase 9: Documentación del proyecto}
+
+Esta fase es en la que desarrollé la documentación, el presente documento y la memoria,
+además de generar el archivo de instalación o APK para la distribución de la aplicación.
+
+
 
 \section{Estudio de viabilidad}
 
+Como hemos comentado anteriormente se va a desglosar este estudio en dos partes, el estudio de la viabilidad legal y el estudio de la viabilidad económica.
+
 \subsection{Viabilidad económica}
+
+En esta sección vamos a desarrollar los costes y beneficios económicos estimados del proyecto, con vista a la realización del proyecto en un entorno real.
+
+\subsubsection{Costes del proyecto}
+
+Dentro de los costes del proyecto podemos diferenciar distintos apartados: costes de personal, costes hardware, costes software, costes totales y posibles beneficios.\\
+
+\textbf{Costes personales}
+
+Este proyecto ha sido realizado por un ingeniero informático a tiempo completo durante un periodo de 3 meses. Se considera el salario mínimo para un ingeniero \cite{salariogob}:
+
+\begin{longtable}[]{@{}lr@{}}
+\toprule
+\begin{minipage}[b]{0.38\columnwidth}\raggedright\strut
+\textbf{Concepto}\strut
+\end{minipage} & \begin{minipage}[b]{0.20\columnwidth}\raggedright\strut
+\textbf{Coste}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.38\columnwidth}\raggedright\strut
+Salario mensual neto\strut
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
+1.215,90\euro{}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.38\columnwidth}\raggedright\strut
+Retención IRPF (24\%)\strut
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
+633,01\euro{}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.38\columnwidth}\raggedright\strut
+Seguridad Social (29,9\%)\strut
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
+788,62\euro{}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.38\columnwidth}\raggedright\strut
+Salario mensual bruto\strut
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
+2.637,53\euro{}\strut
+\end{minipage}\tabularnewline
+\midrule
+\begin{minipage}[t]{0.38\columnwidth}\raggedright\strut
+\textbf{Total 3 meses}\strut
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
+7.912,59 \euro{}\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{Costes de personal.}
+\end{longtable}
+
+La cotización a la Seguridad Social se ha calculado utilizando los valores marcados por el gobierno, que podemos consultar en \cite{salariogob}. Cómo estamos hablando del estudio de viabilidad económica del proyecto, sólo se tienen en cuenta los tipos de cotización para la empres. Los tipos de cotización utilizados son los siguientes:
+\begin{itemize}
+\item
+	Un 23,60\% por contingencias comunes.
+\item
+	Un 5,50\% por desempleo de tipo general.
+\item
+	Un 0,20\% para el Fondo de Garantía Salarial o FOGASA.
+\item
+	Y un 0,60\% para formación profesional.
+\item
+	Un total del 29,90\% del salario bruto total.
+\end{itemize}
+
+Para calcular el tipo de cotización del IRPF se ha consultado \cite{irpfgob}.\\
+
+\textbf{Costes de hardware}
+
+Hardware necesario para el desarrollo del proyecto:
+
+\begin{longtable}[]{@{}lr@{}}
+\toprule
+\begin{minipage}[b]{0.38\columnwidth}\raggedright\strut
+\textbf{Hardware}\strut
+\end{minipage} & \begin{minipage}[b]{0.20\columnwidth}\raggedright\strut
+\textbf{Precio}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.38\columnwidth}\raggedright\strut
+Dispositivo Android\strut
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
+300\euro{}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.38\columnwidth}\raggedright\strut
+Kit Raspberry Pi 400\strut
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
+110\euro{}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.38\columnwidth}\raggedright\strut
+Ordenador para el desarrollo\strut
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
+1000\euro{}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.38\columnwidth}\raggedright\strut
+Enchufes y cables\strut
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
+30\euro{}\strut
+\end{minipage}\tabularnewline
+\midrule
+\begin{minipage}[t]{0.38\columnwidth}\raggedright\strut
+\textbf{Total}\strut
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
+1440\euro{}\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{Costes de hardware.}
+\end{longtable}
+
+Para el cálculo de los precios se ha seguido el siguiente criterio:
+
+\begin{itemize}
+\item
+	Precio promedio de un dispositivo móvil \cite{art:pricesmartphone}.
+\item
+	\href{https://www.kubii.es/raspberry-pi-400/3084-kit-raspberry-pi-400-3272496302914.html#/305-version-version_inglesa?src=raspberrypi}{Kit Raspberry Pi}. 400.
+\item
+	Precio del ordenador usado en desempeño de este proyecto.
+\item
+	Precio aproximado de los cables y enchufes necesarios.
+\end{itemize}
+
+\textbf{Costes de software}
+
+Software necesario para el desarrollo del proyecto:
+
+\begin{itemize}
+\item
+	Python 3.
+\item
+	Visual Studio Code.
+\item
+	Android Studio.
+\item
+	Git.
+\item
+	SonarQube.
+\end{itemize}
+
+Todas las licencias del software necesario son de código abierto o gratuitas y se pueden ejecutar en Linux (sistema operativo de código abierto), por lo que se considera coste nulo para el software utilizado.
+
+\textbf{Costes de software}
+
+A continuación se exponen los costes totales del proyecto:
+
+\begin{longtable}[]{@{}lr@{}}
+\toprule
+\begin{minipage}[b]{0.38\columnwidth}\raggedright\strut
+\textbf{Coste}\strut
+\end{minipage} & \begin{minipage}[b]{0.20\columnwidth}\raggedright\strut
+\textbf{Valor}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.38\columnwidth}\raggedright\strut
+Coste personal\strut
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
+7.912,59\euro{}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.38\columnwidth}\raggedright\strut
+Coste de hardware\strut
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
+1.440\euro{}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.38\columnwidth}\raggedright\strut
+Coste software\strut
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
+0\euro{}\strut
+\end{minipage}\tabularnewline
+\midrule
+\begin{minipage}[t]{0.38\columnwidth}\raggedright\strut
+\textbf{Total}\strut
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
+9.352,59\euro{}\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{Costes de totales del proyecto.}
+\end{longtable}
+
+\textbf{Beneficios}
+
+En cuanto a los beneficios que podría aportar el desarrollo del proyecto, podríamos escoger dos opciones: incluir anuncios en la aplicación o cobrar por ella en el plataforma Google Play en la que la desplegaríamos con un precio aproximado de 4\euro por ella. También podríamos pensar en distribuir la app de forma gratuita pero ofrecer una suscripción para poder beneficiarse de todas las funcionalidades de la aplicación (por ejemplo, sólo permitir añadir un número limitado de cámaras en el pack más básico).
 
 \subsection{Viabilidad legal}
 
+En este punto vamos a estudiar las posibles leyes que atañen al proyecto y las posibles licencias necesarias para desplegar el proyecto.
 
+\subsubsection{Leyes}
+
+En cuanto a las leyes, se debe atender a la privacidad del usuario, es decir, la información del usuario que se recoge, sólo debe ser utilizada para el funcionamiento de la aplicación. \\
+En cuanto a la información y cookies, el usuarios debe aceptarlas mediante una aceptación activa y se le debe informar sobre ellas.
+
+\subsubsection{Licencias}
+
+En segundo lugar debemos comprobar las licencias que rigen el software usado en el proyecto.
+Por ello veamos que licencias usan las librerías utilizadas.
+
+\begin{longtable}[]{@{}llll@{}} 
+\toprule \label{librarylicensetable}
+\begin{minipage}[b]{0.18\columnwidth}\raggedright\strut
+Dependencia\strut
+\end{minipage} & \begin{minipage}[b]{0.10\columnwidth}\raggedright\strut
+Versión\strut
+\end{minipage} & \begin{minipage}[b]{0.49\columnwidth}\raggedright\strut
+Descripción\strut
+\end{minipage} & \begin{minipage}[b]{0.11\columnwidth}\raggedright\strut
+Licencia\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.18\columnwidth}\raggedright\strut
+AndroidX\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1.4.0\strut
+\end{minipage} & \begin{minipage}[t]{0.49\columnwidth}\raggedright\strut
+Nueva biblioteca de compatibilidad para Android.\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+Apache v2.0\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.18\columnwidth}\raggedright\strut
+OpenCV\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+4.5.1.48\strut
+\end{minipage} & \begin{minipage}[t]{0.49\columnwidth}\raggedright\strut
+Biblioteca para el procesamiento de imágenes.\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+BSD\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.18\columnwidth}\raggedright\strut
+SQLAlquemy\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1.4.17\strut
+\end{minipage} & \begin{minipage}[t]{0.49\columnwidth}\raggedright\strut
+Biblioteca para Python que proporciona herramientas SQL.\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+MIT License\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.18\columnwidth}\raggedright\strut
+SQLite\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+2.1.0\strut
+\end{minipage} & \begin{minipage}[t]{0.49\columnwidth}\raggedright\strut
+API para bases de datos en Android.\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+Dominio Público\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{Dependencias del proyecto.}
+\end{longtable}
+
+Una vez sabemos las licencias que usan el software de terceros utilizado, debemos buscar una licencia compatible con las mencionadas en la tabla \ref{librarylicensetable}, Apache v2.0, BSD y MIT.
+
+La licencia que más se ajusta a este proyecto es la licencia \textit{GNU General Public License v3.0}, ya que es compatible con todas las licencias del software de terceros que se ha usado en el proyecto. 
+Si quieres ver las licencias compatibles con \textit{GNU General Public License v3.0}, visita \cite{gnulicensecomp}.
+
+A continuación podemos ver dos tablas \cite{gnuresumetable} y \cite{gnuresumetable1}, con los aspectos más relevantes de la licencia \textit{GNU General Public License v3.0}.
+
+\begin{longtable}[]{@{}llll@{}} 
+\toprule \label{gnuresumetable}
+\begin{minipage}[b]{0.11\columnwidth}\raggedright\strut
+Licencia\strut
+\end{minipage} & \begin{minipage}[b]{0.15\columnwidth}\raggedright\strut
+Enlace\strut
+\end{minipage} & \begin{minipage}[b]{0.20\columnwidth}\raggedright\strut
+Distribución\strut
+\end{minipage} & \begin{minipage}[b]{0.40\columnwidth}\raggedright\strut
+Conceder Marca registrada\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+GPL v3.0\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+sólo con GPLv 3.0.\strut
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
+Licencias de GNU copyleft.\strut
+\end{minipage} & \begin{minipage}[t]{0.40\columnwidth}\raggedright\strut
+Copyleft.\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{Características de \textit{GPL v3.0}.}
+\end{longtable}
+
+
+\begin{longtable}[]{@{}llllllll@{}} 
+\toprule \label{gnuresumetable1}
+\begin{minipage}[b]{0.15\columnwidth}\raggedright\strut
+Licencia\strut
+\end{minipage} & \begin{minipage}[b]{0.18\columnwidth}\raggedright\strut
+Concesión de patente\strut
+\end{minipage} & \begin{minipage}[b]{0.17\columnwidth}\raggedright\strut
+Uso privado\strut
+\end{minipage} & \begin{minipage}[b]{0.15\columnwidth}\raggedright\strut
+Sublicenciar\strut
+\end{minipage} & \begin{minipage}[b]{0.17\columnwidth}\raggedright\strut
+Modificación\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+GPL v3.0\strut
+\end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\raggedright\strut
+Sí.\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+Sí.\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+Copyleft.\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+Sí.\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{Características de \textit{GPL v3.0}.}
+\end{longtable}
+
+Sin embargo para la documentación realizada no usaremos dicha licencia, ya que está enfocada a código y no a documentación. 
+Para la documentación se ha elegido la licencia \textit{Creative Commons Attribution 4.0 o CC BY 4.0}.
+
+A continuación podemos ver dos tablas \cite{ccaresumetable} y \cite{ccaresumetable1}, con los aspectos más relevantes de la licencia \textit{Creative Commons Attribution 4.0}.
+
+\begin{longtable}[]{@{}llll@{}} 
+\toprule \label{ccaresumetable}
+\begin{minipage}[b]{0.15\columnwidth}\raggedright\strut
+Licencia\strut
+\end{minipage} & \begin{minipage}[b]{0.15\columnwidth}\raggedright\strut
+Enlace\strut
+\end{minipage} & \begin{minipage}[b]{0.20\columnwidth}\raggedright\strut
+Distribución\strut
+\end{minipage} & \begin{minipage}[b]{0.36\columnwidth}\raggedright\strut
+Conceder Marca registrada\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+CC BY 4.0\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+Permisivo.\strut
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
+Permisivo.\strut
+\end{minipage} & \begin{minipage}[t]{0.36\columnwidth}\raggedright\strut
+Permisivo.\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{Características de \textit{Creative Commons Attribution 4.0}.}
+\end{longtable}
+
+\begin{longtable}[]{@{}llllllll@{}} 
+\toprule \label{ccaresumetable1}
+\begin{minipage}[b]{0.15\columnwidth}\raggedright\strut
+Licencia\strut
+\end{minipage} & \begin{minipage}[b]{0.18\columnwidth}\raggedright\strut
+Concesión de patente\strut
+\end{minipage} & \begin{minipage}[b]{0.17\columnwidth}\raggedright\strut
+Uso privado\strut
+\end{minipage} & \begin{minipage}[b]{0.15\columnwidth}\raggedright\strut
+Sublicenciar\strut
+\end{minipage} & \begin{minipage}[b]{0.17\columnwidth}\raggedright\strut
+Modificación\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+CC BY 4.0\strut
+\end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\raggedright\strut
+No.\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+Sí.\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+Permisivo.\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+No.\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{Características de \textit{Creative Commons Attribution 4.0}.}
+\end{longtable}
+
+\textbf{Resumen}
+
+Resumen de las licencias escogidas \ref{resumelicense}.
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule \label{resumelicense}
+\begin{minipage}[b]{0.50\columnwidth}\raggedright\strut
+Recurso\strut
+\end{minipage} & \begin{minipage}[b]{0.21\columnwidth}\raggedright\strut
+Licencia\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
+Código fuente del proyecto\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+GPL v3.0\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
+Documentación\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+CC BY 4.0\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{Resumen de las licencias escogidas para del proyecto.}
+\end{longtable}
