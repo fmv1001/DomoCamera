@@ -27,7 +27,6 @@ public class NavMenuActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private static ServerTCPConnexion connexionThread;
     private String serverIp = "192.168.0.28";
-    int i = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

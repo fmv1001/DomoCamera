@@ -10,11 +10,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -114,6 +112,8 @@ public class HomeFragment extends Fragment implements  FragmentDialogNewCam.Frag
             case R.id.action_stop_server:
                 connexionThread.stopServer();
                 return true;
+            case R.id.action_disconnect_to_server:
+                connexionThread.disconnectToServer();
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -133,7 +133,7 @@ public class HomeFragment extends Fragment implements  FragmentDialogNewCam.Frag
         return false;
     }
 
-    private boolean eliminarboton(String camera) {
+    private boolean eliminarBoton(String camera) {
         dataBaseCameras.upDataBase();
         if (dataBaseCameras.deleteCamera(camera)==1) {
             Toast.makeText(getContext(), "exitoD", Toast.LENGTH_SHORT).show();
@@ -167,7 +167,7 @@ public class HomeFragment extends Fragment implements  FragmentDialogNewCam.Frag
     @Override
     public void getDataDelCam(String camera) {
         Toast.makeText(getContext(), camera, Toast.LENGTH_SHORT).show();
-        if(eliminarboton(camera))
+        if(eliminarBoton(camera))
             connexionThread.delCamera(camera);
         else
             Toast.makeText(getContext(), "errorEliminando", Toast.LENGTH_SHORT).show();

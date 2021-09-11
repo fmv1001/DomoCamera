@@ -3,6 +3,7 @@ package com.example.appstream;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.CursorIndexOutOfBoundsException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -177,7 +178,12 @@ public class DataBaseCameras extends SQLiteOpenHelper implements DataBaseCameraI
                 "id DESC");
         int itemID = 0;
         cursor.moveToNext();
-        itemID = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+        try{
+            itemID = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+        }catch (CursorIndexOutOfBoundsException e){
+            return 0;
+        }
+
         cursor.close();
         return itemID+1;
     }

@@ -27,6 +27,7 @@ public class ServerTCPConnexion extends Thread {
     private boolean stopServer = false;
     private boolean stopCamera = false;
     private boolean startCamera = false;
+    private boolean disconnectToServer = false;
     private static ServerTCPConnexion instance;
     private String nameC = "";
     private String ipC = "";
@@ -52,11 +53,9 @@ public class ServerTCPConnexion extends Thread {
     public void run() {
         byte[] idSenderBuffer;
         try {
-            idSenderBuffer = "Hola servidor".getBytes();
             sendSocket = new Socket(serverIp, serverPortRecv);
             dataOutputStream = new DataOutputStream(sendSocket.getOutputStream());
             dataInputStream = new DataInputStream(sendSocket.getInputStream());
-            dataOutputStream.write(idSenderBuffer);
             connexHandler.sendEmptyMessage(1);
         } catch (Exception e) {
             System.err.println("Error en el establecimiento de conexion con servidor: ");
@@ -101,7 +100,12 @@ public class ServerTCPConnexion extends Thread {
                     idSenderBufferAction = nameC.getBytes();
                     dataOutputStream.write(idSenderBufferAction);
                     startCamera = false;
-                } else if (stopServer) {
+                } else if (disconnectToServer) {
+                    idSenderBuffer = "5".getBytes();
+                    dataOutputStream.write(idSenderBuffer);
+                    disconnectToServer = false;
+                    stopRun();
+                }else if (stopServer) {
                     idSenderBuffer = "0".getBytes();
                     dataOutputStream.write(idSenderBuffer);
                     stopServer = false;
@@ -136,6 +140,8 @@ public class ServerTCPConnexion extends Thread {
             e.printStackTrace();
         }
     }
+
+    public void disconnectToServer() { disconnectToServer = true; }
 
     public void addCamera(String name, String ip, int port) {
         nameC = name;
