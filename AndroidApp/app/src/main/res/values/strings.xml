@@ -13,6 +13,7 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="action_disconnect">Desconectar</string>
+    <string name="action_rec">Pulsa para grabar una secuencia de 10 segundos</string>
     <string name="cancel_button">Cancel</string>
     <string name="accept_button">Accept</string>
     <string name="menu_home">Home1</string>

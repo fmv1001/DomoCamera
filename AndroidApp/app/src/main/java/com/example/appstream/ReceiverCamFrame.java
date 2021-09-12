@@ -1,14 +1,19 @@
 package com.example.appstream;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.io.File;
 import java.net.UnknownHostException;
 
 public class ReceiverCamFrame extends AppCompatActivity {
@@ -17,11 +22,16 @@ public class ReceiverCamFrame extends AppCompatActivity {
     private String name;
     ServerTCPConnexion connexion = null;
     private int height;
+    RcvThread rcv1 = null;
+    Context context;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cam_view);
+        context = this;
+        ImageView rec_button = (ImageView) findViewById(R.id.rec_video);
         // Server IP
         String serverIp = getIntent().getStringExtra("server_ip");
         // Server sender port
@@ -42,14 +52,23 @@ public class ReceiverCamFrame extends AppCompatActivity {
         ActionBar actionbar = getSupportActionBar();
         if (actionbar != null)
             actionbar.hide();
-
-        Thread rcv1 = null;
+        
         try {
             rcv1 = new RcvThread(imgViewCam, serverIp, serverPortSend);
             rcv1.start();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        File file = getFilesDir();
+        rec_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rcv1.recVideo(file);
+                Toast.makeText(context, "grabando",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
     }
 
     public void back_to_home(View view){
