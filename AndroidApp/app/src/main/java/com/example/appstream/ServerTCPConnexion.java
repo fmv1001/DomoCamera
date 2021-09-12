@@ -7,11 +7,13 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 
 import com.example.appstream.ui.CheckCamerasViewModel;
+import com.example.appstream.ui.information.InformationViewModel;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.DataInputStream;
 import java.net.Socket;
+import java.net.UnknownHostException;
 
 public class ServerTCPConnexion extends Thread {
 
@@ -34,11 +36,19 @@ public class ServerTCPConnexion extends Thread {
     private int portC = 0;
     private static ViewModelStoreOwner activity;
 
-    public ServerTCPConnexion(String serverIp, int serverPort, ViewModelStoreOwner activityOwner) {
+    public ServerTCPConnexion(String serverIp, int serverPort, ViewModelStoreOwner activityOwner) throws UnknownHostException {
         serverPortRecv = serverPort;
         this.serverIp = serverIp;
         instance = this;
         activity = activityOwner;
+        try {
+            sendSocket = new Socket(serverIp, serverPortRecv);
+        } catch (Exception e) {
+            System.err.println("Error en el establecimiento de conexión con servidor: ");
+            e.printStackTrace();
+            running = false;
+            throw  new UnknownHostException("Error en el establecimiento de conexión con servidor, servidor no accesible.");
+        }
     }
 
     public static ServerTCPConnexion getInstance(ViewModelStoreOwner activityOwner) {
@@ -51,28 +61,28 @@ public class ServerTCPConnexion extends Thread {
 
     @Override
     public void run() {
-        byte[] idSenderBuffer;
         try {
-            sendSocket = new Socket(serverIp, serverPortRecv);
             dataOutputStream = new DataOutputStream(sendSocket.getOutputStream());
             dataInputStream = new DataInputStream(sendSocket.getInputStream());
             connexHandler.sendEmptyMessage(1);
-        } catch (Exception e) {
-            System.err.println("Error en el establecimiento de conexion con servidor: ");
-            e.printStackTrace();
-        }
-
-        byte[] bytes = new byte[512];
-        try {
-            dataInputStream.read(bytes);
         } catch (IOException e) {
+            System.err.println("Error en el establecimiento de conexión con servidor: ");
             e.printStackTrace();
+            running = false;
         }
+        if (running){
+            byte[] bytes = new byte[512];
+            try {
+                dataInputStream.read(bytes);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-        String liveCameras = new String(bytes);
-        CheckCamerasViewModel checkCamerasViewModel = new ViewModelProvider((ViewModelStoreOwner) activity).get(CheckCamerasViewModel.class);
-        checkCamerasViewModel.select(liveCameras);
-
+            String liveCameras = new String(bytes);
+            CheckCamerasViewModel checkCamerasViewModel = new ViewModelProvider((ViewModelStoreOwner) activity).get(CheckCamerasViewModel.class);
+            checkCamerasViewModel.select(liveCameras);
+        }
+        byte[] idSenderBuffer;
         byte[] idSenderBufferAction;
         while (running) {
             try {

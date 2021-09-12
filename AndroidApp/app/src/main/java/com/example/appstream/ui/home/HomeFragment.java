@@ -26,6 +26,7 @@ import com.example.appstream.ReceiverCamFrame;
 import com.example.appstream.ServerTCPConnexion;
 import com.example.appstream.ui.CheckCamerasViewModel;
 import com.example.appstream.ui.SharedViewModel;
+import com.example.appstream.ui.information.InformationViewModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,11 +43,13 @@ public class HomeFragment extends Fragment implements  FragmentDialogNewCam.Frag
     private ArrayAdapter arrayAdapter;
     private static int idCounter = 0;
     private Context context;
+    private InformationViewModel informationViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_home, container, false);
+        informationViewModel = new ViewModelProvider(getActivity()).get(InformationViewModel.class);
 
         setHasOptionsMenu(true);
 
@@ -81,6 +84,7 @@ public class HomeFragment extends Fragment implements  FragmentDialogNewCam.Frag
 
         for (String onlineCamI: onlineCamera){
             connexionThread.stopCamera(onlineCamI);
+            informationViewModel.select("Parando cámara: " + onlineCamI);
             Toast.makeText(getContext(), "parando: " + onlineCamI, Toast.LENGTH_SHORT).show();
         }
         onlineCamera.clear();
@@ -110,9 +114,11 @@ public class HomeFragment extends Fragment implements  FragmentDialogNewCam.Frag
                 new FragmentDialogDelCam(getContext(), HomeFragment.this, cameraList);
                 return true;
             case R.id.action_stop_server:
+                informationViewModel.select("Parando servidor");
                 connexionThread.stopServer();
                 return true;
             case R.id.action_disconnect_to_server:
+                informationViewModel.select("Desconectando del servidor");
                 connexionThread.disconnectToServer();
             default:
                 return super.onOptionsItemSelected(item);
@@ -125,9 +131,12 @@ public class HomeFragment extends Fragment implements  FragmentDialogNewCam.Frag
             Toast.makeText(getContext(), "exitoA", Toast.LENGTH_SHORT).show();
             dataBaseCameras.closeDataBase();
             Camera camX = new Camera(name, ip, port);
-            arrayAdapter.add(camX);
+            if (camX != null)
+                arrayAdapter.add(camX);
+            informationViewModel.select("Cámara añadida: " + name);
             return true;
         }else{
+            informationViewModel.select("Error añadiendo cámara: " + name + ", error en base de datos");
             Toast.makeText(getContext(), "errorAlAñadirCamera", Toast.LENGTH_SHORT).show();
         }
         return false;
@@ -142,11 +151,13 @@ public class HomeFragment extends Fragment implements  FragmentDialogNewCam.Frag
             for (Camera camX : cameraList1) {
                 if (camera.equals(camX.getName())) {
                     arrayAdapter.remove(camX);
+                    informationViewModel.select("Cámara eliminada: " + camera);
                     break;
                 }
             }
             return true;
         }else
+            informationViewModel.select("Error eliminando cámara: " + camera + ", error en base de datos");
             Toast.makeText(getContext(), "errorAlEliminarCamera", Toast.LENGTH_SHORT).show();
         return false;
     }

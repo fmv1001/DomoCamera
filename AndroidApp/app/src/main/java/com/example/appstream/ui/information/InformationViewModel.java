@@ -6,14 +6,16 @@ import androidx.lifecycle.ViewModel;
 
 public class InformationViewModel extends ViewModel {
 
-    private MutableLiveData<String> mText;
+    private final MutableLiveData<String> selected = new MutableLiveData<>();
 
-    public InformationViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is slideshow fragment");
+    public void select(String messageLog) {
+        if (selected.getValue() != null)
+            selected.setValue(selected.getValue() + "\n>> " + messageLog);
+        else
+            selected.setValue(">>" + messageLog);
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public LiveData<String> getSelected() {
+        return selected;
     }
 }

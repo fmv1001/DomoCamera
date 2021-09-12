@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.Menu;
 import android.widget.Toast;
 
+import com.example.appstream.ui.information.InformationViewModel;
 import com.example.appstream.ui.settings.SettingViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -33,6 +34,7 @@ public class NavMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nav_menu);
         Activity activity = this;
+        InformationViewModel informationViewModel = new ViewModelProvider(this).get(InformationViewModel.class);
         SettingViewModel settingViewModel = new ViewModelProvider(this).get(SettingViewModel.class);
         settingViewModel.getSelected().observe(this, new Observer<String[]>() {
             @Override
@@ -44,13 +46,16 @@ public class NavMenuActivity extends AppCompatActivity {
                                 Integer.parseInt(serverInf[1]),
                                 (ViewModelStoreOwner) activity);
                     } catch (Exception e) {
+                        informationViewModel.select("Error al intentar conectar con " +
+                                "el servidor" + "\n\t\t\t  Mensaje de Error: " + e.getMessage() );
                         e.printStackTrace();
                     }
 
-                    if (!connexionThread.isAlive())
+                    if (connexionThread != null && !connexionThread.isAlive()) {
                         connexionThread.start();
-                    Toast.makeText(getApplicationContext(), "servidor conectado", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(activity, "Conxión establecida con éxito", Toast.LENGTH_SHORT).show();
+                        informationViewModel.select("Conxión establecida con éxito.");
+                        informationViewModel.select("Servidor conectado.");
+                    }
                 }
             }
         });
