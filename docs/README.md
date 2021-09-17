@@ -10,7 +10,7 @@ La memoria sigue la siguiente estructura:
   - `Objetivos del proyecto`: explicación de los objetivos que se pretenden cumplir. 
   - `Conceptos teóricos`: breve introducción a los conceptos teóricos clave para la comprensión del desarrollo del proyecto.
   - `Técnicas y herramientas`: conjunto de técnicas metodológicas y herramientas empleadas durante el desarrollo del proyecto.
-  - `Aspectos relevantes del desarrollo del proyecto` exposición de los aspectos más relevantes en el desarrollo del proyecto.
+  - `Aspectos relevantes del desarrollo del proyecto`: exposición de los aspectos más relevantes en el desarrollo del proyecto.
   - `Trabajos relacionados`: pequeña presentación y comparación con algunos trabajos relacionados con el presente trabajo.
   - `Conclusiones y Líneas de trabajo futuras`: conclusiones derivadas tras la realización del proyecto, así como posibles mejoras futuras del resultado del desarrollo del proyecto.
 
