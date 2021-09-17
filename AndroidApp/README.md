@@ -1,24 +1,12 @@
 # Documentación del proyecto
-En esta carpeta podemos encontrar la documentación del proyecto realizado, la memoria y los anexos.
-En la carpeta `img` se encuentran la imagenes utilizadas para el desarrollo de los dos documentos.
-En la carpeta `tex` se encuentran los documentos necesarios para la construcción de los documentos maestros (memoria y anexos).
+En esta carpeta podemos encontrar todos los archivos necesarios para el funcionamiento y desarrollo de la aplicación.
 
-## Memoria
-La memoria sigue la siguiente estructura:
+# Descripción de ficheros importantes
+Vamos a explicar brevemente donde se encuentran los arvhivos más importantes de esta sección del proyecto.
 
-  - `Introducción`: Descripción e introducción del proyecto. También podremos encontrar la estructura de la memoria, de los anexos y de los materiales adjuntos.
-  - `Objetivos del proyecto`: explicación de los objetivos que se pretenden cumplir. 
-  - `Conceptos teóricos`: breve introducción a los conceptos teóricos clave para la comprensión del desarrollo del proyecto.
-  - `Técnicas y herramientas`: conjunto de técnicas metodológicas y herramientas empleadas durante el desarrollo del proyecto.
-  - `Aspectos relevantes del desarrollo del proyecto`: exposición de los aspectos más relevantes en el desarrollo del proyecto.
-  - `Trabajos relacionados`: pequeña presentación y comparación con algunos trabajos relacionados con el presente trabajo.
-  - `Conclusiones y Líneas de trabajo futuras`: conclusiones derivadas tras la realización del proyecto, así como posibles mejoras futuras del resultado del desarrollo del proyecto.
-
-## Anexos
-Los anexos siguen la siguiente estructura:
-
-  - `Plan del proyecto Software`: desarrollo de la planificación temporal y el estudio de viabilidad del proyecto.
-  - `Especificación de Requisitos`: requisitos derivados de los objetivos del proyecto.
-  - `Especificación de diseño`: descripción del diseño del sistema con los consiguientes diagramas.
-  - `Documentación técnica de programación`: explicación de los recursos necesarios para trabajar con el proyecto (entornos de desarrollo, lenguajes, etc).
-  - `Documentación de usuario`: guía para usuario final, en ella se expone como se debe usar el producto final.
+  - `/app/`: módulo respectivo a la aplicación Android.
+  - `/app/src/`: en esta carpeta encontramos el código fuente de la aplicación.
+  - `/app/src/main`: la carpeta “main” alberga los archivos de conjunto de fuentes “principales”: el código de la app y recursos de Android compartidos por las variantes de compilación.
+  - `/app/src/main/res/`: contiene los recursos de aplicación, como archivos de elementos de diseño, archivos de diseño y strings de IU. 
+  - `/app/src/main/java/com/example/appstream/`: contiene las fuentes del código Java que implementa la funcionalidad de la aplicación.
+  - `/app/release/`: en esta carpeta encontramos el archivo de instalación APK de la aplicación.
