@@ -7,4 +7,4 @@ Este proyecto muestra la unión perfecta entre estos dos sectores, poniéndolos 
 
 En el presente repositorio encontramos la realización de un servidor implementado en una Raspberry Pi a través del lenguaje de programación Python, así como una aplicación desplegada a través de Android desde la cual podremos gestionar todo el entorno. Para llevarlo a cabo, se han utilizado los entornos de desarrollo Visual Studio Code (Servidor) y Android Studio (aplicación).
 
-Los archivos de la aplicación se encuentran en la carpeta `AppAndroid`, los archivos del servidor en la carpeta `Server`, y en la carpeta `docs` podemos encontrar la memoria y anexos (en ellos podemos ver los manuales necesarios tanto para instalar el sistema, como para seguir con su desarrollo).
+Los archivos de la aplicación se encuentran en la carpeta `AndroidApp`, los archivos del servidor en la carpeta `Server`, y en la carpeta `docs` podemos encontrar la memoria y anexos (en ellos podemos ver los manuales necesarios tanto para instalar el sistema, como para seguir con su desarrollo).
