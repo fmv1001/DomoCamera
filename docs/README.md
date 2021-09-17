@@ -21,4 +21,4 @@ Los anexos siguen la siguiente estructura:
   - `Especificación de Requisitos`: requisitos derivados de los objetivos del proyecto.
   - `Especificación de diseño`: descripción del diseño del sistema con los consiguientes diagramas.
   - `Documentación técnica de programación`: explicación de los recursos necesarios para trabajar con el proyecto (entornos de desarrollo, lenguajes, etc).
-  - `Documentación de usuario` guía para usuario final, en ella se expone como se debe usar el producto final.
+  - `Documentación de usuario`: guía para usuario final, en ella se expone como se debe usar el producto final.
