@@ -1,5 +1,5 @@
 # DomoCamera
-TFG GII 2021: Etorno domótico para la monitorización de cámaras.
+TFG GII 2021: Entorno domótico para la monitorización de cámaras.
 
 El auge de la domótica y los teléfonos móviles ha tenido un impacto en la sociedad. Por un lado, la domótica facilita una gestión más eficiente en el hogar y hace más segura una vivienda. Por otro lado, la telefonía móvil pone a nuestro alcance cientos de herramientas tecnológicas que mejoran la calidad de vida de las personas. 
 
