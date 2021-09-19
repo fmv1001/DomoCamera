@@ -19,7 +19,7 @@ Para las bases de datos de la aplicación y el servidor se han utilizado cadenas
 
 \subsection{Entidades en el servidor}
 
-En el servidor se maneja la entidad \textit{Camera} (\ref{fig:bbdd1} y \ref{basedatoscamarasservidor}):
+En el servidor se maneja la entidad \textit{Camera} (figura \ref{fig:bbdd1} y tabla \ref{tabla:basedatoscamarasservidor}):
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=0.5\linewidth]{img/bbdd1}
@@ -36,7 +36,7 @@ Dicha entidad es manejada a través de la librería \textit{SQLAlchemy} gracias 
 
 \subsection{Entidades en la aplicación}
 
-En la aplicación se manejan las entidades \textit{Cameras} (\ref{fig:bbdd2} y \ref{basedatoscamarasapp}) y \textit{ServerInf} (\ref{fig:bbdd3} y \ref{basedatosipserverapp}):
+En la aplicación se manejan las entidades \textit{Cameras} (figura \ref{fig:bbdd2} y tabla \ref{tabla:basedatoscamarasapp}) y \textit{ServerInf} (figura \ref{fig:bbdd3} y tabla \ref{tabla:basedatosipserverapp}):
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=0.5\linewidth]{img/bbdd2}
@@ -82,7 +82,7 @@ El diseño procedimental del sistema nos permite apreciar el funcionamiento inte
 A continuación se van a exponer los diagramas de secuencia en los que se representa la interacción entre los distintos elementos del sistema, teniendo en cuenta los requisitos del sistema.\\
 
 \begin{landscape}
-\imagengrande{1.8}{diagramaRF11}{Diagramas de secuencia relativo al RF-1.1 (\ref{RF1-1}).}
+\imagengrande{1.7}{diagramaRF11}{Diagramas de secuencia relativo al RF-1.1 (\ref{RF1-1}).}
 \imagengrande{1.8}{diagramaRF12}{Diagramas de secuencia relativo al RF-1.2 (\ref{RF1-2}).}
 \imagengrande{1.8}{diagramaRF21}{Diagramas de secuencia relativo al RF-2.1 (\ref{RF2-1}).}
 \imagengrande{1.2}{diagramaRF22}{Diagramas de secuencia relativo al RF-2.2 (\ref{RF2-2}).}
@@ -98,8 +98,8 @@ Esta sección trata el concepto de arquitectura software, usado con el fin de co
 
 \subsection{Arquitectura Cliente-Servidor}
 
-La arquitectura Cliente-Servidor (\ref{fig:arqCliente-servidor}) es un modelo de diseño de software en el que se dividen las  tareas entre dos partes, el proveedor de recursos (o servidor), y los clientes. El cliente solicita los recursos al servidor, y el servidor se encarga de responder la demanda del cliente. El servidores suelen ser máquinas que actúan como sistemas gestores de bases de datos o aplicaciones.
-\imagen{arqCliente-servidor}{Imagen explicativa de la arquitectura Cliente-Servidor.}\label{fig:arqCliente-servidor}
+La arquitectura Cliente-Servidor (imagen \ref{fig:arqCliente-servidor}) es un modelo de diseño de software en el que se dividen las  tareas entre dos partes, el proveedor de recursos (o servidor), y los clientes. El cliente solicita los recursos al servidor, y el servidor se encarga de responder la demanda del cliente. El servidores suelen ser máquinas que actúan como sistemas gestores de bases de datos o aplicaciones.
+\imagen{arqCliente-servidor}{Imagen explicativa de la arquitectura Cliente-Servidor.}
 
 El proyecto se ha dividido en la aplicación como cliente y el servidor.
 
@@ -109,14 +109,14 @@ Dentro del servidor se ha seguido el patrón de arquitectura modelo-vista-contro
 
 \subsubsection{Patrón modelo-vista-controlador (MVC)}
 
-El patrón MVC \ref{fig:m-v-c} es un patrón arquitectónico que separa el sistema en tres partes, los datos, la lógica de la aplicación y la interfaz de usuario. El modelo es la capa de datos, la vista es la interfaz de usuario y el controlador, la lógica de la aplicación.
+El patrón MVC (figura \ref{fig:m-v-c}) es un patrón arquitectónico que separa el sistema en tres partes, los datos, la lógica de la aplicación y la interfaz de usuario. El modelo es la capa de datos, la vista es la interfaz de usuario y el controlador, la lógica de la aplicación.
 \imagen{m-v-c}{Imagen explicativa del patrón MVC.}
 En este proyecto se ha utilizado de la siguiente manera:
 \begin{itemize}
 \item
 	Una primera carpeta de datos (\textit{data}) que contiene la base de datos y el ORM (\textit{schema.py}) para el acceso a la misma, todo ello se encuentra dentro de la carpeta \textit{db}.
 \item
-	Una carpeta llamada \textit{logic} que contiene la lógica de negocio de la aplicación. 
+	Una carpeta llamada \textit{logic} que contiene la lógica de negocio del servidor. 
 	Dentro de ella encontramos el archivo \textit{MainServer.py}. 
 \item
 	Una última carpeta que implementa la capa de presentación (\textit{presentation}).
@@ -132,8 +132,12 @@ Los archivos de la aplicación están en la carpeta \textit{/AndroidApp/app/src/
 
 Por último vamos a ver los respectivos diagramas que componen el presente trabajo.
 
-\imagengrande{1}{diagramaClasesServer}{Diagramas de clases del servidor.}
+\imagengrande{0.9}{diagramaClasesServer}{Diagramas de clases del servidor.}
+
+Este diagrama se ha dividido en dos partes por cuestiones de espacio.
+
+\imagengrande{1.2}{diagramaClasesApp1}{Diagrama 1 de clases de la aplicación.}
 
 \begin{landscape}
-\imagengrande{1.8}{diagramaClasesApp}{Diagramas de clases de la aplicación.}
+\imagengrande{1.5}{diagramaClasesApp2}{Diagrama 2 de clases de la aplicación.}
 \end{landscape}

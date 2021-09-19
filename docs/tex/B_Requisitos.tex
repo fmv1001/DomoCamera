@@ -64,7 +64,7 @@ Se pretende cumplir los objetivos siguientes:
 
 
 
-\section{Catalogo de requisitos}
+\section{Catálogo de requisitos}
 
 En este apartado se presentarán los requisitos del sistema, tanto los funcionales como los no funcionales.
 
@@ -107,6 +107,9 @@ En este apartado se presentarán los requisitos del sistema, tanto los funcional
 			\item \label{RF3-1}
 				\textbf{RF-3.1 Visualizar imagen:}
 					El usuario debe de ser capaz de visualizar la imagen procedente de las cámaras.
+			\item
+				\textbf{RF-3.2 Grabar un vídeo de una cámara:} 
+					El usuario debe de ser capaz de poder realizar una pequeña grabación de la imagen que suministra el servidor.
 		\end{itemize}
 	
 	\item
@@ -119,6 +122,14 @@ En este apartado se presentarán los requisitos del sistema, tanto los funcional
 			\item \label{RF4-2}
 				\textbf{RF-4.2 Parar servidor:}
 					El usuario debe de ser capaz de parar el servidor.
+		\end{itemize}
+	\item
+		\textbf{RF-5 Gestión del log del sistema:} 
+			La aplicación debe ser capaz de mantener un log del sistema.
+			\begin{itemize}
+			\item
+				\textbf{RF-5.1 Visualizar del log del sistema:}
+					El usuario debe poder visualizar un log donde se muestren tanto las acciones realizadas como los posibles errores que sucedan durante el uso de la misma.
 		\end{itemize}
 \end{itemize}
 
@@ -526,7 +537,7 @@ El usuario debe encontrarse en la pestaña principal (home).\strut
 \item
   El usuario elige la opción ``\textit{Settings}''.
 \item
-  El visualiza los campos IP y Puerto para la conexión con el servidor.
+  Se visualizan los campos IP y Puerto para la conexión con el servidor.
 
 \end{enumerate}\strut
 \end{minipage}\tabularnewline
@@ -727,7 +738,7 @@ Alta\strut
 \begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
 \textbf{Requisitos asociados}\strut
 \end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
-RF-3, RF-3.1\strut
+RF-3, RF-3.1, RF-3.2\strut
 \end{minipage}\tabularnewline
 \begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
 \textbf{Descripción}\strut
@@ -857,6 +868,82 @@ Alta\strut
 \begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
 \textbf{CU-10}\strut
 \end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Grabar un vídeo de una cámara.}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Versión}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+1.0\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Autor}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\nombre\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF-3.2\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Permite al usuario grabar un pequeño fragmento de vídeo de un cámara de las disponibles.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+La aplicación debe estar conectada al servidor.\\
+El usuario se encuentra en la pantalla de visualización de una cámara.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  El usuario visualiza una cámara y pulsa el botón para grabar.
+\item
+  La aplicación graba un vídeo y lo almacena en el dispositivo.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se ha guardado un vídeo con las imágenes vistas por el usuario de la cámara.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{itemize}
+\tightlist
+\item
+  Error al cargar imagen (mensaje).
+\item
+  Error en la conexión (mensaje).
+\item
+  Error en la grabación (mensaje).
+\end{itemize}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-10 Grabar un vídeo de una cámara.}
+\end{longtable}
+
+%CASO DE USO 11 ---------------------------------------------------------
+
+\begin{longtable}[h!]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-11}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
 \textbf{Gestión del servidor.}\strut
 \end{minipage}\tabularnewline
 \midrule
@@ -914,15 +1001,15 @@ Permite al usuario gestionar el servidor.\strut
 Alta\strut
 \end{minipage}\tabularnewline
 \bottomrule
-\caption{CU-10 Gestión del servidor.}
+\caption{CU-11 Gestión del servidor.}
 \end{longtable}
 
-%CASO DE USO 11 ---------------------------------------------------------
+%CASO DE USO 12 ---------------------------------------------------------
 
 \begin{longtable}[h!]{@{}ll@{}}
 \toprule
 \begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
-\textbf{CU-11}\strut
+\textbf{CU-12}\strut
 \end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
 \textbf{Iniciar servidor.}\strut
 \end{minipage}\tabularnewline
@@ -991,15 +1078,15 @@ Se ha establecido conexión con las cámaras disponibles\strut
 Alta\strut
 \end{minipage}\tabularnewline
 \bottomrule
-\caption{CU-11 Iniciar servidor.}
+\caption{CU-12 Iniciar servidor.}
 \end{longtable}
 
-%CASO DE USO 12 ---------------------------------------------------------
+%CASO DE USO 13 ---------------------------------------------------------
 
 \begin{longtable}[h!]{@{}ll@{}}
 \toprule
 \begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
-\textbf{CU-12}\strut
+\textbf{CU-13}\strut
 \end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
 \textbf{Parar servidor.}\strut
 \end{minipage}\tabularnewline
@@ -1067,5 +1154,150 @@ El servidor se ha parado y se han cerrado las conexiones.\strut
 Alta\strut
 \end{minipage}\tabularnewline
 \bottomrule
-\caption{CU-12 Parar servidor.}
+\caption{CU-13 Parar servidor.}
+\end{longtable}
+
+%CASO DE USO 14 ---------------------------------------------------------
+
+\begin{longtable}[h!]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-14}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Gestión del log del sistema}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Versión}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+1.0\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Autor}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\nombre\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF-5, RF-5.1\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Permite al usuario gestionar el log del sistema.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+El usuario debe encontrarse en la pestaña principal (home).\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  El usuario pulsa el botón del menú lateral superior izquierdo.
+\item
+  El usuario elige la opción ``\textit{Log}''.
+\item
+  Se visualiza la pantalla \textit{Log}.
+
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+-\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{itemize}
+\tightlist
+\item
+  Error al cargar log (mensaje).
+\end{itemize}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-14 Gestión del log del sistema.}
+\end{longtable}
+
+%CASO DE USO 15 ---------------------------------------------------------
+
+\begin{longtable}[h!]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-15}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Visualizar log del sistema}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Versión}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+1.0\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Autor}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\nombre\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF-5.1\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Permite al usuario visualizar el log del sistema.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+El usuario debe encontrarse en la pestaña del log (Log).\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Se muestra el log del sistema en formato texto.
+\item
+  El usuario puede hacer \textit{scroll} para ver el contenido del log desde el incio de la aplicación.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+-\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{itemize}
+\tightlist
+\item
+  Error al cargar log (mensaje).
+\end{itemize}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-15 Visualizar log del sistema.}
 \end{longtable}

@@ -15,42 +15,39 @@ En cuanto al estudio de viabilidad, este se fracciona en dos partes: la viabilid
 
 Esta sección trata la planificación llevada a cabo para la realización de este proyecto.
 Este aspecto es una de las debilidades del proyecto, ya que no se ha seguido la mejor planificación que se podría haber ejecutado.
-Lo ideal es hacer una planificación por \textit{sprints}, pero dado que el tiempo del que disponía durante la realización del mismo era limitado, decidí realizar una planificación por fases.  
+Lo ideal es hacer una planificación por \textit{sprints}, pero dado que el tiempo del que disponía durante la realización del mismo era limitado, decidí realizar una planificación por fases. Durante la realización del proyecto, algunas fases se han solapado en el tiempo, con ello se ha conseguido mejorar algunas de ellas.
 
 A continuación se desarrollaran las fases seguidas en la planificación del proyecto.
 
-\subsection{Fase 1: Instalación del entorno de desarrollo}
+\subsection{Fase 1: Instalación del entorno de desarrollo (febrero-marzo-2021)}
 
 En esta fase, se instalador y configuraron los entornos de desarrollo, estos son: Android Studio y Visual Studio Code. 
-En la configuración de Android Studio había que crear el proyecto de la aplicación, eligiendo la versión de android compatible y hacer un pequeño boceto de la misma \ref{fig:ptimage1}. 
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=0.35\linewidth]{img/pt1}
-	\caption{Boceto inicial de pantalla de inicio de la aplicación.}
-	\label{fig:ptimage1}
-\end{figure}
+En la configuración de Android Studio había que crear el proyecto de la aplicación, eligiendo la versión de android compatible y hacer un pequeño boceto de la misma (figura \ref{fig:pt1}). 
+
+\imagengrande{0.35}{pt1}{Boceto inicial de pantalla de inicio de la aplicación.}
+
 También en esta fase se hizo un estudio de cual era la mejor tecnología para realizar la conexión entre el servidor y la aplicación, además de la librería que implementara dicha tecnología.
 Posteriormente se haría lo mismo con la conexión servidor-cámara.
 
-\subsection{Fase 2: Conexión cámara-servidor}
+\subsection{Fase 2: Conexión cámara-servidor (marzo-2021)}
 
 En esta fase traté de conseguir realizar una conexión con la cámara desde el servidor, con la ayuda de la librería OpenCV. 
 Aquí me retrase unos días ya que no conseguía acceder a la cámara desde OpenCV con python. 
 Para no perder demasiado tiempo contacté con la empresa que me había vendido la cámara y les comenté mi problema.
 Rápidamente me contestaron y me proporcionaron la dirección que debía usar para obtener la conexión, y gracias a ello pude realizar una la conexión servidor-cámara.
 
-\subsection{Fase 3: Conexión servidor-aplicación}
+\subsection{Fase 3: Conexión servidor-aplicación (abril-mayo-2021)}
 
 Una vez que ya podía obtener imagen desde el servidor, la siguiente fase trataba de conseguir conectar la aplicación al servidor.
 Para ello utilicé la tecnología de sockets con los protocolos UDP, y TCP / IP.
 Inicialmente empecé por enviar texto y poco a poco llegué a enviar imágenes.
 
-\subsection{Fase 4: Diseño e implementación de la interfaz de usuario la aplicación}
+\subsection{Fase 4: Diseño e implementación de la interfaz de usuario la aplicación (junio-julio-2021)}
 
 En esta fase tenía que diseñar la interfaz de usuario para la aplicación y toda la lógica que conlleva. 
 Esta fase me retraso algunos días ya que no me terminaba de gustar la interacción con la aplicación y tuve que empezar desde cero dos veces, hasta que topé con la librería \textit{Navigation} de android, que me permitía crear un menú lateral, implementado de una forma muy intuitiva y correcta.
 
-\subsection{Fase 5: Implementación de funcionalidad entre aplicación y servidor}
+\subsection{Fase 5: Implementación de funcionalidad entre aplicación y servidor (junio-agosto-2021)}
 
 Cuando ya tenía la interfaz de usuario, había que desarrollar la lógica de negocio de la aplicación. 
 Pero a la vez tenía que ir implementando la funcionalidad en el servidor.
@@ -58,21 +55,21 @@ En esta fase encontré algunas trabas dentro de la aplicación ya que no podía 
 En este punto utilicé el paquete \textit{ViewModel} e interfaces para realizar dicha comunicación, así como para comunicar los \textit{fragments} dentro de la aplicación.
 Después de esto ya tenía la fase terminada.
 
-\subsection{Fase 6: Añadir funcionalidad al sistema}
+\subsection{Fase 6: Añadir funcionalidad al sistema (julio-septiembre-2021)}
 
 En este punto me dedique a añadir funcionalidad al sistema, es decir, añadir funcionalidades como puede ser añadir cámaras, eliminarlas, parar el servidor entre otras.
 
-\subsection{Fase 7: Añadir persistencia al sistema}
+\subsection{Fase 7: Añadir persistencia al sistema (agosto-septiembre-2021)}
 
 Para que cuando la aplicación o el servidor estuvieran parados y no se perdieran los datos, implemente una base de datos en cada uno de ellos. 
 En la aplicación utilicé SQLite y en el servidor SQLAlchemy.
 
-\subsection{Fase 8: Implementación de herramientas de análisis de calidad de código}
+\subsection{Fase 8: Implementación de herramientas de análisis de calidad de código (agosto-septiembre-2021)} \label{fase8}
 
 Cuando ya disponía de un prototipon completamente funcional, utilicé SonarQube y su herramienta Sonar-Scanner para mejorar la calidad del código del proyecto, además de para encontrar posibles fallos en el mismo.
 \imagen{squse2}{Página de \textit{Issues} de SonarQube.}
 
-\subsection{Fase 9: Documentación del proyecto}
+\subsection{Fase 9: Documentación del proyecto (septiembre-2021)}
 
 Esta fase es en la que desarrollé la documentación, el presente documento y la memoria,
 además de generar el archivo de instalación o APK para la distribución de la aplicación.
@@ -169,9 +166,14 @@ Dispositivo Android\strut
 300\euro{}\strut
 \end{minipage}\tabularnewline
 \begin{minipage}[t]{0.38\columnwidth}\raggedright\strut
-Kit Raspberry Pi 400\strut
+Raspberry Pi 4 Model B\strut
 \end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
-110\euro{}\strut
+45\euro{}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.38\columnwidth}\raggedright\strut
+Teclado y Raton\strut
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
+20\euro{}\strut
 \end{minipage}\tabularnewline
 \begin{minipage}[t]{0.38\columnwidth}\raggedright\strut
 Ordenador para el desarrollo\strut
@@ -187,7 +189,7 @@ Enchufes y cables\strut
 \begin{minipage}[t]{0.38\columnwidth}\raggedright\strut
 \textbf{Total}\strut
 \end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
-1440\euro{}\strut
+1395\euro{}\strut
 \end{minipage}\tabularnewline
 \bottomrule
 \caption{Costes de hardware.}
@@ -199,7 +201,7 @@ Para el cálculo de los precios se ha seguido el siguiente criterio:
 \item
 	Precio promedio de un dispositivo móvil \cite{art:pricesmartphone}.
 \item
-	\href{https://www.kubii.es/raspberry-pi-400/3084-kit-raspberry-pi-400-3272496302914.html#/305-version-version_inglesa?src=raspberrypi}{Kit Raspberry Pi}. 400.
+	Raspberry Pi 4 Model B.
 \item
 	Precio del ordenador usado en desempeño de este proyecto.
 \item
@@ -219,8 +221,6 @@ Software necesario para el desarrollo del proyecto:
 	Android Studio.
 \item
 	Git.
-\item
-	SonarQube.
 \end{itemize}
 
 Todas las licencias del software necesario son de código abierto o gratuitas y se pueden ejecutar en Linux (sistema operativo de código abierto), por lo que se considera coste nulo para el software utilizado.
@@ -279,10 +279,10 @@ En cuanto a la información y cookies, el usuarios debe aceptarlas mediante una 
 \subsubsection{Licencias}
 
 En segundo lugar debemos comprobar las licencias que rigen el software usado en el proyecto.
-Por ello veamos que licencias usan las librerías utilizadas.
+Por ello veamos que licencias usan las librerías utilizadas (tabla \ref{librarylicensetable}).
 
 \begin{longtable}[]{@{}llll@{}} 
-\toprule \label{librarylicensetable}
+\toprule 
 \begin{minipage}[b]{0.18\columnwidth}\raggedright\strut
 Dependencia\strut
 \end{minipage} & \begin{minipage}[b]{0.10\columnwidth}\raggedright\strut
@@ -330,8 +330,18 @@ API para bases de datos en Android.\strut
 \end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
 Dominio Público\strut
 \end{minipage}\tabularnewline
+\begin{minipage}[t]{0.18\columnwidth}\raggedright\strut
+JCodec\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+0.2.5\strut
+\end{minipage} & \begin{minipage}[t]{0.49\columnwidth}\raggedright\strut
+API para códecs de audio y vídeo en Java.\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+BSD\strut
+\end{minipage}\tabularnewline
 \bottomrule
 \caption{Dependencias del proyecto.}
+\label{librarylicensetable}
 \end{longtable}
 
 Una vez sabemos las licencias que usan el software de terceros utilizado, debemos buscar una licencia compatible con las mencionadas en la tabla \ref{librarylicensetable}, Apache v2.0, BSD y MIT.
@@ -339,10 +349,10 @@ Una vez sabemos las licencias que usan el software de terceros utilizado, debemo
 La licencia que más se ajusta a este proyecto es la licencia \textit{GNU General Public License v3.0}, ya que es compatible con todas las licencias del software de terceros que se ha usado en el proyecto. 
 Si quieres ver las licencias compatibles con \textit{GNU General Public License v3.0}, visita \cite{gnulicensecomp}.
 
-A continuación podemos ver dos tablas \cite{gnuresumetable} y \cite{gnuresumetable1}, con los aspectos más relevantes de la licencia \textit{GNU General Public License v3.0}.
+A continuación podemos ver dos tablas \ref{gnuresumetable} y \ref{gnuresumetable1}, con los aspectos más relevantes de la licencia \textit{GNU General Public License v3.0}.
 
 \begin{longtable}[]{@{}llll@{}} 
-\toprule \label{gnuresumetable}
+\toprule 
 \begin{minipage}[b]{0.11\columnwidth}\raggedright\strut
 Licencia\strut
 \end{minipage} & \begin{minipage}[b]{0.15\columnwidth}\raggedright\strut
@@ -365,11 +375,12 @@ Copyleft.\strut
 \end{minipage}\tabularnewline
 \bottomrule
 \caption{Características de \textit{GPL v3.0}.}
+\label{gnuresumetable}
 \end{longtable}
 
 
 \begin{longtable}[]{@{}llllllll@{}} 
-\toprule \label{gnuresumetable1}
+\toprule 
 \begin{minipage}[b]{0.15\columnwidth}\raggedright\strut
 Licencia\strut
 \end{minipage} & \begin{minipage}[b]{0.18\columnwidth}\raggedright\strut
@@ -396,15 +407,16 @@ Sí.\strut
 \end{minipage}\tabularnewline
 \bottomrule
 \caption{Características de \textit{GPL v3.0}.}
+\label{gnuresumetable1}
 \end{longtable}
 
 Sin embargo para la documentación realizada no usaremos dicha licencia, ya que está enfocada a código y no a documentación. 
 Para la documentación se ha elegido la licencia \textit{Creative Commons Attribution 4.0 o CC BY 4.0}.
 
-A continuación podemos ver dos tablas \cite{ccaresumetable} y \cite{ccaresumetable1}, con los aspectos más relevantes de la licencia \textit{Creative Commons Attribution 4.0}.
+A continuación podemos ver dos tablas \ref{tab:ccaresumetable} y \ref{tab:ccaresumetable1}, con los aspectos más relevantes de la licencia \textit{Creative Commons Attribution 4.0}.
 
 \begin{longtable}[]{@{}llll@{}} 
-\toprule \label{ccaresumetable}
+\toprule 
 \begin{minipage}[b]{0.15\columnwidth}\raggedright\strut
 Licencia\strut
 \end{minipage} & \begin{minipage}[b]{0.15\columnwidth}\raggedright\strut
@@ -427,10 +439,11 @@ Permisivo.\strut
 \end{minipage}\tabularnewline
 \bottomrule
 \caption{Características de \textit{Creative Commons Attribution 4.0}.}
+\label{tab:ccaresumetable}
 \end{longtable}
 
 \begin{longtable}[]{@{}llllllll@{}} 
-\toprule \label{ccaresumetable1}
+\toprule 
 \begin{minipage}[b]{0.15\columnwidth}\raggedright\strut
 Licencia\strut
 \end{minipage} & \begin{minipage}[b]{0.18\columnwidth}\raggedright\strut
@@ -457,6 +470,7 @@ No.\strut
 \end{minipage}\tabularnewline
 \bottomrule
 \caption{Características de \textit{Creative Commons Attribution 4.0}.}
+\label{tab:ccaresumetable1}
 \end{longtable}
 
 \textbf{Resumen}
@@ -464,7 +478,7 @@ No.\strut
 Resumen de las licencias escogidas \ref{resumelicense}.
 
 \begin{longtable}[]{@{}ll@{}}
-\toprule \label{resumelicense}
+\toprule 
 \begin{minipage}[b]{0.50\columnwidth}\raggedright\strut
 Recurso\strut
 \end{minipage} & \begin{minipage}[b]{0.21\columnwidth}\raggedright\strut
@@ -484,4 +498,5 @@ CC BY 4.0\strut
 \end{minipage}\tabularnewline
 \bottomrule
 \caption{Resumen de las licencias escogidas para del proyecto.}
+\label{resumelicense}
 \end{longtable}

@@ -17,7 +17,7 @@
 \RequirePackage{multirow}
 
 % Links
-\PassOptionsToPackage{hyphens}{url}\usepackage[colorlinks]{hyperref}
+\usepackage[colorlinks]{hyperref}
 \hypersetup{
 	allcolors = {red}
 }
@@ -110,7 +110,7 @@
 %
 % Nuevo comando para tablas pequeñas (menos de una página).
 \newcommand{\tablaSmall}[5]{%
- \begin{table}
+ \begin{table}[!h]
   \begin{center}
    \rowcolors {2}{gray!35}{}
    \begin{tabular}{#2}
@@ -365,9 +365,9 @@
 \newcommand{\nombretutor}{César Represa Pérez}
 
 % Datos de portada
-\title{título del TFG \\Documentación Técnica}
+\title{{\Huge DomoCamera}\\[0.25cm]Entorno domótico para la monitorización de cámaras desde Android. \\Documentación Técnica}
 \author{\nombre}
-\tutor{D. \nombretutor}
+\tutor{\nombretutor}
 \date{\today}
 
 \begin{document}
@@ -413,7 +413,7 @@
 \include{./tex/E_Manual_usuario}
 
 
-\bibliographystyle{plain}
-\bibliography{bibliografiaAnexos}
+\bibliographystyle{IEEEtran}
+\bibliography{IEEEabrv,bibliografiaAnexos}
 
 \end{document}

@@ -10,7 +10,7 @@ En esta sección vamos a detallar los requisitos necesarios para la instalación
 \item
 	Dispositivo Android con una versión igual o superior a Android Jelly Bean o Android 4.1, para el uso de la aplicación.
 \item
-	Dispositivo de bajo consumo (recomendado) o PC con conexión a Internet, y con Python 3 instalado, para albergar el servidor.
+	Dispositivo de bajo consumo Raspberry Pi (recomendado) o PC con conexión a Internet, y con Python 3 instalado, para albergar el servidor.
 \item
 	Es necesario que el dispositivo Android y el dispositivo que vaya a ejecutar el servidor estén conectados a la misma WIFI.
 \end{itemize}
@@ -21,7 +21,7 @@ Para realizar la instalación del sistema, deberemos realizar dos instalaciones 
 
 \subsubsection{Instalación del servidor}
 
-Esta instalación del servidor se realizará en un dispositivo de bajo consumo como es la Raspberry Pi, aunque si no se dispone de un dispositivo de estas características se puede saltar al paso X\ref{•} y realizar la instalación en el PC.\\
+Esta instalación del servidor se realizará en un dispositivo de bajo consumo como es la Raspberry Pi, aunque si no se dispone de un dispositivo de estas características se puede saltar al paso \ref{paso10} y realizar la instalación en el PC.\\
 
 \textbf{Requisitos}
 
@@ -56,7 +56,7 @@ Esta instalación del servidor se realizará en un dispositivo de bajo consumo c
 \item
 	Esperamos a que concluya el proceso y ya tenemos la tarjeta preparada.
 \item
-	Después de preparar la tarjeta la introducimos en el hueco dispuesto para ello de la Raspberry Pi. La conectamos a la corriente y a los periféricos necesarios ya mencionados \ref{piperifs}.
+	Después de preparar la tarjeta la introducimos en el hueco dispuesto para ello de la Raspberry Pi. La conectamos a la corriente y a los periféricos necesarios ya mencionados en \ref{piperifs}.
 \item
 	Una vez instalado el sistema operativo siguiendo el instalador abrimos un terminal y ejecutamos el siguiente comando:\\
 	\textit{python3 --version}\\
@@ -67,42 +67,36 @@ Esta instalación del servidor se realizará en un dispositivo de bajo consumo c
 \item
 	Cuando acabe la instalación ya tenemos la Raspberry preparada para ejecutar el servidor.
 \item
-	Ahora procedemos a descargar los archivos del servidor, que podremos descargarlos directamente desde Raspberry Pi en el \href{https://github.com/fmv1001/LocalStream}{repositorio} o desde el PC y mediante un USB lo descargamos y lo pasamos a la Raspberry Pi.
+	Ahora procedemos a descargar los archivos del servidor, que podremos descargarlos directamente desde Raspberry Pi en el \href{https://github.com/fmv1001/DomoCamera}{repositorio} o desde el PC y mediante un USB lo descargamos y lo pasamos a la Raspberry Pi.
 \item
-	Cuando tengamos los archivos del repositorio, sólo necesitaremos la carpeta \textit{Server}, los demás archivos pueden ser borrados.
+	Cuando tengamos los archivos del repositorio, sólo necesitaremos la carpeta \textit{Server}, los demás archivos pueden ser borrados. \label{paso10}
 \item
-	Después abrimos un terminal y nos colocamos dentro de la carpeta \textit{Server}.
+	Después abrimos un terminal y nos colocamos dentro de la carpeta \textit{Server/logic}.
 \item
-	Por último ejecutamos en el Terminal:\\
+	Es posible que haya que instalar las dependencias, OpenCV y SQLAlchemy, para python. Para ello ejecutamos en el terminal:\\
+	\textit{pip3 install opencv-python}\\
+	\textit{pip3 install SQLAlchemy}
+\item
+	Por último ejecutamos en el terminal el archivo \textit{MainServer.py}, y ya tendremos el servidor en funcionamiento. Para ello ejecutamos el siguiente comando:\\
 	\textit{python3 MainServer.py}\\
-	Y ya hemos acabado.
+
 \end{enumerate}
 
-\textbf{Instalación de la app}\\
+\subsubsection{Instalación de la app}
 
 \begin{itemize}
 \item
-	En primero lugar descargamos los archivos, que podremos descargarlos directamente desde el dispositivo Android en el \href{https://github.com/fmv1001/LocalStream}{repositorio} o desde el PC y mediante un USB lo descargamos y lo pasamos al smartphone.
+	En primero lugar descargamos los archivos, que podremos descargarlos directamente desde el dispositivo Android en el \href{https://github.com/fmv1001/DomoCamera}{repositorio} o desde el PC y mediante un USB lo descargamos y lo pasamos al smartphone.
 	Este archivo que queremos es el archivo APK que se encuentra en la carpeta \textit{/AndroidApp/app/release/}.
 \item
 	Una vez descragado, lo debemos abrir en el dispositivo Android.
 	Para ello nos dirigimos al almacenamiento del dispositivo donde hayamos guardado el archivo y lo abrimos.
 \item
-	Recibiremos un cuadro de diálogo \ref{fig:appinstall} que nos pregunta si queremos instalar la aplicación, debemos indicar \textit{instalar}.
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=0.35\linewidth]{img/appinstall}
-	\caption{Instalación de la aplicación desde un archivo APK.}
-	\label{fig:appinstall}
-\end{figure}
+	Recibiremos un cuadro de diálogo (figura \ref{fig:appinstall}) que nos pregunta si queremos instalar la aplicación, debemos indicar \textit{instalar}.
+\imagengrande{0.35}{appinstall}{Instalación de la aplicación desde un archivo APK.}
 \item
-	Es posible que recibamos un aviso como el que se muestra a continuación\ref{fig:appinstall1}.\\
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=0.35\linewidth]{img/appinstall1}
-	\caption{Aviso en la instalación de la aplicación desde un archivo APK.}
-	\label{fig:appinstall1}
-\end{figure}
+	Es posible que recibamos un aviso como el que se muestra a continuación (figura \ref{fig:appinstall1}).
+\imagengrande{0.35}{appinstall1}{Aviso en la instalación de la aplicación desde un archivo APK.}
 	Debemos pulsar en \textit{Instalar de todas formas}.
 \end{itemize}
 
@@ -111,6 +105,7 @@ Esta instalación del servidor se realizará en un dispositivo de bajo consumo c
 \section{Manual del usuario}
 
 En este manual se va a proceder a explicar cómo hacer uso de la aplicación.
+En este enlace (\href{https://youtu.be/txAF8uAJ6B0}{Vídeo manual de usuario}), podremos ver este manual en formato vídeo.
 
 \subsubsection{Conectarse al servidor}
 
@@ -118,29 +113,14 @@ Para conectarnos al servidor debemos navegar hasta la pantalla \textit{Settings}
 
 \begin{itemize}
 \item
-	Desde la pantalla principal abriremos el menú de navegación en el borde superior izquierdo (\ref{fig:appmanual1}).
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=0.35\linewidth]{img/manualuse0}
-	\caption{Pantalla principal de la aplicación.}
-	\label{fig:appmanual1}
-\end{figure}
+	Desde la pantalla principal abriremos el menú de navegación en el borde superior izquierdo (figura \ref{fig:manualuse0}).
+	\imagengrande{0.35}{manualuse0}{Pantalla principal de la aplicación.}
 \item
-	Desde el menú de navegación pulsaremos \textit{Settings} para ir a la pantalla de \textit{Settings} (\ref{fig:appmanual2}).
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=0.35\linewidth]{img/manualuse01}
-	\caption{Menú de navegación de la aplicación.}
-	\label{fig:appmanual2}
-\end{figure}
+	Desde el menú de navegación pulsaremos \textit{Settings} para ir a la pantalla de \textit{Settings} (figura \ref{fig:manualuse01}).
+	\imagengrande{0.35}{manualuse01}{Menú de navegación de la aplicación.}
 \item
-	Una vez en la pantalla de \textit{Settings} procederemos a rellenar los campos con la Ip del servidor y el puerto de escucha (este es el 8888 por defecto) (\ref{fig:appmanual3}).
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=0.35\linewidth]{img/manualuse1}
-	\caption{Pantalla \textit{Settings} de la aplicación.}
-	\label{fig:appmanual3}
-\end{figure}
+	Una vez en la pantalla de \textit{Settings} procederemos a rellenar los campos con la Ip del servidor y el puerto de escucha (este es el 8888 por defecto) (figura \ref{fig:manualuse1}).
+	\imagengrande{0.35}{manualuse1}{Pantalla \textit{Settings} de la aplicación.}
 \item
 	Por último pulsamos en \textit{Conectarse con el servidor}.
 \end{itemize}
@@ -151,43 +131,18 @@ Para añadir una cámara debemos situarnos en la pantalla principal y abrir el m
 
 \begin{itemize}
 \item
-	Desde la pantalla principal abriremos el menú de desplegable en el borde superior derecho (\ref{fig:appmanual4}).
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=0.35\linewidth]{img/manualuse20}
-	\caption{Pantalla principal de la aplicación.}
-	\label{fig:appmanual4}
-\end{figure}
+	Desde la pantalla principal abriremos el menú de desplegable en el borde superior derecho (figura \ref{fig:manualuse20}).
+	\imagengrande{0.35}{manualuse20}{Pantalla principal de la aplicación.}
 \item
-	Desde el menú de desplegable pulsaremos \textit{Add camera} y nos saltará un cuadro de diálogo (\ref{fig:appmanual5} y \ref{fig:appmanual6}) .
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=0.35\linewidth]{img/manualuse21}
-	\caption{Pantalla principal con menú desplegable abierto.}
-	\label{fig:appmanual5}
-\end{figure}
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=0.35\linewidth]{img/manualuse3}
-	\caption{Diálogo para añadir cámara en la aplicación.}
-	\label{fig:appmanual6}
-\end{figure}
+	Desde el menú de desplegable pulsaremos \textit{Add camera} y nos saltará un cuadro de diálogo (figs. \ref{fig:manualuse21} y \ref{fig:manualuse3}).
+	\imagengrande{0.35}{manualuse21}{Pantalla principal con menú desplegable abierto.}
+	\imagengrande{0.35}{manualuse3}{Diálogo para añadir cámara en la aplicación.}
 \item
-	Una vez en cuadro de diálogo, rellenamos los campos exigidos y hacemos clic en aceptar (\ref{fig:appmanual7}).
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=0.35\linewidth]{img/manualuse4}
-	\caption{Diálogo para añadir cámara en la aplicación.}
-	\label{fig:appmanual7}
-\end{figure}
+	Una vez en cuadro de diálogo, rellenamos los campos exigidos y hacemos clic en aceptar (figura \ref{fig:manualuse4}).
+	\imagengrande{0.35}{manualuse4}{Diálogo para añadir cámara en la aplicación.}
 \item
-	Se ha mostrado en la pantalla principal el botón de la cámara introducida (\ref{fig:appmanual8}).
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=0.35\linewidth]{img/manualuse5}
-	\caption{Pantalla principal con cámara añadida en la aplicación.}
-	\label{fig:appmanual8}
-\end{figure}
+	Se ha mostrado en la pantalla principal el botón de la cámara introducida (figura \ref{fig:manualuse5}).
+	\imagengrande{0.35}{manualuse5}{Pantalla principal con cámara añadida en la aplicación.}
 \end{itemize}
 
 \subsubsection{Ver cámara}
@@ -196,29 +151,26 @@ Para ver una cámara debemos situarnos en la pantalla principal y debe haber alg
 
 \begin{itemize}
 \item
-	Desde la pantalla principal pulsaremos el botón de la cámara que deseemos ver, están designadas con su nombre (\ref{fig:appmanual9}).
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=0.35\linewidth]{img/manualuse5}
-	\caption{Pantalla principal con cámara añadida en la aplicación.}
-	\label{fig:appmanual9}
-\end{figure}
+	Desde la pantalla principal pulsaremos el botón de la cámara que deseemos ver, están designadas con su nombre (figura \ref{fig:manualuse5a}).
+	\imagengrande{0.35}{manualuse5a}{Pantalla principal con cámara añadida en la aplicación.}
 \item
-	Se nos abrirá una pantalla donde se muestra la imagen en teimpo real (\ref{fig:appmanual10}).
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=0.35\linewidth]{img/manualuse6}
-	\caption{Pantalla de visualización de cámara.}
-	\label{fig:appmanual10}
-\end{figure}
+	Se nos abrirá una pantalla donde se muestra la imagen en teimpo real (figura \ref{fig:manualuse6}).
+	\imagengrande{0.35}{manualuse6}{Pantalla de visualización de cámara.}
 \item
-	Si lo deseamos podemos tumbar el dispositivo para ver una imagen mas amplia (\ref{fig:appmanual11}).
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=0.9\linewidth]{img/manualuse7}
-	\caption{Pantalla de visualización de cámara tumbada.}
-	\label{fig:appmanual11}
-\end{figure}
+	Si lo deseamos podemos tumbar el dispositivo para ver una imagen mas amplia (figura \ref{fig:manualuse7}).
+	\imagengrande{0.9}{manualuse7}{Pantalla de visualización de cámara tumbada.}
+\end{itemize}
+
+\subsubsection{Grabar de la cámara}
+
+Para grabar una pequeña secuencia de vídeo debemos encontrarnos en pantalla de visualización de una de las cámaras.
+
+\begin{itemize}
+\item
+	Una vez en la pantalla de visualización, pinchamos en el botón gris y rojo (figura \ref{fig:manualuse61}).
+	\imagengrande{0.35}{manualuse61}{Pantalla de visualización de cámara.}
+\item
+	Se grabará un vídeo que podremos ver en el almacenamiento del dispositivo.
 \end{itemize}
 
 \subsubsection{Eliminar cámara}
@@ -227,37 +179,17 @@ Para eliminar una cámara debemos situarnos en la pantalla principal y abrir el 
 
 \begin{itemize}
 \item
-	Desde la pantalla principal abriremos el menú de desplegable en el borde superior derecho (\ref{fig:appmanual12}).
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=0.35\linewidth]{img/manualuse20}
-	\caption{Pantalla principal de la aplicación.}
-	\label{fig:appmanual12}
-\end{figure}
+	Desde la pantalla principal abriremos el menú de desplegable en el borde superior derecho (figura \ref{fig:manualuse20a}).
+	\imagengrande{0.35}{manualuse20a}{Pantalla principal de la aplicación.}
 \item
-	Desde el menú de desplegable pulsaremos \textit{Delete camera} y nos saltará un cuadro de diálogo (\ref{fig:appmanual13}).
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=0.35\linewidth]{img/manualuse80}
-	\caption{Pantalla principal con menú desplegable abierto.}
-	\label{fig:appmanual13}
-\end{figure}
+	Desde el menú de desplegable pulsaremos \textit{Delete camera} y nos saltará un cuadro de diálogo (figura \ref{fig:manualuse80}).
+	\imagengrande{0.35}{manualuse80}{Pantalla principal con menú desplegable abierto.}
 \item
-	Una vez en cuadro de diálogo, escogemos la cámara para eliminar y hacemos clic en aceptar (\ref{fig:appmanual14}).
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=0.35\linewidth]{img/manualuse81}
-	\caption{Diálogo para eliminar cámara en la aplicación.}
-	\label{fig:appmanual14}
-\end{figure}
+	Una vez en cuadro de diálogo, escogemos la cámara para eliminar y hacemos clic en aceptar (figura \ref{fig:manualuse81}).
+	\imagengrande{0.35}{manualuse81}{Diálogo para eliminar cámara en la aplicación.}
 \item
-	Se ha eliminado de la pantalla principal el botón de la cámara (\ref{fig:appmanual15}).
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=0.35\linewidth]{img/manualuse}
-	\caption{Pantalla principal con cámara eliminada en la aplicación.}
-	\label{fig:appmanual15}
-\end{figure}
+	Se ha eliminado de la pantalla principal el botón de la cámara (figura \ref{fig:manualuse}).
+	\imagengrande{0.35}{manualuse}{Pantalla principal con cámara eliminada en la aplicación.}
 \end{itemize}
 
 \subsubsection{Desconectarse del servidor}
@@ -266,21 +198,11 @@ Para desconectarse del servidor debemos situarnos en la pantalla principal y abr
 
 \begin{itemize}
 \item
-	Desde la pantalla principal abriremos el menú de desplegable en el borde superior derecho (\ref{fig:appmanual16}).
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=0.35\linewidth]{img/manualuse20}
-	\caption{Pantalla principal de la aplicación.}
-	\label{fig:appmanual16}
-\end{figure}
+	Desde la pantalla principal abriremos el menú de desplegable en el borde superior derecho (figura \ref{fig:manualuse20b}).
+	\imagengrande{0.35}{manualuse20b}{Pantalla principal de la aplicación.}
 \item
-	Desde el menú de desplegable pulsaremos \textit{Disconnect} (\ref{fig:appmanual17}).
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=0.35\linewidth]{img/manualuse90}
-	\caption{Pantalla principal con menú desplegable abierto.}
-	\label{fig:appmanual17}
-\end{figure}
+	Desde el menú de desplegable pulsaremos \textit{Disconnect} (figura \ref{fig:manualuse90}).
+	\imagengrande{0.35}{manualuse90}{Pantalla principal con menú desplegable abierto.}
 \end{itemize}
 
 \subsubsection{Parar servidor}
@@ -289,23 +211,27 @@ Para parar el servidor debemos situarnos en la pantalla principal y abrir el men
 
 \begin{itemize}
 \item
-	Desde la pantalla principal abriremos el menú de desplegable en el borde superior derecho (\ref{fig:appmanual18}).
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=0.35\linewidth]{img/manualuse20}
-	\caption{Pantalla principal de la aplicación.}
-	\label{fig:appmanual18}
-\end{figure}
+	Desde la pantalla principal abriremos el menú de desplegable en el borde superior derecho (figura \ref{fig:manualuse20c}).
+	\imagengrande{0.35}{manualuse20c}{Pantalla principal de la aplicación.}
 \item
-	Desde el menú de desplegable pulsaremos \textit{Stop Server} (\ref{fig:appmanual19}).
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=0.35\linewidth]{img/manualuse91}
-	\caption{Pantalla principal con menú desplegable abierto.}
-	\label{fig:appmanual19}
-\end{figure}
+	Desde el menú de desplegable pulsaremos \textit{Stop Server} (figura \ref{fig:manualuse91}).
+	\imagengrande{0.35}{manualuse91}{Pantalla principal con menú desplegable abierto.}
 \end{itemize}
 
+\subsubsection{Visualizar log}
 
+Para visualizar el log debemos navegar hasta la pantalla \textit{Log}.
+
+\begin{itemize}
+\item
+	Desde la pantalla principal abriremos el menú de navegación en el borde superior izquierdo.
+	\imagengrande{0.35}{manualuse0a}{Pantalla principal de la aplicación.}
+\item
+	Desde el menú de navegación pulsaremos \textit{Log} para ir a la pantalla de \textit{Log} (figura \ref{fig:manualuse02}).
+	\imagengrande{0.35}{manualuse02}{Menú de navegación de la aplicación.}
+\item
+	Una vez en la pantalla de \textit{Log} podemos ver el log y hacer scroll sobre él (figura \ref{fig:manualuselog}).
+	\imagengrande{0.35}{manualuselog}{Pantalla \textit{Log} de la aplicación.}
+\end{itemize}
 
 

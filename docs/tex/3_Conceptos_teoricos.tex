@@ -1,17 +1,32 @@
 \capitulo{3}{Conceptos teóricos}
 
-Para comprender el marco teórico del desarrollo de este proyecto, debemos conocer previamente algunos conceptos en los que se basa este propósito.
+Para comprender el marco teórico del desarrollo de este proyecto, debemos conocer previamente algunos conceptos en los que se basa el mismo.
 
-Seguir con una pequeña introducción.
+\section{Domótica}
+
+La domótica \cite{domoticaCEDOM} según la \href{http://www.cedom.es/}{Asociación Española de Domótica e Inmótica} (CEDOM) es el conjunto de tecnologías aplicadas al control y la automatización inteligente de la vivienda, que permite una gestión eficiente del uso de la energía, que aporta seguridad y confort, además de comunicación entre el usuario y el sistema. La domótica aporta servicios de gestión energética, seguridad, bienestar y comunicación.\\
+
+En este proyecto se centra en dar un servicio de seguridad en el que vamos a controlar cámaras en un vivienda y en futuras versiones podrían añadirse otros elementos inteligentes del hogar. 
+
 
 
 \section{Android}
 
 Android \cite{book:android} es un sistema operativo (OS) que inicialmente fue desarrollado para dispositivos móviles pero que hoy en día engloba ordenadores, relojes, televisores, tablets, coches, etc. Este entorno ha sido desarrollado por Google cuyo obetivo fue fomentar el uso de una plataforma abierta, gratuita, multiplataforma y muy segura, y es por ello que está basado en Linux (Linux es un núcleo sistema operativo (OS) open source).\\
-Este sistema permite programar aplicaciones empleando una variación de Java llamada Dalvik (o ART a partir de su version 5.0) y proporciona todas las interfaces necesarias para desarrollar fácilmente aplicaciones que acceden a las funciones del dispositivo (como pudiera ser el GPS,o la memoria entre otros).\\
+Este sistema permite programar aplicaciones empleando una variación de Java llamada Dalvik (o ART a partir de su version 5.0) y proporciona todas las interfaces necesarias para desarrollar fácilmente aplicaciones que acceden a las funciones del dispositivo (como pudiera ser el GPS, o la memoria entre otros).\\
 Y es por todo esto que es el sistema operativo más usado el mundo.
 
 \imagen{os_combined_2009_to_2021}{Sistemas operativos mas usados desde 2009 a 2021 \cite{androidvsworld}}
+
+
+
+\section{Servidor}
+
+Un servidor es una máquina que está integrada en una red informática que se encarga de realizar tareas para los clientes. Su funcionamiento se basa en el modelo Cliente-Servidor (figura \ref{fig:cliente-servidor-img}), un servidor provee un servicio y los clientes solicitan recursos mediante peticiones y el servidor provee los recursos con respuestas.
+
+\imagen{cliente-servidor-img}{Arquitectura Cliente-Servidor}
+
+Existen muchos tipos de servidores, tanto servidores web, como FTP, proxy o inlcuso de juegos online. En este proyecto se va a desarrollar un servidor proveedor de servicios, en este caso monitorización de cámaras.
 
 
 
@@ -20,16 +35,7 @@ Y es por todo esto que es el sistema operativo más usado el mundo.
 Python \cite{python} es un lenguaje interpretado, interactivo y orientado a objetos, que incorpora módulos, excepciones, tipado dinámico, tipos de datos de muy alto nivel y clases. Está muy extendido y nos permite realizar cualquiera de nuestros propósitos gracias a su gran cantidad de librerías y programadores. \\
 Fue creado a principios de la década de 1990 por Guido van Rossum en Stichting Mathematisch Centrum (CWI) en los Países Bajos como sucesor de un idioma llamado ABC \cite{pythonhistory}. \\
 Este lenguaje \cite{python} nos proporciona una gran biblioteca estándar que abarca áreas como procesamiento de cadenas (ya sea tanto expresiones regulares, Unicode, o incluso cálculo de diferencias entre archivos), protocolos de Internet (como son HTTP, FTP, SMTP, XML-RPC, POP, IMAP,o programación CGI entre otros), ingeniería de software (desde pruebas unitarias, registro, creación de perfiles, hasta análisis del propio código Python) e interfaces del sistema operativo (tales como llamadas al sistema, sistemas de archivos, incluidos sockets TCP / IP).
-\imagen{growth_major_languages}{lenguajes de programación mas usados desde 2012 a 2018 \cite{pythonuse}}
-
-
-
-\section{Domótica}
-
-La domótica \cite{domoticaCEDOM} según la \href{http://www.cedom.es/}{Asociación Española de Domótica e Inmótica} (CEDOM) es el conjunto de tecnologías aplicadas al control y la automatización inteligente de la vivienda, que permite una gestión eficiente del uso de la energía, que aporta seguridad y confort, además de comunicación entre el usuario y el sistema. La domótica aporta servicios de gestión energética, seguridad, bienestar y comunicación.\\
-
-En este proyecto se centra en dar un servicio de seguridad en el que vamos a controlar cámaras en un vivienda y en futuras versiones podrían añadirse otros elementos inteligentes del hogar. 
-
+\imagen{growth_major_languages}{lenguajes de programación mas usados desde 2012 a 2018 \cite{pythonuse}.}
 
 
 

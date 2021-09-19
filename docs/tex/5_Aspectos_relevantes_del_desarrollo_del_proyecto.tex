@@ -4,32 +4,43 @@ Este apartado pretende recoger los aspectos más interesantes del desarrollo del
 
 \section{Elección del tema}
 
-Siempre me ha gustado el hecho de desarrollar una aplicación Android y cuando estuve mirando tema para mi proyecto, me llamó la atención el hecho de desarrollar algo que me sirviera en mi día a día, se ofertaba un trabajo para hacer una aplicación con Unity3D, pero el profesor había cambiado de área y ya no lo tutorizaba. 
-Así que decidí darle mi enfoque y realizar la aplicación para el sistema Android dado lo extendido que está. 
-También decidí hacer el servidor dado que una asignatura que he cursado en este último curso trataba el tema y me llamó mucho la atención. Y todo esto me llevó a realizar el proyecto que expongo a continuación.
+Siempre me ha gustado el hecho de desarrollar una aplicación Android y cuando estuve mirando tema para mi proyecto, me llamó la atención el hecho de desarrollar algo que me sirviera en mi día a día. 
+Así que decidí realizar una aplicación para el sistema Android dado lo extendido que está. 
+También decidí darle un enfoque domótico y hacer un servidor dado que una asignatura que he cursado en este último curso trataba el tema y me llamó mucho la atención. 
+Y todo esto me llevó a realizar el proyecto que expongo a continuación.
 
 
 
 \section{Comienzo del proyecto}
 
 Una vez escogido el tema, tocaba diseñar la estructura del proyecto. 
-Decidí que la mejor opción sería separar el servidor en un dispositivo y la aplicación en otro, ya que así el dispositivo no cargaría con toda la carga computacional que supondría para él, dado que estos no disponen de mucha batería, aplicando el modelo cliente-servidor.\\
+Decidí que la mejor opción sería separar el servidor en un dispositivo y la aplicación en otro, ya que así el dispositivo no cargaría con toda la carga computacional que supondría para él, dado que estos no disponen de mucha batería, aplicando el modelo cliente-servidor.
+
+\imagengrande{0.4}{arqCliente-servidor}{Arquitectura modelo Cliente-Servidor.}
+
 Ahora tocaba decidir donde desarrollar el servidor y en que lenguaje. En este paso, me decanté por el lenguaje Python ya que está muy extendido (llegando a ser uno de los lenguajes de programación mas usados del mundo \cite{pythonuse}) y estaba muy familiarizado con él debido a que lo he usado en numerosas ocasiones.\\
 Después tenía que asegurarme de poder realizar la conexión con una cámara a través de Python.
 Tras una búsqueda intensa por internet encontré la librería OpenCV. 
 Para la realización de este proyecto me compré una cámara IP, pero tras unos días no conseguía acceder a ella desde OpenCV con python. 
 Para no perder demasiado tiempo contacté con la empresa que me había vendido la cámara y les comenté mi problema.
-Rápidamente me contestaron y me proporcionaron la dirección que debía usar, y gracias a ello pude realizar una conexión python-cámara.\\
+Rápidamente me contestaron y me proporcionaron la dirección que debía usar, y gracias a ello pude realizar una conexión python-cámara.
+En la figura \ref{fig:cam-server-connex}, podemos ver los diferentes intentos realizados en la conexión Servidor-Cámara. Algunos intentados bajo el protocolo http y otros bajo el protocolo rtsp, el que finalmente funcionó y se ha usado.
+
+\imagen{cam-server-connex}{Primeras conexiones con la cámara.}
+
 Una vez realizada dicha conexión ya podía empezar con el siguiente punto del proyecto.
 
 
 
 \section{Desarrollo del servidor}
-A la hora de desarrollar el servidor pensé que debía de implementarlo en algún dispositivo de bajo consumo, ya que iba a estar operativo las 24 horas del día. Por ello pensé en la Raspberry Pi, que la tenía por casa y ya había realizado algún proyecto personal con ella y se puede ejecutar python en ella.\\
+A la hora de desarrollar el servidor pensé que debía de implementarlo en algún dispositivo de bajo consumo, ya que iba a estar operativo las 24 horas del día. Por ello pensé en la Raspberry Pi, que ya había realizado algún proyecto personal con ella y se puede ejecutar python en ella.
+
+\imagen{picase}{Raspberry Pi 4.}
+
 Ahora ya podía empezar a programar. 
-Inicialmente realicé una conexión mediante Sockets con el servidor esperando a la conexión TCP / IP de la aplicación.
+Inicialmente realicé una conexión mediante Sockets con el servidor esperando a la conexión TCP / IP de la aplicación. En este momento cogí ideas del libro \textit{Foundations of Python Network Programming} \cite{book:sockets}.
 Poco a poco fui añadiendo más funcionalidad, como por ejemplo, permitir añadir las cámaras o eliminarlas, o poder para el servidor entre otras.
-Para poder mantener persistencia en la información, decidí crear un ORM para la base de datos de la cámara \ref{tabla:basedatoscamarasservidor}. Para ello usé \textbf{SQLAlchemy}, debido a que esta librería dispone de su propio ORM, el cual es capaz de mapear tablas a clases Python y convertir automáticamente las llamadas a funciones dentro de dichas clases a sentencias en lenguaje SQL.
+Para poder mantener persistencia en la información, decidí crear un ORM para la base de datos de la cámara (en la tabla \ref{tabla:basedatoscamarasservidor} podemos ver ejemplos de instancias en dicha base de datos, exactamente igual a la tabla \ref{tabla:basedatoscamarasapp} de la aplicación ). 
 
 \tablaSmall{Ejemplo de la base de datos de \textit{cámaras} en el servidor.}{l c c c c}{basedatoscamarasservidor}
 { \multicolumn{1}{l}{Id} & Ip Address & Name & Port \\}{
@@ -37,6 +48,11 @@ Para poder mantener persistencia en la información, decidí crear un ORM para l
 	1 & 192.168.0.31:8080 & Cámara 2 & 9998\\
 	2 & 192.168.0.32:8080 & Cámara 3 & 9997\\
 }
+
+Un ORM o Object Relational Mapping (Mapeador de Objetos Relacionales) es una estructura que permite convertir (mapear) datos de objetos en el formato necesario para una base de datos, vinculando los mismos (el objeto con los datos en la base de datos). Este mapeo puede realizarse a cualquier base de datos.\\
+Para ello usé \textbf{SQLAlchemy}, debido a que esta librería dispone de su propio ORM, el cual es capaz de mapear tablas a clases Python y convertir automáticamente las llamadas a funciones dentro de dichas clases a sentencias en lenguaje SQL.
+
+\imagengrande{0.6}{sqlalchemydiagrama}{Diagrama de la librería SQLAlchemy.}
 
 Para el envío de imágenes de que se obtenían desde la conexión con la cámara que mantenía el servidor gracias a la librería OpenCV, una vez obtenía el frame, realizamos la serialización del mismo con la funcion \textit{imencode}.
 Esta función comprime la imagen y la almacena en el búfer de memoria redimensionándola para ajustarla al resultado.
@@ -48,14 +64,16 @@ Por temas de consumo energético se tomó la decisión de mantener la conexión 
 \section{Desarrollo de la aplicación}
 El desarrollo de la aplicación Android fue lo que más trabajo me ha costado y es en este donde más problemas me he encontrado.\\
 
-Antes de comenzar a escribir código realice un cursillo para Android Studio, a continuación dejo el enlace: \href{https://www.youtube.com/watch?v=tyx05coXixw&list=PLyvsggKtwbLX06iMtXnRGX5lyjiiMaT2y}{\textit{Curso de programación Android desde cero}}.\\
+Antes de comenzar a escribir código, realicé un cursillo para Android Studio, a continuación dejo el enlace: \href{https://www.youtube.com/watch?v=tyx05coXixw&list=PLyvsggKtwbLX06iMtXnRGX5lyjiiMaT2y}{\textit{Curso de programación Android desde cero}}.
+
+\imagen{cursoas}{\textit{Curso de programación Android desde cero}.}
 
 En un principio creé una única actividad en la que utilizaba un botón para conectarme al servidor y recibir un pequeño texto. 
-Es aquí donde me encontré el primer problema, ya que al enviar datos desde un socket de python y otro Java, los datos no se serializan igual. Para solucionarlo tube que convertir a bytes el texto en python y recibirlo en Java en un buffer de bytes y convertirlo a String.\\
+Es aquí donde me encontré el primer problema, ya que al enviar datos desde un socket de python y otro Java, los datos no se serializan igual. Para solucionarlo tuve que convertir a bytes el texto en python y recibirlo en Java en un buffer de bytes y convertirlo a String.\\
 
-Una vez conseguido enviar texto desde las dos partes, y recibirla con éxito, comencé con l aparte en que envíamos imágenes a la aplicación. 
+Una vez conseguido enviar texto desde las dos partes, y recibirla con éxito, comencé con la parte en que enviamos imágenes a la aplicación. 
 Y aquí tuve muchos problemas, ya que OpenCV desde python codificaba las imágenes en un formato que luego desde Java no conseguía descifrar. 
-Tras mucho tiempo navegando por Stack Overflow y muchos repositorios de GitHub, encontré la forma adecuada, el paquete \textit{android.graphics.Bitmap}.
+Tras mucho tiempo buscando la solución, encontré la forma adecuada, el paquete \textit{android.graphics.Bitmap}.
 Primero creé un \textit{DatagramPacket} con un buffer de bytes para la entrada de los datos, y con la clase \textit{BitmapFactory} y la función \textit{decodeByteArray} pude mostrar la imagen enviada desde el servidor, convirtiéndola en un \textit{BitMap}. 
 También hubo que usar un manejador o Handler para permitir que el hilo secundario actualice la interfaz.\\
 
@@ -64,23 +82,42 @@ Cuando la aplicación recibe una imagen del servidor la actualiza sobre un \text
 Después de conseguir la conexión de vídeo, diseñé la interfaz de usuario.
 Para ello usé el paquete \textit{androidx.navigation} con un menú desplegable. 
 En este momento encontré mas problemas, dado que el menú desplegable utiliza Fragments de Android y no se pueden comunicar directamente con la actividad principal.
-Para ello use la clase \textit{ViewModel} del paquete \textit{androidx.lifecycle}, para la comunicación entre fragments y con la actividad principal.\\
+Para ello use la clase \textit{ViewModel} del paquete \textit{androidx.lifecycle}, para la comunicación entre fragments y con la actividad principal.
 
-Tras conseguir implementar el diseño, se fue añadiendo funcionalidad a la aplicación:
-\begin{itemize}
+\imagen{navigation}{Archivo navigation.}
+
+Tras conseguir implementar el diseño, se fue añadiendo funcionalidad a la aplicación (podemos ver el resultado en la figura \ref{fig:desarrolloapp}):
+\begin{enumerate}
 	\item Añadir las cámaras.
 	\item Eliminar las cámaras.
 	\item Parar el servidor.
 	\item Desconectarse del servidor.
-\end{itemize}
+	\item Grabación de un pequeño fragmento de vídeo.
+	\item Visualización del log del sistema.
+\end{enumerate}
+\imagengrande{0.8}{desarrolloapp}{Pantallas de la aplicación según la funcionalidad.}
+
+En cuanto a la implementación de la grabación de un pequeño fragmento de vídeo, debo comentar que encontré algunos problemas. Como la aplicación da soporte a la gran mayoría de los dispositivos Android (99\%), el API de android que se utiliza (\textit{API 16}) es antiguo y no dispone de muchas librerías compatibles. Buscando librerías encontré JCodec, que daba soporte para Android y lograba realizar la acción deseada. Añadirla al proyecto fue fácil y gracias a esta librería logré realizar la grabación. Para ello usé su clase \textit{AndroidSequenceEncoder}, que permite la creación de vídeos a partir de imágenes, o en nuestro caso de \textit{Bitmaps}.
 
 \subsection{Persistencia en la aplicación}
 
 Para lograr la persistencia en Android debemos mantener la información en una base de datos y \textbf{SQLite} es la API en Android el uso de bases de datos.\\
 En la app hemos creado dos tablas:
 \begin{itemize}
-	\item Tabla para las cámaras \ref{tabla:basedatoscamarasapp}.
-	\item Tabla para la IP del servidor \ref{tabla:basedatosipserverapp}.
+	\item Para las cámaras la tabla \ref{tabla:basedatoscamarasapp}.
+		En dicha tabla tenemos 4 comunas: 
+		\begin{itemize}
+		\item
+			\textit{Id} para el identificador y \textit{primary key}.
+		\item
+			\textit{Ip Address} con la ip de la cámara.
+		\item
+			\textit{Name} para el nombre adjudicado a la cámara.
+		\item
+			\textit{Port} con el puerto por el que el cliente va a recibir sus imágenes.
+		\end{itemize}
+	\item Para la IP del servidor la tabla \ref{tabla:basedatosipserverapp}.
+		En esta tabla tenemos 1 columna, \textit{Ip Address} con la ip del servidor.
 \end{itemize}
 
 \tablaSmall{Ejemplo de la base de datos de \textit{cámaras} en la app.}{l c c c c}{basedatoscamarasapp}
@@ -99,13 +136,34 @@ Para esta base de datos he creado una interfaz para el acceso a la misma, para e
 
 
 
+\section{Evaluación del código}
+
+Cuando ya disponía prácticamente de una versión final del código, realicé un análisis del mismo con la herramienta SonarQube. Esta herramienta analiza tanto fragmentos de código sensibles a la seguridad, como \textit{code smells}, duplicaciones de código, vulnerabilidades, bugs, y posibles errores entre otros.\\
+Inicialmente analicé por separado la aplicación y el servidor. Aquí podemos ver unas imágenes que ilustran el resultado (figuras \ref{fig:squse2} y \ref{fig:squse11}):
+\imagen{squse2}{Resultado del escaneo del código de la aplicación con SonarQube.}
+\imagen{squse11}{Resultado del escaneo del código del servidor con SonarQube.}
+Podemos apreciar que al analizar el código las primeras veces obtendremos una calificación global ``\textit{failed}'', debido a que algunos de los campos que se han comprobado no es apto (podemos ver en la figura \ref{fig:squse2} el campo ``\textit{Hotspots Reviewed}'' tiene una calificación ``\textit{E}'').
+Tras refactorizar el código, ya lo analicé todo junto, obteniendo la calificación más alta (A) en todos los campos y la calificación global \textit{Passed} (figura \ref{fig:sqpruebas5}).
+\imagen{sqpruebas5}{Resultado del escaneo del código con SonarQube.}
+Gracias a esta herramienta el proyecto ha obtenido una calidad de código superior, siendo menos vulnerable y más seguro para el usuario final.
 
 
 
+\section{Documentación}
 
+Para la documentación he utilizado el editor de textos offline \textit{TEXMAKER}, que es el recomendado por la universidad en el repositorio con la plantilla de \LaTeX. Gracias a este editor y a la plantilla proporcionada por la universidad, he podido desarrollar la memoria y anexos con más facilidad.\\
 
+Cabe destacar que a la hora de hacer las referencias bibliográficas, se me presentó el problema de no visualizarse las URLs de las mismas. Para ello me dirigí a la página del repositorio de la plantilla utilizada \cite{plantilalatex}, y en el apartado de \textit{Issues} vi que aún estaba abierto un \textit{issue} (\textit{No aparecen las url en las referencias bibiográficas}, el 18) que trataba este problema. En él se explicaba como solucionar el problema:
+\begin{enumerate}
+\item
+	Cambiar en el archivo \textit{memoria.text} el estilo de la bibliografía.
+\item
+	Y por último descargar el archivo \textit{IEEEtran.bst} y dejarlo en la misma carpeta que el archivo de la memoria.
+\end{enumerate}
 
+Tras realizar estos cambios, ya se aparecían las URLs, y con ello ya disponía de la memoria y los anexos terminados y conformes a los estándares.
 
+\subsection{Logo App}
 
-
-
+También se ha diseñado un logo para el despliegue de la aplicación. Podemos verlo en la siguiente imagen (figura \ref{fig:logoapp}):
+\imagengrande{0.4}{logoapp}{Logo de la aplicación.}

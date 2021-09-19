@@ -1,15 +1,19 @@
 # Built application files
-*.apk
 *.aar
 *.ap_
 *.aab
 
 # Sonar
 .scannerwork
-.scannerwork/*
+.scannerwork/*git add 
 
 # pycache
+*.pyc
 Server/__pycache__/*
+Server/data/__pycache__/*
+Server/data/db/__pycache__/*
+Server/presentation/__pycache__/*
+Server/logic/__pycache__/*
 
 # Files for the ART/Dalvik VM
 *.dex

@@ -9,7 +9,7 @@ Se incluye la instalación de IDEs, la estructura de la aplicación y el servido
 
 \section{Estructura de directorios}
 
-La estructura del proyecto se puede encontrar en el \href{https://github.com/fmv1001/LocalStream}{repositorio de GitHub}.\\
+La estructura del proyecto se puede encontrar en el \href{https://github.com/fmv1001/DomoCamera}{repositorio de GitHub}.\\
 Dicha estructura se describe a continuación:
 
 \begin{itemize}
@@ -28,6 +28,8 @@ Dicha estructura se describe a continuación:
 \item
 	\textbf{/AndroidApp/app/src/main/java/com/example/appstream/:} Contiene las fuentes del código Java que implementa la funcionalidad de la aplicación.
 \item
+	\textbf{/AndroidApp/app/release/:} en esta carpeta encontramos el archivo de instalación APK de la aplicación.
+\item
 	\textbf{/AndroidApp/app/androidTest/:} Contiene el código necesario para las pruebas de instrumentación que se ejecutan en los dispositivos Android.
 \item
 	\textbf{/AndroidApp/app/test/:} Contiene el código necesario para pruebas locales.
@@ -38,7 +40,15 @@ Dicha estructura se describe a continuación:
 \item
 	\textbf{/docs/text/:} En la carpeta ``\textit{text}'' se encuentran los distintos documentos que forman los documentos maestros.
 \item
-	\textbf{/Server/:} contiene todo los archivos de código fuente necesarios para que el servidor funcione correctamente.
+	\textbf{/Server/:} contiene las carpetas distribuidas según el patrón modelo-vista-controlador del código fuente necesarios para que el servidor funcione correctamente.
+\item
+	\textbf{/Server/data/:} carpeta de datos (\textit{data}) que contiene la base de datos del servidor y el ORM (\textit{schema.py}) para el acceso a la misma, todo ello se encuentra dentro de la carpeta \textit{db}.
+\item
+	\textbf{/Server/logic/:} contiene la lógica de negocio del servidor. 
+	Dentro de ella encontramos el archivo \textit{MainServer.py}.
+\item
+	\textbf{/Server/presentation/:} implementa la capa de presentación (\textit{vista}).
+	Dentro de ella encontramos el archivo \textit{CamConnex.py}, que implementa el envío de imágenes a los clientes.
 \end{itemize}
 
 \section{Manual del programador}
@@ -114,7 +124,7 @@ Instalación de Visual Studio Code:
 \imagen{vscinstall7}{Instalador para Windows de Visual Studio Code.}
 
 \item
-	En linux podemos ejecutar el comando \textit{sudo apt install code} \cite{vscforrasp}
+	En linux podemos ejecutar el comando \textit{sudo apt install code} \cite{vscforrasp}.
 \end{enumerate}
 
 \subsubsection{Android Studio}
@@ -193,7 +203,7 @@ Instalación de SonarQube:
 \item
 	Para iniciar SonarQube debemos ejecutar el archivo ``\textit{StartSonar.bat}'' y esperar a su ejecución, nos dirigimos a un navegador y vamos a la dirección ``\textit{http://localhost:9000/}'' e iniciamos sesión.
 \imagen{squse1}{Pantalla incial de SonarQube.}
-\imagen{squse2}{Pantalla principal de SonarQube.}\label{princiQube}
+\imagen{squse2}{Pantalla principal de SonarQube.}
 \item
 	Para parar SonarQube debemos ejecutar ``\textit{Ctrl + c}'' en la terminal de ejecución de SonarQube.
 \end{enumerate}
@@ -239,7 +249,7 @@ Configuración de SonarScanner:
 \section{Compilación, instalación y ejecución del proyecto}
 
 Antes de proceder a la compilación, instalación y ejecución del proyecto debemos descargar el \href{https://github.com/fmv1001/LocalStream}{repositorio de GitHub}.
-Para ello copiamos la dirección del repositorio (\textit{https://github.com/fmv1001/LocalStream}) y en la herramienta Git Bash for Windows ejecutamos el comando ``\textit{git clone https://github.com/fmv1001/LocalStream}'', que clonara el repositorio en una carpeta local de nuestro dispositivo.
+Para ello copiamos la dirección del repositorio (\textit{https://github.com/fmv1001/DomoCamera}) y en la herramienta Git Bash for Windows ejecutamos el comando ``\textit{git clone https://github.com/fmv1001/Domocamera}'', que clonara el repositorio en una carpeta local de nuestro dispositivo.
 \imagen{descargaRep}{Descarga del repositorio a través de comandos Git.}
 
 \subsection{Importar el proyecto en Android Studio}
@@ -351,15 +361,15 @@ Para compilar la aplicación debemos hacer uso de Gradle. Para ello nos dirigimo
 
 La compilación del servidor se realizará durante la ejecución del mismo.
 
-\subsection{SonarQube}
+\subsection{SonarQube} \label{sonaruse}
 
 SonarQube es una plataforma de código abierto desarrollada en Java que nos permite realizar análisis de código con diferentes herramientas de forma automatizada.
 Vamos a proceder a la explicación de como lo hemos integrado al proyecto, y cómo usarlo.\\
 \begin{enumerate}
 \item
 	Una vez instalado e inciado SonarQube como se explica en \ref{sonarQubeInstall} debemos dirigirnos a la carpeta del repositorio del proyecto y abrir una terminal. 
-	Podemos hacerlo desde la ruta escribiendo \textit{cmd}\ref{abrircmd} o desde el terminal navegar hasta la ruta.
-\imagen{ssuse1}{Cómo abrir un terminal desde una carpeta en Windows.}\label{abrircmd}
+	Podemos hacerlo desde la ruta escribiendo \textit{cmd} (como podemos ver en la figura \ref{fig:ssuse1}) o desde el terminal navegar hasta la ruta.
+\imagen{ssuse1}{Cómo abrir un terminal desde una carpeta en Windows.}
 \item 
 	Una vez llegado este momento, debemos ejecutar uno de los siguientes comandos:
 	\begin{itemize}
@@ -371,7 +381,7 @@ Vamos a proceder a la explicación de como lo hemos integrado al proyecto, y có
 		\textit{sonar-scanner -Dproject.settings=sonar-project.properties -Dsonar.login=} ``\textit{admin}'' \textit{-Dsonar.password=}``\textit{****}''
 	\end{itemize}
 \item
-	Después, esperamos a que termine la ejecución del comando. Cuando haya terminado nos dirigimos a la página principal de SonarQube \ref{princiQube}. 
+	Después, esperamos a que termine la ejecución del comando. Cuando haya terminado nos dirigimos a la página principal de SonarQube. 
 \item
 	Una vez allí nos dirigimos a la pestaña \textit{Issues} en el borde superior. Allí nos muestra todos los bugs, las vulnerabilidades y ``code smell'' que hay en el código y debería ser corregido. 
 \imagen{ssuse2}{Pestaña \textit{Issues} de SonarQube}
@@ -437,22 +447,42 @@ Para generar el APK debemos realizar los siguientes pasos:
 	Una vez generado lo podremos encontrar en la carpeta \textit{/AndroidApp/app/release/}
 \end{enumerate}
 
-Después de generar el archivo lo pasamos al teléfono y lo ejecutamos, misma salida que \ref{fig:androapp}.
+Después de generar el archivo lo pasamos al teléfono y lo ejecutamos, misma salida que la imagen \ref{fig:androapp}.
 
 \subsubsection{Ejecución del servidor}
 
 Para la ejecución del servidor deberemos haber instalado previamente Visual Studio Code y Python 3 en el dispositivo que queramos desplegarlo.\\
 Una vez instalados los componentes, abrimos Visual Studio Code, importamos el proyecto (tal como se explica en manual \ref{importtovsc}).
-Después abrimos el archivo MainServer.py y en la esquina superior derecha ejecutamos pinchando el el icono \textit{play/run}. 
+Después abrimos el archivo \textit{MainServer.py} y en la esquina superior derecha ejecutamos pinchando el el icono \textit{play/run}. 
 Seguidos estos pasos el servidor ya se encuentra en ejecución.
 \imagen{runvsc}{Ejecución del servidor desde Visual Studio Code.}
 
-También podemos ejecutar el servidor desde comandos situándonos en la carpeta \textit{/Server/} y desde el terminal ejecutamos el comando:\\
+También podemos ejecutar el servidor desde comandos situándonos en la carpeta \textit{/Server/logic/} y desde el terminal ejecutamos el comando:\\
 \textit{python3 MainServer.py}
 
 
 
 \section{Pruebas del sistema}
+
+Durante el desarrollo del proyecto las pruebas las he realizado manualmente, tanto en la aplicación (ejecutándola en un dispositivo real y en el emulador textit{Android Virtual Device}) como en el servidor.\\
+
+También he utilizado la herramienta SonarQube para mejorar la calidad del código, encontrar errores o bugs, y detectar vulnerabilidades entre otras cosas.  Una vez instalado (instalación SonarQube \ref{sonarQubeInstall}) y ejecutado SonarQube (inicio de SonarQube \ref{sonaruse}) a la vez que SonarScanner, podemos ver un pequeño resumen de la calidad del proyecto (figura \ref{fig:squse3}).
+
+\imagen{squse3}{Resumen del escaneo de SonarQube en la aplicación.}
+
+En la pestaña \textit{Issues} podemos ver todos los errores o code smells que ha detectado, y así poder corregirlos.\\
+
+En el siguiente gráfico (figura \ref{fig:sqpruebas1}) vamos a ver la actividad seguida en SonarQube durante la fase 8 (\ref{fase8}) del proyecto, en el que se puede ver como se han ido solucionando los errores, bugs, vulnerabilidades y \textit{code smells}.
+
+\imagengrande{1.1}{sqpruebas1}{Actividad medida por SonarQube.}
+
+Acabando por obtener la calificación \textit{Passed} del proyecto (siendo las posibilidades \textit{Passed} y \textit{Failed}), podemos ver en la imagen \ref{fig:sqpruebas5}.
+
+\imagengrande{1}{sqpruebas5}{Resumen del proyecto en SonarQube.}
+
+También Sonar nos proporciona un pequeño resumen con las carpetas que ha analizado, que podemos ver en la imagen \ref{fig:sqpruebas4}.
+
+\imagengrande{1.1}{sqpruebas4}{Carpetas analizadas por SonarQube.}
 
 
 
