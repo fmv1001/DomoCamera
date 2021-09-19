@@ -1,7 +1,11 @@
 package com.example.appstream;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.widget.Toast;
@@ -12,6 +16,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
@@ -26,14 +32,27 @@ import androidx.appcompat.widget.Toolbar;
 public class NavMenuActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-    private static ServerTCPConnexion connexionThread;
-    private String serverIp = "192.168.0.28";
+    private ServerTCPConnexion connexionThread;
+    private String serverIp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nav_menu);
         Activity activity = this;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            //Verifica permisos para Android 6.0+
+            int permissionCheck = ContextCompat.checkSelfPermission(
+                    this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+                Log.i("Mensaje", "No se tiene permiso para leer.");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 225);
+            } else {
+                Log.i("Mensaje", "Se tiene permiso para leer!");
+            }
+        }
+
         InformationViewModel informationViewModel = new ViewModelProvider(this).get(InformationViewModel.class);
         SettingViewModel settingViewModel = new ViewModelProvider(this).get(SettingViewModel.class);
         settingViewModel.getSelected().observe(this, new Observer<String[]>() {
@@ -48,7 +67,7 @@ public class NavMenuActivity extends AppCompatActivity {
                     } catch (Exception e) {
                         informationViewModel.select("Error al intentar conectar con " +
                                 "el servidor" + "\n\t\t\t  Mensaje de Error: " + e.getMessage() );
-                        e.printStackTrace();
+                        Log.println(Log.ERROR,"12",e.getMessage());
                     }
 
                     if (connexionThread != null && !connexionThread.isAlive()) {

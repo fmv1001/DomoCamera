@@ -48,7 +48,6 @@ class SocketServer():
         cameras_string = "-"
         for instance in self.__db_session.query(Camera).order_by(Camera.name):
             cameras_string = (cameras_string + instance.name + "|" + instance.ipaddres + "|" + str(instance.port) + "-")
-            print(cameras_string)
             cam_x = ServerThreadForIpCam(instance.name,instance.port, self.__client_address, instance.ipaddres)
             self.__lista_camaras.append(cam_x)
             cam_x.start()
@@ -58,44 +57,37 @@ class SocketServer():
             while True:
                 try:
                     print("recibiendo nueva instruccion")
-                    #connection.send(b"True")
                     option = connection.recv(1)
-                    print("reciboOption: ", option.decode())
-                    #self.__switch_options.get(option.decode(), self.error)()
                     if option.decode() == "0":
-                        print("op0")
                         self.stop_server()
                         break
                     elif option.decode() == "1":
-                        print("op1")
+                        print("Añadiendo cámara")
                         new_cam = connection.recv(128)
-                        print("reciboNew: ", new_cam.decode())
                         camera_options = new_cam.decode().split('-')
                         print(camera_options)
                         self.add_camera(camera_options[0], camera_options[1], camera_options[2])
                     elif option.decode() == "2":
-                        print("op2")
+                        
                         del_cam = connection.recv(16)
-                        print("reciboDel: ", del_cam.decode())
+                        print("Eliminando camara: ", del_cam.decode())
                         self.delete_camera(del_cam.decode())
                     elif option.decode() == "3":
-                        print("op3")
                         stop_cam = connection.recv(16)
-                        print("reciboStop: ", stop_cam.decode())
+                        print("Parando cámara: ", stop_cam.decode())
                         self.stop_camera(stop_cam.decode())
                     elif option.decode() == "4":
-                        print("op4")
                         start_c = connection.recv(16)
-                        print("reciboStart: ", start_c.decode())
+                        print("Enviando imágenes de cámara: ", start_c.decode())
                         self.start_camera(start_c.decode())
                     if option.decode() == "5":
-                        print("op5")
+                        print("Cliente ", client_address, " desconectado")
                         break
                     else:
                         self.error()
                 except Exception as e:  
                     print(e)              
-                    print("Error en la conexion, cerrando camaras...") #---------------
+                    print("Error en la conexion, cerrando camaras...") 
                     for i in self.__lista_camaras:
                         print("Cerrando camara: ", i)
                         i.delete()
@@ -125,7 +117,6 @@ class SocketServer():
         cam_x.start()
     
     def delete_camera(self, name_camera):
-        print("Numero de camaras: ", self.__lista_camaras)
         for i in self.__lista_camaras:
                 if i.getName() == name_camera:
                     i.delete()
@@ -139,8 +130,6 @@ class SocketServer():
                         print("Error eliminando camaras de la bbdd")
                         self.__db_session.rollback()
                     self.__lista_camaras.remove(i)
-                    print("Camara eliminada de la lista del servidor")
-                    print("Numero de camaras final: ", self.__lista_camaras)
                     return
     
     def stop_server(self):
@@ -166,6 +155,6 @@ class SocketServer():
                     return
 
     def error(self):
-	    print('error al recibir accion')
+	    print("")
     
 SocketServer()

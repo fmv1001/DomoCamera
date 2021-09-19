@@ -13,9 +13,9 @@ import java.util.List;
 public class DataBaseCameras extends SQLiteOpenHelper implements DataBaseCameraInterface{
 
     private static final int DATABASE_VERSION = 1;
-    private final String CAMERAS_TABLE_NAME = "cameras";
-    private final String SERVER_TABLE_NAME = "serverinf";
-    private final String IP_SERVER_COLUMN = "ipServer";
+    private static final String CAMERAS_TABLE_NAME = "cameras";
+    private static final String SERVER_TABLE_NAME = "serverinf";
+    private static final String IP_SERVER_COLUMN = "ipServer";
     public static final String DATABASE_NAME = "DataBase.db";
     private Context context;
     private SQLiteDatabase db;

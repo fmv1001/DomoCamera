@@ -1,14 +1,16 @@
-from schema import Schema
-from cameras import Camera
 from sqlalchemy.orm.session import Session
 from sqlalchemy.sql.sqltypes import Boolean 
 from sqlalchemy import sql, exc
+import sys, os
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(os.path.dirname(SCRIPT_DIR))
+from schema import Schema
+from cameras import Camera
+
 
 
 schema: Schema = Schema('sqlite:////tmp/database.db')
-cam1: Camera = Camera(0, "camera 1","rtsp://192.168.0.29:8080/h264_pcm.sdp",9999)
-cam2: Camera = Camera(1, "camera 2","rtsp://192.168.18.5:8080/h264_pcm.sdp",9998)
-
 
 db_session: Session = schema.new_session()
 

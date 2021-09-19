@@ -12,7 +12,7 @@ class ServerThreadForIpCam(Thread):
 
         super().__init__(group=group, target=target, name=name,
                          daemon=daemon)
-        print("iniciando: ", cam_dir)
+        print("Iniciando cámara: ", cam_dir)
         self.__sock_send = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.__runnig = True
         self.__stop = False
@@ -34,19 +34,13 @@ class ServerThreadForIpCam(Thread):
         while True:
             time.sleep(5)
             while self.__runnig:
-                print("frame ", self.__img_counter)
                 ret, frame = self.__capture.read()
                 if not ret:
                     print("error en lectura de frame en camra: ", self.__cam_dir)
                     break
 
-                # Frame resize
-                #frame = cv2.resize(frame, (1000,700))
-
                 # Frame serialize
                 data = cv2.imencode('.jpg', frame, [int(cv2.IMWRITE_JPEG_QUALITY),15])[1]
-
-                print(len(data))
 
                 # Sending the frame
                 try:

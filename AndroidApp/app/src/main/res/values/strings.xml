@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AppStream</string>
+    <string name="app_name">DomoCamera</string>
     <string name="start_page">Volver a inicio</string>
     <string name="conectar">Conectarse con el servidor</string>
     <string name="Image_view">Imagen de la camara</string>

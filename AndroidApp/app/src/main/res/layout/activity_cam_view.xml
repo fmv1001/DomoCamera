@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_background"
     tools:context=".ReceiverCamFrame">
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="416dp"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_margin="0dp"
         android:gravity="center_horizontal"
         android:orientation="vertical"
@@ -31,7 +32,8 @@
             android:id="@+id/textView4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/amplify_camera" />
+            android:text="@string/amplify_camera"
+            android:textColor="#131313" />
 
     </LinearLayout>
 
@@ -44,6 +46,8 @@
         android:layout_marginBottom="10dp"
         android:onClick="back_to_home"
         android:text="@string/start_page"
+        android:textColor="@color/white"
+        app:backgroundTint="@color/gray_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -51,9 +55,9 @@
         android:id="@+id/rec_video"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginBottom="276dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="200dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@android:drawable/radiobutton_on_background"
@@ -62,11 +66,13 @@
     <TextView
         android:id="@+id/rec_text"
         android:layout_width="wrap_content"
-        android:layout_height="22dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginBottom="283dp"
+        android:layout_marginBottom="210dp"
         android:text="@string/action_rec"
+        android:textColor="#000000"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/rec_video" />
 

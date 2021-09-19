@@ -18,6 +18,9 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.jcodec.api.android.AndroidSequenceEncoder;
 import org.jcodec.common.Codec;
 import org.jcodec.common.Format;
@@ -30,10 +33,8 @@ import org.jcodec.common.model.Rational;
 
 public class RcvThread extends Thread {
 
-    private static String serverIp;    // Server IP
-    private static int serverPortSend;// Server sender port
+    private final String serverIp;    // Server IP
     private DatagramSocket rcvSocket;
-    private InetAddress serverAddress;
     private boolean rec = false;
     private AndroidSequenceEncoder encoder;
     private SeekableByteChannel out = null;
@@ -46,15 +47,14 @@ public class RcvThread extends Thread {
     private ImageView imgViewCam;
 
     public RcvThread(ImageView imgViewCam, String serverIp, int serverPortSend) {
-        RcvThread.serverIp = serverIp;
-        this.serverPortSend = serverPortSend;
+        this.serverIp = serverIp;
         this.imgViewCam = imgViewCam;
         try {
             rcvSocket = new DatagramSocket(null);
             rcvSocket.setReuseAddress(true);
             rcvSocket.bind(new InetSocketAddress(serverPortSend));
         } catch (SocketException e) {
-            e.printStackTrace();
+            Log.println(Log.ERROR,"12",e.getMessage());
         }
 
     }
@@ -75,14 +75,13 @@ public class RcvThread extends Thread {
                 rcvSocket.receive(inPacket);
 
                 if(!inPacket.getAddress().equals(InetAddress.getByName(serverIp)))
-                    throw new IOException("Mensaje desconocido: " + serverAddress.toString());
+                    throw new IOException("Mensaje desconocido: " + serverIp);
 
                 Bitmap b = BitmapFactory.decodeByteArray(inPacket.getData(), 0, inPacket.getLength());
                 b = Bitmap.createScaledBitmap(b, imgViewCam.getWidth(), imgViewCam.getHeight(), false);
                 frameHandler.sendEmptyMessage(1);
                 frameBitMap = b;
                 if(rec){
-                    Log.println(Log.WARN, "11","cargando una imagen al video");
                     Bitmap bitmapVideo = Bitmap.createScaledBitmap(b, 500, 500, false);
                     encoder.encodeImage(bitmapVideo);
                     framesInVideo++;
@@ -96,20 +95,20 @@ public class RcvThread extends Thread {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Error en recepción de imagen: ");
-            e.printStackTrace();
+            Log.println(Log.WARN,"10","Error en recepción de imagen: ");
+            Log.println(Log.ERROR,"12",e.getMessage());
         }finally {
             rcvSocket.close();
         }
     }
 
     public void recVideo(File file){
-
         File file1 = new File(file,File.separator + "newDir");
         if(!file1.exists()){
             file1.mkdirs();
         }
-        File file2 = new File(file1,"output2.mp4");
+        String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmmss").format(new Date());
+        File file2 = new File(file1,timeStamp + "_output2.mp4");
         String path = file2.getPath();
         Log.println(Log.WARN, "13",path);
         try {
@@ -117,7 +116,7 @@ public class RcvThread extends Thread {
             encoder = new AndroidSequenceEncoder(out, Rational.R(25, 1));
             Log.println(Log.WARN, "14","no hay error");
         }catch (IOException e) {
-            e.printStackTrace();
+            Log.println(Log.ERROR,"12",e.getMessage());
         }
         rec = true;
     }

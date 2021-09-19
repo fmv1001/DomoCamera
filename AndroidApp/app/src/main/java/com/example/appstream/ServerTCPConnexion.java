@@ -2,6 +2,7 @@ package com.example.appstream;
 
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
@@ -19,8 +20,8 @@ public class ServerTCPConnexion extends Thread {
 
     private Socket sendSocket;
     private ConnexHandler connexHandler = new ConnexHandler();
-    private static int serverPortRecv;
-    private static String serverIp;
+    private final int serverPortRecv;
+    private final String serverIp;
     private DataOutputStream dataOutputStream;
     private DataInputStream dataInputStream;
     private boolean running = true;
@@ -36,46 +37,29 @@ public class ServerTCPConnexion extends Thread {
     private int portC = 0;
     private static ViewModelStoreOwner activity;
 
-    public ServerTCPConnexion(String serverIp, int serverPort, ViewModelStoreOwner activityOwner) throws UnknownHostException {
+    public ServerTCPConnexion(String serverIp, int serverPort, ViewModelStoreOwner activityOwner) {
         serverPortRecv = serverPort;
         this.serverIp = serverIp;
         instance = this;
         activity = activityOwner;
-        try {
-            sendSocket = new Socket(serverIp, serverPortRecv);
-        } catch (Exception e) {
-            System.err.println("Error en el establecimiento de conexión con servidor: ");
-            e.printStackTrace();
-            running = false;
-            throw  new UnknownHostException("Error en el establecimiento de conexión con servidor, servidor no accesible.");
-        }
     }
 
-    public static ServerTCPConnexion getInstance(ViewModelStoreOwner activityOwner) {
-        if (instance == null)
-            return null;
-        if (activity != null)
-            activity = activityOwner;
+    public static ServerTCPConnexion getInstance() {
         return instance;
     }
 
     @Override
     public void run() {
-        try {
-            dataOutputStream = new DataOutputStream(sendSocket.getOutputStream());
-            dataInputStream = new DataInputStream(sendSocket.getInputStream());
-            connexHandler.sendEmptyMessage(1);
-        } catch (IOException e) {
-            System.err.println("Error en el establecimiento de conexión con servidor: ");
-            e.printStackTrace();
-            running = false;
-        }
+        startConnexion();
         if (running){
             byte[] bytes = new byte[512];
             try {
-                dataInputStream.read(bytes);
-            } catch (IOException e) {
-                e.printStackTrace();
+                int count = 0;
+                count = dataInputStream.read(bytes);
+                if(count<=0)
+                    throw new IOException("no se ha leído nada");
+            } catch (Exception e) {
+                Log.println(Log.ERROR,"12",e.getMessage());
             }
 
             String liveCameras = new String(bytes);
@@ -127,9 +111,22 @@ public class ServerTCPConnexion extends Thread {
                 newCamera = false;
                 stopCamera = false;
                 startCamera = false;
-                e.printStackTrace();
+                Log.println(Log.ERROR,"12",e.getMessage());
                 stopRun();
             }
+        }
+    }
+
+    private void startConnexion(){
+        try {
+            sendSocket = new Socket(serverIp, serverPortRecv);
+            dataOutputStream = new DataOutputStream(sendSocket.getOutputStream());
+            dataInputStream = new DataInputStream(sendSocket.getInputStream());
+            connexHandler.sendEmptyMessage(1);
+        } catch (IOException e) {
+            Log.println(Log.WARN,"11","Error en el establecimiento de conexión con servidor: ");
+            Log.println(Log.ERROR,"12",e.getMessage());
+            running = false;
         }
     }
 
@@ -147,7 +144,7 @@ public class ServerTCPConnexion extends Thread {
             sendSocket.close();
             running = false;
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.println(Log.ERROR,"12",e.getMessage());
         }
     }
 

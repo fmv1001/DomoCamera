@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="color_background">#B3C3FF</color>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
@@ -9,5 +10,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="grenn_conn">#FF36FB13</color>
     <color name="red_conn">#FFFB091D</color>
-
+    <color name="gray_button">#7A6D6D</color>
 </resources>

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_background"
     tools:context=".ui.information.InformationFragment">
 
     <ScrollView
@@ -24,7 +25,8 @@
             android:id="@+id/log_sistema"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="TextView" />
+            android:hint="@string/menu_information"
+            android:textColor="#000000" />
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

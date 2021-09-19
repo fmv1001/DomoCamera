@@ -1,3 +1,4 @@
+
 package com.example.appstream.ui.information;
 
 import android.os.Bundle;

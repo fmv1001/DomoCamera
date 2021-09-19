@@ -3,6 +3,7 @@ package com.example.appstream.ui.home;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,14 +36,13 @@ import java.util.List;
 
 public class HomeFragment extends Fragment implements  FragmentDialogNewCam.FragmentDialogInterfaceNewCAm, FragmentDialogDelCam.FragmentDialogInterfaceDelCam{
 
-    private String serverIp = "192.168.0.108";
+    private String serverIp;
     private static ServerTCPConnexion connexionThread;
     DataBaseCameras dataBaseCameras;
     private List<Camera> cameraList = new ArrayList<>();
     private List<String> onlineCamera = new ArrayList<>();
     private ArrayAdapter arrayAdapter;
-    private static int idCounter = 0;
-    private Context context;
+    private int idCounter = 0;
     private InformationViewModel informationViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -53,18 +53,12 @@ public class HomeFragment extends Fragment implements  FragmentDialogNewCam.Frag
 
         setHasOptionsMenu(true);
 
-        context = getContext();
-
         SharedViewModel sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
         sharedViewModel.getSelected().observe(getActivity(), new Observer<String[]>() {
             @Override
             public void onChanged(String[] serverInf) {
                 serverIp = serverInf[0];
-                try {
-                    connexionThread = connexionThread.getInstance(requireActivity());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                getInstanceServerTCPConnexion();
             }
         });
 
@@ -74,7 +68,7 @@ public class HomeFragment extends Fragment implements  FragmentDialogNewCam.Frag
         serverIp = dataBaseCameras.getIpServer();
         idCounter = dataBaseCameras.getIdCounter();
 
-        CheckCamerasViewModel checkCamerasViewModel = new ViewModelProvider(requireActivity()).get(CheckCamerasViewModel.class);
+        CheckCamerasViewModel checkCamerasViewModel = new ViewModelProvider(getActivity()).get(CheckCamerasViewModel.class);
         checkCamerasViewModel.getSelected().observe(getActivity(), new Observer<String>() {
             @Override
             public void onChanged(String liveCameras) {
@@ -104,6 +98,14 @@ public class HomeFragment extends Fragment implements  FragmentDialogNewCam.Frag
         return root;
     }
 
+    private static void getInstanceServerTCPConnexion(){
+        try {
+            connexionThread = connexionThread.getInstance();
+        } catch (Exception e) {
+            Log.println(Log.ERROR,"12",e.getMessage());
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -120,6 +122,7 @@ public class HomeFragment extends Fragment implements  FragmentDialogNewCam.Frag
             case R.id.action_disconnect_to_server:
                 informationViewModel.select("Desconectando del servidor");
                 connexionThread.disconnectToServer();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -131,13 +134,11 @@ public class HomeFragment extends Fragment implements  FragmentDialogNewCam.Frag
             Toast.makeText(getContext(), "exitoA", Toast.LENGTH_SHORT).show();
             dataBaseCameras.closeDataBase();
             Camera camX = new Camera(name, ip, port);
-            if (camX != null)
-                arrayAdapter.add(camX);
+            arrayAdapter.add(camX);
             informationViewModel.select("Cámara añadida: " + name);
             return true;
         }else{
             informationViewModel.select("Error añadiendo cámara: " + name + ", error en base de datos");
-            Toast.makeText(getContext(), "errorAlAñadirCamera", Toast.LENGTH_SHORT).show();
         }
         return false;
     }
@@ -156,9 +157,9 @@ public class HomeFragment extends Fragment implements  FragmentDialogNewCam.Frag
                 }
             }
             return true;
-        }else
+        }else {
             informationViewModel.select("Error eliminando cámara: " + camera + ", error en base de datos");
-            Toast.makeText(getContext(), "errorAlEliminarCamera", Toast.LENGTH_SHORT).show();
+        }
         return false;
     }
 
@@ -185,7 +186,7 @@ public class HomeFragment extends Fragment implements  FragmentDialogNewCam.Frag
     }
 
     public void checkLiveCameras(String listOfCameras){
-        if (listOfCameras != null && !listOfCameras.equals("")){
+        if (listOfCameras != null){
             List<String> list0 = new LinkedList<>(Arrays.asList(listOfCameras.split("-")));
             List<String[]> listC = new ArrayList<>();
             List<String> listX = new ArrayList<>();
@@ -206,11 +207,7 @@ public class HomeFragment extends Fragment implements  FragmentDialogNewCam.Frag
                     listX.remove(index);
                     listC.remove(index);
                 } else {
-                    dataBaseCameras.upDataBase();
-                    if(dataBaseCameras.deleteCamera(camX.getName()) == 1)
-                        arrayAdapter.remove(camX);
-                    else
-                        Toast.makeText(context, "error borrando: " + camX.getName(), Toast.LENGTH_SHORT).show();
+                    eliminarBoton(camX.getName());
                 }
             }
             for (String[] camX:listC){
@@ -232,7 +229,7 @@ public class HomeFragment extends Fragment implements  FragmentDialogNewCam.Frag
         }
     };
 
-    public static synchronized int nextID(){
+    public synchronized int nextID(){
         return idCounter++;
     }
 }
